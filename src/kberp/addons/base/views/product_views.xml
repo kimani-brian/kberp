@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- Kernel catalogue screens. Shared by the app menus once each app ships. -->
+
+  <record id="view_product_template_list" model="core.ir_ui_view">
+    <field name="name">core.product_template.list</field>
+    <field name="model">core.product_template</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Products">
+        <field name="name" string="Product"/>
+        <field name="default_code" string="Internal Reference"/>
+        <field name="type" string="Type"/>
+        <field name="list_price" string="Sales Price"/>
+        <field name="category_id" string="Category"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="view_product_template_form" model="core.ir_ui_view">
+    <field name="name">core.product_template.form</field>
+    <field name="model">core.product_template</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Product">
+        <sheet>
+          <group string="Product">
+            <field name="name"/>
+            <field name="default_code"/>
+            <field name="type"/>
+            <field name="active"/>
+          </group>
+          <group string="Pricing">
+            <field name="list_price"/>
+            <field name="standard_price"/>
+            <field name="category_id"/>
+            <field name="uom_id"/>
+          </group>
+          <group string="Identification">
+            <field name="barcode"/>
+            <field name="description"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_product_template_search" model="core.ir_ui_view">
+    <field name="name">core.product_template.search</field>
+    <field name="model">core.product_template</field>
+    <field name="type">search</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name" string="Search"/>
+        <filter name="goods" string="Goods" domain="[('type', '=', 'goods')]"/>
+        <filter name="services" string="Services" domain="[('type', '=', 'service')]"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="view_uom_list" model="core.ir_ui_view">
+    <field name="name">core.uom.list</field>
+    <field name="model">core.uom</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Units of Measure">
+        <field name="name"/>
+        <field name="category_id"/>
+        <field name="rounding"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="view_uom_form" model="core.ir_ui_view">
+    <field name="name">core.uom.form</field>
+    <field name="model">core.uom</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Unit of Measure">
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="category_id"/>
+            <field name="rounding"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_product_category_list" model="core.ir_ui_view">
+    <field name="name">core.product_category.list</field>
+    <field name="model">core.product_category</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Product Categories">
+        <field name="name"/>
+        <field name="parent_id"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="view_product_category_form" model="core.ir_ui_view">
+    <field name="name">core.product_category.form</field>
+    <field name="model">core.product_category</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Product Category">
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="parent_id"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_product_attribute_list" model="core.ir_ui_view">
+    <field name="name">core.product_attribute.list</field>
+    <field name="model">core.product_attribute</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Attributes">
+        <field name="name" string="Attribute"/>
+        <field name="display_type" string="Display"/>
+        <field name="sequence" string="Sequence"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_product_attribute_form" model="core.ir_ui_view">
+    <field name="name">core.product_attribute.form</field>
+    <field name="model">core.product_attribute</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Attribute"><sheet>
+        <group string="Attribute">
+          <field name="name"/><field name="display_type"/>
+          <field name="sequence"/><field name="active"/>
+        </group>
+        <group string="Values">
+          <field name="value_ids" widget="lines">
+            <list string="Values" editable="1">
+              <field name="name" string="Value"/>
+              <field name="sequence" string="Sequence"/>
+            </list>
+          </field>
+        </group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_product_attribute" model="core.ir_act_window">
+    <field name="name">Attributes</field>
+    <field name="res_model">core.product_attribute</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">product-attributes</field>
+  </record>
+
+  <record id="action_product_template" model="core.ir_act_window">
+    <field name="name">Products</field>
+    <field name="res_model">core.product_template</field>
+    <field name="view_mode">list,form,search</field>
+    <field name="path">products</field>
+  </record>
+
+  <record id="action_uom" model="core.ir_act_window">
+    <field name="name">Units of Measure</field>
+    <field name="res_model">core.uom</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">uom</field>
+  </record>
+
+  <record id="action_product_category" model="core.ir_act_window">
+    <field name="name">Product Categories</field>
+    <field name="res_model">core.product_category</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">product-categories</field>
+  </record>
+
+</odoo>

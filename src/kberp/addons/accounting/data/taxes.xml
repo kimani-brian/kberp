@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="tax_vat_16" model="accounting.tax">
+    <field name="name">VAT 16%</field>
+    <field name="amount">16</field>
+    <field name="sequence">10</field>
+    <field name="active">True</field>
+  </record>
+
+  <record id="tax_zero" model="accounting.tax">
+    <field name="name">Zero rated</field>
+    <field name="amount">0</field>
+    <field name="sequence">20</field>
+    <field name="active">True</field>
+  </record>
+
+
+  <record id="payment_term_net_30" model="accounting.payment_term">
+    <field name="name">Net 30</field>
+    <field name="days">30</field>
+  </record>
+
+  <record id="fiscal_position_local" model="accounting.fiscal_position">
+    <field name="name">Local</field>
+  </record>
+
+</odoo>

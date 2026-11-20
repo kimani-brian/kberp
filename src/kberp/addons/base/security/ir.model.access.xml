@@ -1,0 +1,474 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+  <!-- Internal users read the catalogue; only managers may write it. -->
+  <record id="access_core_ir_ui_menu_user" model="core.ir_model_access">
+    <field name="name">Menu Item / Internal User: read</field>
+    <field name="model">core.ir_ui_menu</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_ir_ui_view_user" model="core.ir_model_access">
+    <field name="name">View / Internal User: read</field>
+    <field name="model">core.ir_ui_view</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_ir_act_window_user" model="core.ir_model_access">
+    <field name="name">Window Action / Internal User: read</field>
+    <field name="model">core.ir_act_window</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_ir_act_client_user" model="core.ir_model_access">
+    <field name="name">Client Action / Internal User: read</field>
+    <field name="model">core.ir_act_client</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_ir_module_user" model="core.ir_model_access">
+    <field name="name">Module / Internal User: read</field>
+    <field name="model">core.ir_module</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_res_groups_user" model="core.ir_model_access">
+    <field name="name">Security Group / Internal User: read</field>
+    <field name="model">core.res_groups</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_partner_user" model="core.ir_model_access">
+    <field name="name">Contact / Internal User: read</field>
+    <field name="model">core.partner</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_partner_tag_user" model="core.ir_model_access">
+    <field name="name">Contact Tag / Internal User: read</field>
+    <field name="model">core.partner_tag</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_industry_user" model="core.ir_model_access">
+    <field name="name">Industry / Internal User: read</field>
+    <field name="model">core.industry</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_bank_user" model="core.ir_model_access">
+    <field name="name">Bank / Internal User: read</field>
+    <field name="model">core.bank</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_bank_account_user" model="core.ir_model_access">
+    <field name="name">Bank Account / Internal User: read</field>
+    <field name="model">core.bank_account</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_user_read" model="core.ir_model_access">
+    <field name="name">User / Internal User: read</field>
+    <field name="model">core.user</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_country_user" model="core.ir_model_access">
+    <field name="name">Country / Internal User: read</field>
+    <field name="model">core.country</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_state_user" model="core.ir_model_access">
+    <field name="name">State / Internal User: read</field>
+    <field name="model">core.state</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_company_user" model="core.ir_model_access">
+    <field name="name">Company / Internal User: read</field>
+    <field name="model">core.company</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_currency_user" model="core.ir_model_access">
+    <field name="name">Currency / Internal User: read</field>
+    <field name="model">core.currency</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_uom_user" model="core.ir_model_access">
+    <field name="name">Unit of Measure / Internal User: read</field>
+    <field name="model">core.uom</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_uom_category_user" model="core.ir_model_access">
+    <field name="name">Unit of Measure Category / Internal User: read</field>
+    <field name="model">core.uom_category</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_product_category_user" model="core.ir_model_access">
+    <field name="name">Product Category / Internal User: read</field>
+    <field name="model">core.product_category</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_product_template_user" model="core.ir_model_access">
+    <field name="name">Product / Internal User: read</field>
+    <field name="model">core.product_template</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+
+  <record id="access_core_partner_manager" model="core.ir_model_access">
+    <field name="name">Contact / Partner Manager: full</field>
+    <field name="model">core.partner</field>
+    <field name="group_xmlid">base.group_partner_manager</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_partner_tag_manager" model="core.ir_model_access">
+    <field name="name">Contact Tag / Partner Manager: full</field>
+    <field name="model">core.partner_tag</field>
+    <field name="group_xmlid">base.group_partner_manager</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_industry_manager" model="core.ir_model_access">
+    <field name="name">Industry / Partner Manager: full</field>
+    <field name="model">core.industry</field>
+    <field name="group_xmlid">base.group_partner_manager</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_bank_manager" model="core.ir_model_access">
+    <field name="name">Bank / Partner Manager: full</field>
+    <field name="model">core.bank</field>
+    <field name="group_xmlid">base.group_partner_manager</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_bank_account_manager" model="core.ir_model_access">
+    <field name="name">Bank Account / Partner Manager: full</field>
+    <field name="model">core.bank_account</field>
+    <field name="group_xmlid">base.group_partner_manager</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+
+  <!-- Administrators manage metadata and users. -->
+  <record id="access_core_ir_ui_menu_system" model="core.ir_model_access">
+    <field name="name">Menu Item / Settings: full</field>
+    <field name="model">core.ir_ui_menu</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_ir_ui_view_system" model="core.ir_model_access">
+    <field name="name">View / Settings: full</field>
+    <field name="model">core.ir_ui_view</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_ir_act_window_system" model="core.ir_model_access">
+    <field name="name">Window Action / Settings: full</field>
+    <field name="model">core.ir_act_window</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_ir_act_client_system" model="core.ir_model_access">
+    <field name="name">Client Action / Settings: full</field>
+    <field name="model">core.ir_act_client</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_ir_module_system" model="core.ir_model_access">
+    <field name="name">Module / Settings: full</field>
+    <field name="model">core.ir_module</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_res_groups_system" model="core.ir_model_access">
+    <field name="name">Security Group / Settings: full</field>
+    <field name="model">core.res_groups</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_partner_system" model="core.ir_model_access">
+    <field name="name">Contact / Settings: full</field>
+    <field name="model">core.partner</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_partner_tag_system" model="core.ir_model_access">
+    <field name="name">Contact Tag / Settings: full</field>
+    <field name="model">core.partner_tag</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_industry_system" model="core.ir_model_access">
+    <field name="name">Industry / Settings: full</field>
+    <field name="model">core.industry</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_bank_system" model="core.ir_model_access">
+    <field name="name">Bank / Settings: full</field>
+    <field name="model">core.bank</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_bank_account_system" model="core.ir_model_access">
+    <field name="name">Bank Account / Settings: full</field>
+    <field name="model">core.bank_account</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_country_system" model="core.ir_model_access">
+    <field name="name">Country / Settings: full</field>
+    <field name="model">core.country</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_state_system" model="core.ir_model_access">
+    <field name="name">State / Settings: full</field>
+    <field name="model">core.state</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_company_system" model="core.ir_model_access">
+    <field name="name">Company / Settings: full</field>
+    <field name="model">core.company</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_currency_system" model="core.ir_model_access">
+    <field name="name">Currency / Settings: full</field>
+    <field name="model">core.currency</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_uom_system" model="core.ir_model_access">
+    <field name="name">Unit of Measure / Settings: full</field>
+    <field name="model">core.uom</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_uom_category_system" model="core.ir_model_access">
+    <field name="name">Unit of Measure Category / Settings: full</field>
+    <field name="model">core.uom_category</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_product_category_system" model="core.ir_model_access">
+    <field name="name">Product Category / Settings: full</field>
+    <field name="model">core.product_category</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_product_template_system" model="core.ir_model_access">
+    <field name="name">Product / Settings: full</field>
+    <field name="model">core.product_template</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_user_system" model="core.ir_model_access">
+    <field name="name">User / Settings: full</field>
+    <field name="model">core.user</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_platform_session_system" model="core.ir_model_access">
+    <field name="name">Session / Settings: full</field>
+    <field name="model">platform.session</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_ir_model_access_system" model="core.ir_model_access">
+    <field name="name">Access Control / Settings: full</field>
+    <field name="model">core.ir_model_access</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+  <record id="access_platform_bus_message_user" model="core.ir_model_access">
+    <field name="name">Bus Message / Internal User: read</field>
+    <field name="model">platform.bus_message</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+
+  <record id="access_platform_bus_message_system" model="core.ir_model_access">
+    <field name="name">Bus Message / Settings: full</field>
+    <field name="model">platform.bus_message</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_platform_outbox_event_system" model="core.ir_model_access">
+    <field name="name">Outbox Event / Settings: full</field>
+    <field name="model">platform.outbox_event</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_core_ir_cron_system" model="core.ir_model_access">
+    <field name="name">Scheduled Action / Settings: full</field>
+    <field name="model">core.ir_cron</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_chatter_message_user" model="core.ir_model_access">
+    <field name="name">Message / Internal User: read</field>
+    <field name="model">chatter.message</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+
+  <record id="access_chatter_follower_user" model="core.ir_model_access">
+    <field name="name">Follower / Internal User: read</field>
+    <field name="model">chatter.follower</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+
+  <record id="access_chatter_activity_type_user" model="core.ir_model_access">
+    <field name="name">Activity Type / Internal User: read</field>
+    <field name="model">chatter.activity_type</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+
+  <record id="access_chatter_activity_user" model="core.ir_model_access">
+    <field name="name">Activity / Internal User: read</field>
+    <field name="model">chatter.activity</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+
+  <record id="access_chatter_message_system" model="core.ir_model_access">
+    <field name="name">Message / Settings: full</field>
+    <field name="model">chatter.message</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_chatter_follower_system" model="core.ir_model_access">
+    <field name="name">Follower / Settings: full</field>
+    <field name="model">chatter.follower</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_chatter_activity_type_system" model="core.ir_model_access">
+    <field name="name">Activity Type / Settings: full</field>
+    <field name="model">chatter.activity_type</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_chatter_activity_system" model="core.ir_model_access">
+    <field name="name">Activity / Settings: full</field>
+    <field name="model">chatter.activity</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field>
+    <field name="perm_create">True</field>
+    <field name="perm_unlink">True</field>
+  </record>
+
+
+  <record id="access_core_product_attribute_user" model="core.ir_model_access">
+    <field name="name">Product Attribute / Internal User: read</field>
+    <field name="model">core.product_attribute</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_product_attribute_system" model="core.ir_model_access">
+    <field name="name">Product Attribute / Settings: full</field>
+    <field name="model">core.product_attribute</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_core_product_attribute_value_user" model="core.ir_model_access">
+    <field name="name">Product Attribute Value / Internal User: read</field>
+    <field name="model">core.product_attribute_value</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_product_attribute_value_system" model="core.ir_model_access">
+    <field name="name">Product Attribute Value / Settings: full</field>
+    <field name="model">core.product_attribute_value</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+
+  <!-- Kernel metadata that the settings UI edits. Internal users may read
+       sequences and pricelists on documents; only Settings may change them. -->
+  <record id="access_core_ir_rule_system" model="core.ir_model_access">
+    <field name="name">Record Rule / Settings: full</field>
+    <field name="model">core.ir_rule</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_ir_sequence_user" model="core.ir_model_access">
+    <field name="name">Sequence / Internal User: read</field>
+    <field name="model">core.ir_sequence</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_ir_sequence_system" model="core.ir_model_access">
+    <field name="name">Sequence / Settings: full</field>
+    <field name="model">core.ir_sequence</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+  <record id="access_core_pricelist_user" model="core.ir_model_access">
+    <field name="name">Pricelist / Internal User: read</field>
+    <field name="model">core.pricelist</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_core_pricelist_system" model="core.ir_model_access">
+    <field name="name">Pricelist / Settings: full</field>
+    <field name="model">core.pricelist</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+</odoo>

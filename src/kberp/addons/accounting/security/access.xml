@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="group_accounting_user" model="core.res_groups">
+    <field name="name">Accounting User</field>
+  </record>
+  <record id="group_accounting_manager" model="core.res_groups">
+    <field name="name">Accounting Manager</field>
+  </record>
+  <record id="group_accounting_auditor" model="core.res_groups">
+    <field name="name">Accounting Auditor</field>
+  </record>
+
+  <record id="access_accounting_tax_user" model="core.ir_model_access">
+    <field name="name">Tax / Internal User: read</field>
+    <field name="model">accounting.tax</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_tax_system" model="core.ir_model_access">
+    <field name="name">Tax / Settings: full</field>
+    <field name="model">accounting.tax</field>
+    <field name="group_xmlid">base.group_system</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_config_user" model="core.ir_model_access">
+    <field name="name">Chart / Internal User: read</field>
+    <field name="model">accounting.account</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_config_manager" model="core.ir_model_access">
+    <field name="name">Chart / Accounting Manager: full</field>
+    <field name="model">accounting.account</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+  <record id="access_journal_user" model="core.ir_model_access">
+    <field name="name">Journal / Internal User: read</field>
+    <field name="model">accounting.journal</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_journal_manager" model="core.ir_model_access">
+    <field name="name">Journal / Accounting Manager: full</field>
+    <field name="model">accounting.journal</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+  <record id="access_move_user" model="core.ir_model_access">
+    <field name="name">Entry / Internal User: read</field>
+    <field name="model">accounting.move</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_move_user_write" model="core.ir_model_access">
+    <field name="name">Entry / Accounting User: write and create</field>
+    <field name="model">accounting.move</field>
+    <field name="group_xmlid">accounting.group_accounting_user</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field>
+  </record>
+  <record id="access_move_manager" model="core.ir_model_access">
+    <field name="name">Entry / Accounting Manager: full</field>
+    <field name="model">accounting.move</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+  <record id="access_move_line_user" model="core.ir_model_access">
+    <field name="name">Line / Internal User: read</field>
+    <field name="model">accounting.move_line</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_move_line_user_write" model="core.ir_model_access">
+    <field name="name">Line / Accounting User: write and create</field>
+    <field name="model">accounting.move_line</field>
+    <field name="group_xmlid">accounting.group_accounting_user</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field>
+  </record>
+  <record id="access_move_line_manager" model="core.ir_model_access">
+    <field name="name">Line / Accounting Manager: full</field>
+    <field name="model">accounting.move_line</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+  <record id="access_audit_user" model="core.ir_model_access">
+    <field name="name">Audit / Auditor: read</field>
+    <field name="model">accounting.audit_log</field>
+    <field name="group_xmlid">accounting.group_accounting_auditor</field>
+  </record>
+
+  <record id="rule_accounting_move_company" model="core.ir_rule">
+    <field name="name">Entries: own company</field>
+    <field name="model">accounting.move</field>
+    <field name="domain">[["company_id", "in", "$company"]]</field>
+    <field name="is_global">True</field>
+  </record>
+
+
+  <record id="access_payment_user" model="core.ir_model_access">
+    <field name="name">Payment / Internal User: read</field>
+    <field name="model">accounting.payment</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_payment_manager" model="core.ir_model_access">
+    <field name="name">Payment / Accounting Manager: full</field>
+    <field name="model">accounting.payment</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+  <record id="access_payment_line_user" model="core.ir_model_access">
+    <field name="name">Payment Allocation / Internal User: read</field>
+    <field name="model">accounting.payment_line</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_payment_line_manager" model="core.ir_model_access">
+    <field name="name">Payment Allocation / Accounting Manager: full</field>
+    <field name="model">accounting.payment_line</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+  <record id="access_payment_term_user" model="core.ir_model_access">
+    <field name="name">Payment Terms / Internal User: read</field>
+    <field name="model">accounting.payment_term</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_payment_term_manager" model="core.ir_model_access">
+    <field name="name">Payment Terms / Accounting Manager: full</field>
+    <field name="model">accounting.payment_term</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+  <record id="access_fiscal_position_user" model="core.ir_model_access">
+    <field name="name">Fiscal Position / Internal User: read</field>
+    <field name="model">accounting.fiscal_position</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_fiscal_position_manager" model="core.ir_model_access">
+    <field name="name">Fiscal Position / Accounting Manager: full</field>
+    <field name="model">accounting.fiscal_position</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+  <record id="rule_payment_company" model="core.ir_rule">
+    <field name="name">Payments: own company</field>
+    <field name="model">accounting.payment</field>
+    <field name="domain">[["company_id", "in", "$company"]]</field>
+    <field name="is_global">True</field>
+  </record>
+
+
+  <record id="access_accounting_lock_date_user" model="core.ir_model_access">
+    <field name="name">Lock Date / Internal User: read</field>
+    <field name="model">accounting.lock_date</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_lock_date_manager" model="core.ir_model_access">
+    <field name="name">Lock Date / Accounting Manager: full</field>
+    <field name="model">accounting.lock_date</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_tax_return_user" model="core.ir_model_access">
+    <field name="name">Tax Return / Internal User: read</field>
+    <field name="model">accounting.tax_return</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_tax_return_manager" model="core.ir_model_access">
+    <field name="name">Tax Return / Accounting Manager: full</field>
+    <field name="model">accounting.tax_return</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_tax_return_line_user" model="core.ir_model_access">
+    <field name="name">Tax Return Line / Internal User: read</field>
+    <field name="model">accounting.tax_return_line</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_tax_return_line_manager" model="core.ir_model_access">
+    <field name="name">Tax Return Line / Accounting Manager: full</field>
+    <field name="model">accounting.tax_return_line</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_asset_model_user" model="core.ir_model_access">
+    <field name="name">Asset Model / Internal User: read</field>
+    <field name="model">accounting.asset_model</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_asset_model_manager" model="core.ir_model_access">
+    <field name="name">Asset Model / Accounting Manager: full</field>
+    <field name="model">accounting.asset_model</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_asset_user" model="core.ir_model_access">
+    <field name="name">Asset / Internal User: read</field>
+    <field name="model">accounting.asset</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_asset_manager" model="core.ir_model_access">
+    <field name="name">Asset / Accounting Manager: full</field>
+    <field name="model">accounting.asset</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_asset_line_user" model="core.ir_model_access">
+    <field name="name">Asset Line / Internal User: read</field>
+    <field name="model">accounting.asset_line</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_asset_line_manager" model="core.ir_model_access">
+    <field name="name">Asset Line / Accounting Manager: full</field>
+    <field name="model">accounting.asset_line</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_loan_user" model="core.ir_model_access">
+    <field name="name">Loan / Internal User: read</field>
+    <field name="model">accounting.loan</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_loan_manager" model="core.ir_model_access">
+    <field name="name">Loan / Accounting Manager: full</field>
+    <field name="model">accounting.loan</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_loan_line_user" model="core.ir_model_access">
+    <field name="name">Loan Line / Internal User: read</field>
+    <field name="model">accounting.loan_line</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_loan_line_manager" model="core.ir_model_access">
+    <field name="name">Loan Line / Accounting Manager: full</field>
+    <field name="model">accounting.loan_line</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_deferral_user" model="core.ir_model_access">
+    <field name="name">Deferral / Internal User: read</field>
+    <field name="model">accounting.deferral</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_deferral_manager" model="core.ir_model_access">
+    <field name="name">Deferral / Accounting Manager: full</field>
+    <field name="model">accounting.deferral</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_deferral_line_user" model="core.ir_model_access">
+    <field name="name">Deferral Line / Internal User: read</field>
+    <field name="model">accounting.deferral_line</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_deferral_line_manager" model="core.ir_model_access">
+    <field name="name">Deferral Line / Accounting Manager: full</field>
+    <field name="model">accounting.deferral_line</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_reconciliation_model_user" model="core.ir_model_access">
+    <field name="name">Reconciliation Model / Internal User: read</field>
+    <field name="model">accounting.reconciliation_model</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_reconciliation_model_manager" model="core.ir_model_access">
+    <field name="name">Reconciliation Model / Accounting Manager: full</field>
+    <field name="model">accounting.reconciliation_model</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_bank_statement_user" model="core.ir_model_access">
+    <field name="name">Bank Statement / Internal User: read</field>
+    <field name="model">accounting.bank_statement</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_bank_statement_manager" model="core.ir_model_access">
+    <field name="name">Bank Statement / Accounting Manager: full</field>
+    <field name="model">accounting.bank_statement</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_bank_statement_line_user" model="core.ir_model_access">
+    <field name="name">Bank Statement Line / Internal User: read</field>
+    <field name="model">accounting.bank_statement_line</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_bank_statement_line_manager" model="core.ir_model_access">
+    <field name="name">Bank Statement Line / Accounting Manager: full</field>
+    <field name="model">accounting.bank_statement_line</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_report_user" model="core.ir_model_access">
+    <field name="name">Accounting Report / Internal User: read</field>
+    <field name="model">accounting.report</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_report_manager" model="core.ir_model_access">
+    <field name="name">Accounting Report / Accounting Manager: full</field>
+    <field name="model">accounting.report</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_report_line_user" model="core.ir_model_access">
+    <field name="name">Accounting Report Line / Internal User: read</field>
+    <field name="model">accounting.report_line</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_report_line_manager" model="core.ir_model_access">
+    <field name="name">Accounting Report Line / Accounting Manager: full</field>
+    <field name="model">accounting.report_line</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_analytic_plan_user" model="core.ir_model_access">
+    <field name="name">Analytic Plan / Internal User: read</field>
+    <field name="model">accounting.analytic_plan</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_analytic_plan_manager" model="core.ir_model_access">
+    <field name="name">Analytic Plan / Accounting Manager: full</field>
+    <field name="model">accounting.analytic_plan</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_analytic_account_user" model="core.ir_model_access">
+    <field name="name">Analytic Account / Internal User: read</field>
+    <field name="model">accounting.analytic_account</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_analytic_account_manager" model="core.ir_model_access">
+    <field name="name">Analytic Account / Accounting Manager: full</field>
+    <field name="model">accounting.analytic_account</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_budget_user" model="core.ir_model_access">
+    <field name="name">Budget / Internal User: read</field>
+    <field name="model">accounting.budget</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_budget_manager" model="core.ir_model_access">
+    <field name="name">Budget / Accounting Manager: full</field>
+    <field name="model">accounting.budget</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_budget_line_user" model="core.ir_model_access">
+    <field name="name">Budget Line / Internal User: read</field>
+    <field name="model">accounting.budget_line</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_budget_line_manager" model="core.ir_model_access">
+    <field name="name">Budget Line / Accounting Manager: full</field>
+    <field name="model">accounting.budget_line</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_followup_level_user" model="core.ir_model_access">
+    <field name="name">Follow-up Level / Internal User: read</field>
+    <field name="model">accounting.followup_level</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_followup_level_manager" model="core.ir_model_access">
+    <field name="name">Follow-up Level / Accounting Manager: full</field>
+    <field name="model">accounting.followup_level</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_payment_provider_user" model="core.ir_model_access">
+    <field name="name">Payment Provider / Internal User: read</field>
+    <field name="model">accounting.payment_provider</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_payment_provider_manager" model="core.ir_model_access">
+    <field name="name">Payment Provider / Accounting Manager: full</field>
+    <field name="model">accounting.payment_provider</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_payment_method_user" model="core.ir_model_access">
+    <field name="name">Payment Method / Internal User: read</field>
+    <field name="model">accounting.payment_method</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_payment_method_manager" model="core.ir_model_access">
+    <field name="name">Payment Method / Accounting Manager: full</field>
+    <field name="model">accounting.payment_method</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_payment_token_user" model="core.ir_model_access">
+    <field name="name">Payment Token / Internal User: read</field>
+    <field name="model">accounting.payment_token</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_payment_token_manager" model="core.ir_model_access">
+    <field name="name">Payment Token / Accounting Manager: full</field>
+    <field name="model">accounting.payment_token</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_payment_transaction_user" model="core.ir_model_access">
+    <field name="name">Payment Transaction / Internal User: read</field>
+    <field name="model">accounting.payment_transaction</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_payment_transaction_manager" model="core.ir_model_access">
+    <field name="name">Payment Transaction / Accounting Manager: full</field>
+    <field name="model">accounting.payment_transaction</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_config_item_user" model="core.ir_model_access">
+    <field name="name">Accounting Configuration Item / Internal User: read</field>
+    <field name="model">accounting.config_item</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_config_item_manager" model="core.ir_model_access">
+    <field name="name">Accounting Configuration Item / Accounting Manager: full</field>
+    <field name="model">accounting.config_item</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+  <record id="access_accounting_edi_document_user" model="core.ir_model_access">
+    <field name="name">E-Invoicing Document / Internal User: read</field>
+    <field name="model">accounting.edi_document</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_edi_document_manager" model="core.ir_model_access">
+    <field name="name">E-Invoicing Document / Accounting Manager: full</field>
+    <field name="model">accounting.edi_document</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+
+  <!-- Accounting reference data. Users read it on documents; managers own it. -->
+  <record id="access_accounting_fiscal_year_user" model="core.ir_model_access">
+    <field name="name">Fiscal Year / Internal User: read</field>
+    <field name="model">accounting.fiscal_year</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_fiscal_year_manager" model="core.ir_model_access">
+    <field name="name">Fiscal Year / Accounting Manager: full</field>
+    <field name="model">accounting.fiscal_year</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+  <record id="access_accounting_tax_group_user" model="core.ir_model_access">
+    <field name="name">Tax Group / Internal User: read</field>
+    <field name="model">accounting.tax_group</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_tax_group_manager" model="core.ir_model_access">
+    <field name="name">Tax Group / Accounting Manager: full</field>
+    <field name="model">accounting.tax_group</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+  <record id="access_accounting_tax_repartition_user" model="core.ir_model_access">
+    <field name="name">Tax Repartition / Internal User: read</field>
+    <field name="model">accounting.tax_repartition</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_tax_repartition_manager" model="core.ir_model_access">
+    <field name="name">Tax Repartition / Accounting Manager: full</field>
+    <field name="model">accounting.tax_repartition</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+  <record id="access_accounting_settings_user" model="core.ir_model_access">
+    <field name="name">Accounting Settings / Internal User: read</field>
+    <field name="model">accounting.settings</field>
+    <field name="group_xmlid">base.group_user</field>
+  </record>
+  <record id="access_accounting_settings_manager" model="core.ir_model_access">
+    <field name="name">Accounting Settings / Accounting Manager: full</field>
+    <field name="model">accounting.settings</field>
+    <field name="group_xmlid">accounting.group_accounting_manager</field>
+    <field name="perm_write">True</field><field name="perm_create">True</field><field name="perm_unlink">True</field>
+  </record>
+
+</odoo>

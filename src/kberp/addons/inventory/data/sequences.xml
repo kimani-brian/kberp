@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="seq_inventory_delivery" model="core.ir_sequence">
+    <field name="name">Delivery</field>
+    <field name="prefix">OUT/</field>
+    <field name="padding">5</field>
+  </record>
+
+
+  <record id="seq_stock_count" model="core.ir_sequence">
+    <field name="name">Physical Inventory</field>
+    <field name="prefix">CNT/</field>
+    <field name="padding">5</field>
+  </record>
+  <record id="seq_scrap" model="core.ir_sequence">
+    <field name="name">Scrap</field>
+    <field name="prefix">SCRAP/</field>
+    <field name="padding">5</field>
+  </record>
+
+</odoo>

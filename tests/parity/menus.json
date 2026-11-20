@@ -1,0 +1,2034 @@
+{
+  "phase": "A3",
+  "note": "Menu tree after A3 (P3 + closing/reporting parity); later phases append their own entries and update this fixture.",
+  "root_order": [
+    "contacts.menu_contacts_root",
+    "sales.menu_sales_root",
+    "accounting.menu_accounting_root",
+    "purchase.menu_purchase_root",
+    "inventory.menu_inventory_root",
+    "base.menu_settings_root"
+  ],
+  "menus": [
+    {
+      "xml_id": "accounting.menu_accounting_account_groups",
+      "name": "Account Groups",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 65,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_account_groups",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_account_tags",
+      "name": "Account Tags",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 70,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_account_tags",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_accounting",
+      "name": "Accounting",
+      "parent": "accounting.menu_accounting_root",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_aged_payable",
+      "name": "Aged Payable",
+      "parent": "accounting.menu_accounting_reporting_partner",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_aged_payable",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_aged_receivable",
+      "name": "Aged Receivable",
+      "parent": "accounting.menu_accounting_reporting_partner",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_aged_receivable",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_analytic_accounts",
+      "name": "Analytic Accounts",
+      "parent": "accounting.menu_accounting_config_analytic",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_analytic_item",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_analytic_items",
+      "name": "Analytic Items",
+      "parent": "accounting.menu_accounting_transactions",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_analytic_item",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_analytic_models",
+      "name": "Analytic Distribution Models",
+      "parent": "accounting.menu_accounting_config_analytic",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_analytic_model",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_analytic_plans",
+      "name": "Analytic Plans",
+      "parent": "accounting.menu_accounting_config_analytic",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_analytic_plan",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_analytic_report",
+      "name": "Analytic Report",
+      "parent": "accounting.menu_accounting_reporting_management",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_analytic",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_asset_models",
+      "name": "Asset Models",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 105,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_asset_model",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_assets",
+      "name": "Assets",
+      "parent": "accounting.menu_accounting_assets_liabilities",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_asset",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_assets_liabilities",
+      "name": "Assets & Liabilities",
+      "parent": "accounting.menu_accounting_accounting",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_audit_trail",
+      "name": "Audit Trail",
+      "parent": "accounting.menu_accounting_review_logs",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_audit_trail",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_balance_sheet",
+      "name": "Balance Sheet",
+      "parent": "accounting.menu_accounting_reporting_statements",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_balance_sheet",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_bill_to_receive",
+      "name": "Bill To Receive",
+      "parent": "accounting.menu_accounting_review_purchases",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_bill_to_receive",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_billed_not_received",
+      "name": "Billed Not Received",
+      "parent": "accounting.menu_accounting_review_purchases",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_billed_not_received",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_bills",
+      "name": "Bills",
+      "parent": "accounting.menu_accounting_vendors",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_bill",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_budgets",
+      "name": "Financial Budgets",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 100,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_budget",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_cash_flow",
+      "name": "Cash Flow Statement",
+      "parent": "accounting.menu_accounting_reporting_statements",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_cash_flow",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_cash_roundings",
+      "name": "Cash Roundings",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 85,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_cash_roundings",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_chart",
+      "name": "Chart of Accounts",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_account",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_checks",
+      "name": "Checks",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 90,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_checks",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_closing",
+      "name": "Closing",
+      "parent": "accounting.menu_accounting_accounting",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_config",
+      "name": "Configuration",
+      "parent": "accounting.menu_accounting_root",
+      "sequence": 100,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_config_accounting",
+      "name": "Accounting",
+      "parent": "accounting.menu_accounting_config",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_config_analytic",
+      "name": "Analytic Accounting",
+      "parent": "accounting.menu_accounting_config",
+      "sequence": 50,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_config_etims",
+      "name": "KRA eTIMS",
+      "parent": "accounting.menu_accounting_config",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_config_invoicing",
+      "name": "Invoicing",
+      "parent": "accounting.menu_accounting_config",
+      "sequence": 15,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_config_payments",
+      "name": "Online Payments",
+      "parent": "accounting.menu_accounting_config",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_credit_notes",
+      "name": "Credit Notes",
+      "parent": "accounting.menu_accounting_customers",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_credit_note",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_currencies",
+      "name": "Currencies",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 60,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_currency",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_customer_payments",
+      "name": "Payments",
+      "parent": "accounting.menu_accounting_customers",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_payment_inbound",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_customers",
+      "name": "Customers",
+      "parent": "accounting.menu_accounting_root",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_customs_imports",
+      "name": "Customs Imports",
+      "parent": "accounting.menu_accounting_vendors",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_customs_imports",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_dashboard",
+      "name": "Dashboard",
+      "parent": "accounting.menu_accounting_root",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_app_home",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_deferred_expenses",
+      "name": "Deferred Expenses",
+      "parent": "accounting.menu_accounting_review_regularization",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_deferred_expense",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_deferred_revenues",
+      "name": "Deferred Revenues",
+      "parent": "accounting.menu_accounting_review_regularization",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_deferred_revenue",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_depreciation_schedule",
+      "name": "Depreciation Schedule",
+      "parent": "accounting.menu_accounting_review_inventory",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_asset_line",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_ec_sales",
+      "name": "EC Sales List",
+      "parent": "accounting.menu_accounting_reporting_taxes",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_ec_sales",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_executive_summary",
+      "name": "Executive Summary",
+      "parent": "accounting.menu_accounting_reporting_management",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_executive",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_fiscal_categories",
+      "name": "Fiscal Categories",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 75,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_fiscal_categories",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_fiscal_positions",
+      "name": "Fiscal Positions",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 25,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_fiscal_position",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_fiscal_report",
+      "name": "Fiscal Report",
+      "parent": "accounting.menu_accounting_reporting_taxes",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_fiscal",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_fiscal_years",
+      "name": "Fiscal Years",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 50,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_fiscal_year",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_followup_levels",
+      "name": "Follow-up Levels",
+      "parent": "accounting.menu_accounting_config_invoicing",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_followup_level",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_general_ledger",
+      "name": "General Ledger",
+      "parent": "accounting.menu_accounting_reporting_ledgers",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_general_ledger",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_horizontal_groups",
+      "name": "Horizontal Groups",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 115,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_horizontal_groups",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_incoterms",
+      "name": "Incoterms",
+      "parent": "accounting.menu_accounting_config_invoicing",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_incoterms",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_inventory_valuation",
+      "name": "Inventory Valuation",
+      "parent": "accounting.menu_accounting_review_inventory",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_inventory_valuation",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_invoice_analysis",
+      "name": "Invoice Analysis",
+      "parent": "accounting.menu_accounting_reporting_management",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_invoice_analysis",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_invoiced_not_delivered",
+      "name": "Invoiced Not Delivered",
+      "parent": "accounting.menu_accounting_review_sales",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_invoiced_not_delivered",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_invoices",
+      "name": "Invoices",
+      "parent": "accounting.menu_accounting_customers",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_invoice",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_invoices_to_issue",
+      "name": "Invoices To Be Issued",
+      "parent": "accounting.menu_accounting_review_sales",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_invoices_to_issue",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_journal_audit",
+      "name": "Journal Audit",
+      "parent": "accounting.menu_accounting_review_control",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_journal_audit",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_journal_entries",
+      "name": "Journal Entries",
+      "parent": "accounting.menu_accounting_transactions",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_journal_entry",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_journal_items",
+      "name": "Journal Items",
+      "parent": "accounting.menu_accounting_review_control",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_journal_items",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_journals",
+      "name": "Journals",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_journal",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_loans",
+      "name": "Loans",
+      "parent": "accounting.menu_accounting_assets_liabilities",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_loan",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_loans_analysis",
+      "name": "Loans Analysis",
+      "parent": "accounting.menu_accounting_review_inventory",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_loan_line",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_lock_dates",
+      "name": "Lock Dates\u2026",
+      "parent": "accounting.menu_accounting_closing",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_lock_date",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_multi_ledger",
+      "name": "Multi-Ledger",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 80,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_multi_ledger",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_online_sync",
+      "name": "Online Synchronization",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 120,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_online_sync",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_oscu_codes",
+      "name": "KE OSCU Codes",
+      "parent": "accounting.menu_accounting_config_etims",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_oscu_codes",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_oscu_notices",
+      "name": "KE OSCU Notices",
+      "parent": "accounting.menu_accounting_config_etims",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_oscu_notices",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_partner_ledger",
+      "name": "Partner Ledger",
+      "parent": "accounting.menu_accounting_reporting_partner",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_partner_ledger",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_payment_methods",
+      "name": "Payment Methods",
+      "parent": "accounting.menu_accounting_config_payments",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_payment_method",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_payment_providers",
+      "name": "Payment Providers",
+      "parent": "accounting.menu_accounting_config_payments",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_payment_provider",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_payment_terms",
+      "name": "Payment Terms",
+      "parent": "accounting.menu_accounting_config_invoicing",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_payment_term",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_payment_tokens",
+      "name": "Payment Tokens",
+      "parent": "accounting.menu_accounting_config_payments",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_payment_token",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_payment_transactions",
+      "name": "Payment Transactions",
+      "parent": "accounting.menu_accounting_config_payments",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_payment_transaction",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_product_categories",
+      "name": "Product Categories",
+      "parent": "accounting.menu_accounting_config_invoicing",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_product_category",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_profit_loss",
+      "name": "Profit and Loss",
+      "parent": "accounting.menu_accounting_reporting_statements",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_profit_loss",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_reconcile",
+      "name": "Reconcile",
+      "parent": "accounting.menu_accounting_closing",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_bank_statement",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_refunds",
+      "name": "Refunds",
+      "parent": "accounting.menu_accounting_vendors",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_refund",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_reporting",
+      "name": "Reporting",
+      "parent": "accounting.menu_accounting_accounting",
+      "sequence": 50,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_reporting_ledgers",
+      "name": "Ledgers",
+      "parent": "accounting.menu_accounting_reporting",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_reporting_management",
+      "name": "Management",
+      "parent": "accounting.menu_accounting_reporting",
+      "sequence": 50,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_reporting_partner",
+      "name": "Partner Reports",
+      "parent": "accounting.menu_accounting_reporting",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_reporting_statements",
+      "name": "Statement Reports",
+      "parent": "accounting.menu_accounting_reporting",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_reporting_taxes",
+      "name": "Taxes & Fiscal",
+      "parent": "accounting.menu_accounting_reporting",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_reports",
+      "name": "Accounting Reports",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 110,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_return_types",
+      "name": "Return Types",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 95,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_return_types",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_review",
+      "name": "Review",
+      "parent": "accounting.menu_accounting_accounting",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_review_audit",
+      "name": "Audit",
+      "parent": "accounting.menu_accounting_review",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_review_control",
+      "name": "Control",
+      "parent": "accounting.menu_accounting_review",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_review_inventory",
+      "name": "Inventory",
+      "parent": "accounting.menu_accounting_review",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_review_logs",
+      "name": "Logs",
+      "parent": "accounting.menu_accounting_review",
+      "sequence": 70,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_review_purchases",
+      "name": "Purchases",
+      "parent": "accounting.menu_accounting_review",
+      "sequence": 50,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_review_regularization",
+      "name": "Regularization Entries",
+      "parent": "accounting.menu_accounting_review",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_review_sales",
+      "name": "Sales",
+      "parent": "accounting.menu_accounting_review",
+      "sequence": 60,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_root",
+      "name": "Accounting",
+      "parent": null,
+      "sequence": 60,
+      "is_app": true,
+      "web_icon": "accounting",
+      "action": "base.action_app_home",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_secure_entries",
+      "name": "Secure Entries",
+      "parent": "accounting.menu_accounting_closing",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_secured_entries",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_settings",
+      "name": "Settings",
+      "parent": "accounting.menu_accounting_config",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_accounting_settings",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_tax_groups",
+      "name": "Tax Groups",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_tax_group",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_tax_report",
+      "name": "Tax Report",
+      "parent": "accounting.menu_accounting_reporting_taxes",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_tax",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_tax_returns",
+      "name": "Tax Returns",
+      "parent": "accounting.menu_accounting_closing",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_tax_return",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_tax_units",
+      "name": "Tax Units",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 35,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_tax_units",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_taxes",
+      "name": "Taxes",
+      "parent": "accounting.menu_accounting_config_accounting",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_tax",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_transactions",
+      "name": "Transactions",
+      "parent": "accounting.menu_accounting_accounting",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_trial_balance",
+      "name": "Trial Balance",
+      "parent": "accounting.menu_accounting_reporting_ledgers",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_trial_balance",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_unrealized_currencies",
+      "name": "Unrealized Currencies",
+      "parent": "accounting.menu_accounting_review_regularization",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_report_unrealized",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_vendor_payments",
+      "name": "Payments",
+      "parent": "accounting.menu_accounting_vendors",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_payment_outbound",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_vendors",
+      "name": "Vendors",
+      "parent": "accounting.menu_accounting_root",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "accounting.menu_accounting_working_files",
+      "name": "Working Files",
+      "parent": "accounting.menu_accounting_review_audit",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "accounting.action_working_files",
+      "groups": ""
+    },
+    {
+      "xml_id": "base.menu_settings_events",
+      "name": "Outbox Events",
+      "parent": "base.menu_settings_technical",
+      "sequence": 90,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_outbox_event",
+      "groups": "base.group_system"
+    },
+    {
+      "xml_id": "base.menu_settings_product_categories",
+      "name": "Product Categories",
+      "parent": "base.menu_settings_technical",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_product_category",
+      "groups": "base.group_system"
+    },
+    {
+      "xml_id": "base.menu_settings_products",
+      "name": "Products",
+      "parent": "base.menu_settings_technical",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_product_template",
+      "groups": "base.group_system"
+    },
+    {
+      "xml_id": "base.menu_settings_root",
+      "name": "Settings",
+      "parent": null,
+      "sequence": 200,
+      "is_app": false,
+      "web_icon": "settings",
+      "action": "",
+      "groups": "base.group_system"
+    },
+    {
+      "xml_id": "base.menu_settings_technical",
+      "name": "Technical",
+      "parent": "base.menu_settings_root",
+      "sequence": 90,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": "base.group_system"
+    },
+    {
+      "xml_id": "base.menu_settings_uom",
+      "name": "Units of Measure",
+      "parent": "base.menu_settings_technical",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_uom",
+      "groups": "base.group_system"
+    },
+    {
+      "xml_id": "contacts.menu_contacts",
+      "name": "Contacts",
+      "parent": "contacts.menu_contacts_root",
+      "sequence": 2,
+      "is_app": false,
+      "web_icon": "",
+      "action": "contacts.action_partner",
+      "groups": ""
+    },
+    {
+      "xml_id": "contacts.menu_contacts_bank_account_list",
+      "name": "Bank Accounts",
+      "parent": "contacts.menu_contacts_bank_accounts",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "contacts.action_bank_account",
+      "groups": ""
+    },
+    {
+      "xml_id": "contacts.menu_contacts_bank_accounts",
+      "name": "Bank Accounts",
+      "parent": "contacts.menu_contacts_config",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "contacts.menu_contacts_banks",
+      "name": "Banks",
+      "parent": "contacts.menu_contacts_bank_accounts",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "contacts.action_bank",
+      "groups": ""
+    },
+    {
+      "xml_id": "contacts.menu_contacts_config",
+      "name": "Configuration",
+      "parent": "contacts.menu_contacts_root",
+      "sequence": 100,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "contacts.menu_contacts_countries",
+      "name": "Countries",
+      "parent": "contacts.menu_contacts_localization",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "contacts.action_country",
+      "groups": ""
+    },
+    {
+      "xml_id": "contacts.menu_contacts_industries",
+      "name": "Industries",
+      "parent": "contacts.menu_contacts_config",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "contacts.action_industry",
+      "groups": ""
+    },
+    {
+      "xml_id": "contacts.menu_contacts_localization",
+      "name": "Localization",
+      "parent": "contacts.menu_contacts_config",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "contacts.menu_contacts_root",
+      "name": "Contacts",
+      "parent": null,
+      "sequence": 20,
+      "is_app": true,
+      "web_icon": "contacts",
+      "action": "base.action_app_home",
+      "groups": ""
+    },
+    {
+      "xml_id": "contacts.menu_contacts_states",
+      "name": "Fed. States",
+      "parent": "contacts.menu_contacts_localization",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "contacts.action_state",
+      "groups": ""
+    },
+    {
+      "xml_id": "contacts.menu_contacts_tags",
+      "name": "Contact Tags",
+      "parent": "contacts.menu_contacts_config",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "contacts.action_partner_tag",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_adjustments",
+      "name": "Adjustments",
+      "parent": "inventory.menu_inventory_operations",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_attributes",
+      "name": "Attributes",
+      "parent": "inventory.menu_inventory_config_products",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_product_category",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_barcodes",
+      "name": "Barcode Nomenclatures",
+      "parent": "inventory.menu_inventory_config_products",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_barcode_nomenclature",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_categories",
+      "name": "Categories",
+      "parent": "inventory.menu_inventory_config_products",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_product_category",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_config",
+      "name": "Configuration",
+      "parent": "inventory.menu_inventory_root",
+      "sequence": 100,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_config_products",
+      "name": "Products",
+      "parent": "inventory.menu_inventory_config",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_config_routes",
+      "name": "Routes",
+      "parent": "inventory.menu_inventory_warehouse_management",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_route",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_config_rules",
+      "name": "Rules",
+      "parent": "inventory.menu_inventory_warehouse_management",
+      "sequence": 50,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_rule",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_counts",
+      "name": "Physical Inventory",
+      "parent": "inventory.menu_inventory_adjustments",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_count",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_deliveries",
+      "name": "Deliveries",
+      "parent": "inventory.menu_inventory_transfers",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_delivery",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_delivery_config",
+      "name": "Delivery",
+      "parent": "inventory.menu_inventory_config",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_delivery_methods",
+      "name": "Delivery Methods",
+      "parent": "inventory.menu_inventory_delivery_config",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_delivery_method",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_internal",
+      "name": "Internal",
+      "parent": "inventory.menu_inventory_transfers",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_internal",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_location_report",
+      "name": "Locations",
+      "parent": "inventory.menu_inventory_reporting",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_location",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_locations",
+      "name": "Locations",
+      "parent": "inventory.menu_inventory_warehouse_management",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_location",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_lots",
+      "name": "Lots / Serial Numbers",
+      "parent": "inventory.menu_inventory_products",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_lot",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_moves_analysis",
+      "name": "Moves Analysis",
+      "parent": "inventory.menu_inventory_reporting",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_moves_analysis",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_moves_history",
+      "name": "Moves History",
+      "parent": "inventory.menu_inventory_reporting",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_moves_history",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_operation_types",
+      "name": "Operations Types",
+      "parent": "inventory.menu_inventory_warehouse_management",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_operation_type",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_operations",
+      "name": "Operations",
+      "parent": "inventory.menu_inventory_root",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_overview",
+      "name": "Overview",
+      "parent": "inventory.menu_inventory_root",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_app_home",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_package_types",
+      "name": "Package Types",
+      "parent": "inventory.menu_inventory_delivery_config",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_package_type",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_packages",
+      "name": "Packages",
+      "parent": "inventory.menu_inventory_products",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_package",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_performance",
+      "name": "Performance",
+      "parent": "inventory.menu_inventory_reporting",
+      "sequence": 70,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_performance",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_procurement",
+      "name": "Procurement",
+      "parent": "inventory.menu_inventory_operations",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_product_list",
+      "name": "Products",
+      "parent": "inventory.menu_inventory_products",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_product_template",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_products",
+      "name": "Products",
+      "parent": "inventory.menu_inventory_root",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_putaway",
+      "name": "Putaway Rules",
+      "parent": "inventory.menu_inventory_warehouse_management",
+      "sequence": 70,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_putaway",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_receipts",
+      "name": "Receipts",
+      "parent": "inventory.menu_inventory_transfers",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_receipt",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_references",
+      "name": "References",
+      "parent": "inventory.menu_inventory_procurement",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_route",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_replenishment",
+      "name": "Replenishment",
+      "parent": "inventory.menu_inventory_procurement",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_orderpoint",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_reporting",
+      "name": "Reporting",
+      "parent": "inventory.menu_inventory_root",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_root",
+      "name": "Inventory",
+      "parent": null,
+      "sequence": 140,
+      "is_app": true,
+      "web_icon": "inventory",
+      "action": "base.action_app_home",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_scheduler",
+      "name": "Run Scheduler",
+      "parent": "inventory.menu_inventory_procurement",
+      "sequence": 15,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_orderpoint",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_scrap",
+      "name": "Scrap",
+      "parent": "inventory.menu_inventory_adjustments",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_scrap",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_settings",
+      "name": "Settings",
+      "parent": "inventory.menu_inventory_config",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_inventory_settings",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_stock_report",
+      "name": "Stock",
+      "parent": "inventory.menu_inventory_reporting",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_stock_report",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_stock_valuation",
+      "name": "Stock Valuation",
+      "parent": "inventory.menu_inventory_reporting",
+      "sequence": 60,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_stock_valuation",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_storage_categories",
+      "name": "Storage Categories",
+      "parent": "inventory.menu_inventory_warehouse_management",
+      "sequence": 60,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_storage_category",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_traceability",
+      "name": "Traceability",
+      "parent": "inventory.menu_inventory_reporting",
+      "sequence": 50,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_traceability",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_transfers",
+      "name": "Transfers",
+      "parent": "inventory.menu_inventory_operations",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_units",
+      "name": "Units & Packagings",
+      "parent": "inventory.menu_inventory_config_products",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_uom",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_variants",
+      "name": "Product Variants",
+      "parent": "inventory.menu_inventory_products",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_product_template",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_warehouse_management",
+      "name": "Warehouse Management",
+      "parent": "inventory.menu_inventory_config",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_warehouses",
+      "name": "Warehouses",
+      "parent": "inventory.menu_inventory_warehouse_management",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_warehouse",
+      "groups": ""
+    },
+    {
+      "xml_id": "inventory.menu_inventory_zip_prefix",
+      "name": "Zip Prefix",
+      "parent": "inventory.menu_inventory_delivery_config",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "inventory.action_zip_prefix",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_agreements",
+      "name": "Purchase Agreements",
+      "parent": "purchase.menu_purchase_orders",
+      "sequence": 25,
+      "is_app": false,
+      "web_icon": "",
+      "action": "purchase.action_agreement",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_analysis",
+      "name": "Purchase",
+      "parent": "purchase.menu_purchase_reporting",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "purchase.action_analysis",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_attributes",
+      "name": "Attributes",
+      "parent": "purchase.menu_purchase_config_products",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_product_attribute",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_categories",
+      "name": "Categories",
+      "parent": "purchase.menu_purchase_config_products",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_product_category",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_config",
+      "name": "Configuration",
+      "parent": "purchase.menu_purchase_root",
+      "sequence": 100,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_config_products",
+      "name": "Products",
+      "parent": "purchase.menu_purchase_config",
+      "sequence": 40,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_landed_costs",
+      "name": "Landed Costs",
+      "parent": "purchase.menu_purchase_config",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "purchase.action_landed_cost",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_order_list",
+      "name": "Purchase Orders",
+      "parent": "purchase.menu_purchase_orders",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "purchase.action_purchase_order",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_orders",
+      "name": "Orders",
+      "parent": "purchase.menu_purchase_root",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_product_list",
+      "name": "Products",
+      "parent": "purchase.menu_purchase_products",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_product_template",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_products",
+      "name": "Products",
+      "parent": "purchase.menu_purchase_root",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_reporting",
+      "name": "Reporting",
+      "parent": "purchase.menu_purchase_root",
+      "sequence": 90,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_rfqs",
+      "name": "Requests for Quotation",
+      "parent": "purchase.menu_purchase_orders",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "purchase.action_rfq",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_root",
+      "name": "Purchase",
+      "parent": null,
+      "sequence": 135,
+      "is_app": true,
+      "web_icon": "purchase",
+      "action": "base.action_app_home",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_settings",
+      "name": "Settings",
+      "parent": "purchase.menu_purchase_config",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "purchase.action_purchase_settings",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_units",
+      "name": "Units & Packagings",
+      "parent": "purchase.menu_purchase_config_products",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_uom",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_variants",
+      "name": "Product Variants",
+      "parent": "purchase.menu_purchase_products",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_product_template",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_vendor_prices",
+      "name": "Vendor Pricelists",
+      "parent": "purchase.menu_purchase_config",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "purchase.action_vendor_price",
+      "groups": ""
+    },
+    {
+      "xml_id": "purchase.menu_purchase_vendors",
+      "name": "Vendors",
+      "parent": "purchase.menu_purchase_orders",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "contacts.action_partner",
+      "groups": ""
+    },
+    {
+      "xml_id": "sales.menu_sales_config",
+      "name": "Configuration",
+      "parent": "sales.menu_sales_root",
+      "sequence": 100,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "sales.menu_sales_config_orders",
+      "name": "Sales Orders",
+      "parent": "sales.menu_sales_config",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "sales.menu_sales_customers",
+      "name": "Customers",
+      "parent": "sales.menu_sales_orders",
+      "sequence": 30,
+      "is_app": false,
+      "web_icon": "",
+      "action": "contacts.action_partner",
+      "groups": ""
+    },
+    {
+      "xml_id": "sales.menu_sales_headers_footers",
+      "name": "Headers/Footers",
+      "parent": "sales.menu_sales_config_orders",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "sales.action_header_footer",
+      "groups": ""
+    },
+    {
+      "xml_id": "sales.menu_sales_order_list",
+      "name": "Orders",
+      "parent": "sales.menu_sales_orders",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "sales.action_sale_order",
+      "groups": ""
+    },
+    {
+      "xml_id": "sales.menu_sales_orders",
+      "name": "Orders",
+      "parent": "sales.menu_sales_root",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "sales.menu_sales_orders_to_invoice",
+      "name": "Orders to Invoice",
+      "parent": "sales.menu_sales_to_invoice",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "sales.action_to_invoice",
+      "groups": ""
+    },
+    {
+      "xml_id": "sales.menu_sales_product_list",
+      "name": "Products",
+      "parent": "sales.menu_sales_products",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "base.action_product_template",
+      "groups": ""
+    },
+    {
+      "xml_id": "sales.menu_sales_products",
+      "name": "Products",
+      "parent": "sales.menu_sales_root",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "sales.menu_sales_quotations",
+      "name": "Quotations",
+      "parent": "sales.menu_sales_orders",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "sales.action_quotation",
+      "groups": ""
+    },
+    {
+      "xml_id": "sales.menu_sales_root",
+      "name": "Sales",
+      "parent": null,
+      "sequence": 30,
+      "is_app": true,
+      "web_icon": "sales",
+      "action": "base.action_app_home",
+      "groups": ""
+    },
+    {
+      "xml_id": "sales.menu_sales_settings",
+      "name": "Settings",
+      "parent": "sales.menu_sales_config",
+      "sequence": 10,
+      "is_app": false,
+      "web_icon": "",
+      "action": "sales.action_sales_settings",
+      "groups": ""
+    },
+    {
+      "xml_id": "sales.menu_sales_tags",
+      "name": "Tags",
+      "parent": "sales.menu_sales_config_orders",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "sales.action_sales_tag",
+      "groups": ""
+    },
+    {
+      "xml_id": "sales.menu_sales_to_invoice",
+      "name": "To Invoice",
+      "parent": "sales.menu_sales_root",
+      "sequence": 15,
+      "is_app": false,
+      "web_icon": "",
+      "action": "",
+      "groups": ""
+    },
+    {
+      "xml_id": "sales.menu_sales_upsell",
+      "name": "Orders to Upsell",
+      "parent": "sales.menu_sales_to_invoice",
+      "sequence": 20,
+      "is_app": false,
+      "web_icon": "",
+      "action": "sales.action_upsell",
+      "groups": ""
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_sales_tag_list" model="core.ir_ui_view">
+    <field name="name">sales.tag.list</field>
+    <field name="model">sales.tag</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Sales Tags"><field name="name" string="Tag"/></list>
+    </field>
+  </record>
+  <record id="view_sales_tag_form" model="core.ir_ui_view">
+    <field name="name">sales.tag.form</field>
+    <field name="model">sales.tag</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Sales Tag"><sheet>
+        <group string="Tag"><field name="name"/><field name="color"/></group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_sales_tag" model="core.ir_act_window">
+    <field name="name">Tags</field>
+    <field name="res_model">sales.tag</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">sales/tags</field>
+  </record>
+
+  <record id="view_header_footer_list" model="core.ir_ui_view">
+    <field name="name">sales.header_footer.list</field>
+    <field name="model">sales.header_footer</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Headers and Footers">
+        <field name="name" string="Name"/>
+        <field name="active" string="Active"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_header_footer_form" model="core.ir_ui_view">
+    <field name="name">sales.header_footer.form</field>
+    <field name="model">sales.header_footer</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Header / Footer"><sheet>
+        <group string="Template">
+          <field name="name"/><field name="active"/>
+        </group>
+        <group string="Text">
+          <field name="header"/><field name="footer"/>
+        </group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_header_footer" model="core.ir_act_window">
+    <field name="name">Headers/Footers</field>
+    <field name="res_model">sales.header_footer</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">sales/headers-footers</field>
+  </record>
+
+</odoo>

@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:16
+        env:
+          POSTGRES_DB: kberp
+          POSTGRES_USER: kberp
+          POSTGRES_PASSWORD: kberp
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U kberp -d kberp"
+          --health-interval 3s
+          --health-timeout 3s
+          --health-retries 20
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 3s
+          --health-timeout 3s
+          --health-retries 20
+    env:
+      KB_DB_HOST: localhost
+      KB_DB_PORT: "5433"
+      KB_DB_USER: kberp
+      KB_DB_PASSWORD: kberp
+      KB_DB_NAME: kberp
+      KB_REDIS_URL: redis://localhost:6379/0
+      KB_DEBUG: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e '.[dev]'
+      - name: Client install
+        run: cd client && npm ci
+      - name: Client types and build
+        run: cd client && npm run typecheck && npm run build
+      - name: Client bundle is current
+        run: git diff --exit-code src/kberp/web/static/js/kwl.js
+      - name: Install metadata and demo data
+        run: python -m kberp.cli init --with-demo --fresh
+      - name: Lint
+        run: python -m ruff check src tests
+      - name: Types
+        run: python -m mypy
+      - name: Menu and view parity
+        run: python -m kberp.cli check all
+      - name: Tests
+        run: python -m pytest

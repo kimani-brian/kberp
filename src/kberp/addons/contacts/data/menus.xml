@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <menuitem id="menu_contacts_root" name="Contacts" sequence="20" web_icon="contacts"
+            action="base.action_app_home"/>
+
+  <menuitem id="menu_contacts" name="Contacts" parent="menu_contacts_root" sequence="2"
+            action="action_partner"/>
+
+  <menuitem id="menu_contacts_config" name="Configuration" parent="menu_contacts_root"
+            sequence="100"/>
+
+  <menuitem id="menu_contacts_tags" name="Contact Tags" parent="menu_contacts_config"
+            sequence="10" action="action_partner_tag"/>
+
+  <menuitem id="menu_contacts_industries" name="Industries" parent="menu_contacts_config"
+            sequence="20" action="action_industry"/>
+
+  <menuitem id="menu_contacts_localization" name="Localization"
+            parent="menu_contacts_config" sequence="30"/>
+
+  <menuitem id="menu_contacts_countries" name="Countries"
+            parent="menu_contacts_localization" sequence="10" action="action_country"/>
+
+  <menuitem id="menu_contacts_states" name="Fed. States"
+            parent="menu_contacts_localization" sequence="20" action="action_state"/>
+
+  <menuitem id="menu_contacts_bank_accounts" name="Bank Accounts"
+            parent="menu_contacts_config" sequence="40"/>
+
+  <menuitem id="menu_contacts_banks" name="Banks"
+            parent="menu_contacts_bank_accounts" sequence="10" action="action_bank"/>
+
+  <menuitem id="menu_contacts_bank_account_list" name="Bank Accounts"
+            parent="menu_contacts_bank_accounts" sequence="20" action="action_bank_account"/>
+
+</odoo>

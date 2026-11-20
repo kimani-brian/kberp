@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- Client action used by every application root: the app home screen. -->
+  <record id="action_app_home" model="core.ir_act_client">
+    <field name="name">Application Home</field>
+    <field name="tag">app_home</field>
+    <field name="params">{}</field>
+  </record>
+
+  <!-- Settings lives outside the five-icon launcher, in the user menu. -->
+  <menuitem id="menu_settings_root" name="Settings" sequence="200" app="0"
+            groups="base.group_system" web_icon="settings"/>
+
+  <menuitem id="menu_settings_technical" name="Technical" parent="menu_settings_root"
+            sequence="90" groups="base.group_system"/>
+
+  <menuitem id="menu_settings_products" name="Products" parent="menu_settings_technical"
+            sequence="10" action="action_product_template" groups="base.group_system"/>
+
+  <menuitem id="menu_settings_uom" name="Units of Measure" parent="menu_settings_technical"
+            sequence="20" action="action_uom" groups="base.group_system"/>
+
+  <menuitem id="menu_settings_product_categories" name="Product Categories"
+            parent="menu_settings_technical" sequence="30" action="action_product_category"
+            groups="base.group_system"/>
+
+  <menuitem id="menu_settings_events" name="Outbox Events" parent="menu_settings_technical"
+            sequence="90" action="action_outbox_event" groups="base.group_system"/>
+
+</odoo>

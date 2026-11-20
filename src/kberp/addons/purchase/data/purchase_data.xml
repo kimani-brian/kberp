@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="seq_purchase_order" model="core.ir_sequence">
+    <field name="name">Purchase Order</field>
+    <field name="prefix"></field>
+    <field name="padding">5</field>
+  </record>
+
+  <record id="seq_agreement" model="core.ir_sequence">
+    <field name="name">Purchase Agreement</field>
+    <field name="prefix"></field>
+    <field name="padding">5</field>
+  </record>
+
+  <record id="seq_landed_cost" model="core.ir_sequence">
+    <field name="name">Landed Cost</field>
+    <field name="prefix"></field>
+    <field name="padding">5</field>
+  </record>
+
+  <record id="settings_purchase" model="purchase.settings">
+    <field name="name">Purchase Settings</field>
+    <field name="bill_control">ordered</field>
+    <field name="lock_confirmed">False</field>
+    <field name="show_warnings">True</field>
+  </record>
+
+</odoo>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="kberp-csrf" content="{{ csrf_token }}">
+  <meta name="kberp-user" content="{{ user.id if user else '' }}">
+  <title>{{ title }}</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/css/kberp.css">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+{% from "_icons.html" import app_icon, icon %}
+
+{% if user %}
+<header class="topbar">
+  <a class="brand" href="/apps">KB&nbsp;ERP</a>
+  <button class="icon-btn" id="app-switcher-btn" type="button"
+          aria-label="Applications (Alt+W)" aria-expanded="false" aria-controls="app-switcher">
+    {{ icon("grid") }}
+  </button>
+  {% if current_app %}
+    <span class="app-name">{{ current_app.name }}</span>
+  {% endif %}
+
+  <nav class="menubar" aria-label="Application menu">
+    {% for node in menus %}
+      {% if node.children %}
+        <div class="menu">
+          <button class="menu-btn" type="button" aria-expanded="false">
+            {{ node.name }}
+          </button>
+          <div class="menu-panel" role="menu">
+            {% for child in node.children %}
+              {% if child.url %}
+                <a role="menuitem" href="{{ child.url }}">{{ child.name }}</a>
+              {% else %}
+                <span class="menu-group">{{ child.name }}</span>
+                {% for grandchild in child.children %}
+                  {% if grandchild.url %}
+                    <a role="menuitem" class="menu-child" href="{{ grandchild.url }}">{{ grandchild.name }}</a>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% elif node.url %}
+        <a class="menu-btn" href="{{ node.url }}">{{ node.name }}</a>
+      {% endif %}
+    {% endfor %}
+  </nav>
+
+  <div class="topbar-right">
+    {% if settings_url %}
+      <a class="topbar-link" href="{{ settings_url }}">Settings</a>
+    {% endif %}
+    <div class="menu user-menu">
+      <button class="menu-btn user-btn" type="button" aria-expanded="false">
+        <span class="avatar">{{ user.name[:1] | upper }}</span>
+        <span class="user-name">{{ user.name }}</span>
+      </button>
+      <div class="menu-panel menu-right" role="menu">
+        <span class="menu-group">{{ user.login }}</span>
+        <form method="post" action="/web/logout">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button class="menu-item" type="submit" role="menuitem">Sign out</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div id="app-switcher" class="app-switcher" hidden>
+  <div class="app-switcher-inner">
+    <div class="app-switcher-head">
+      <h2>Applications</h2>
+      <button class="icon-btn" type="button" data-close-switcher aria-label="Close">{{ icon("close") }}</button>
+    </div>
+    <div class="launcher-grid launcher-grid-compact">
+      {% for app in apps %}
+        <a class="app-card" href="/apps/{{ app.key }}" style="--app-accent: {{ app_color(app.key) }}">
+          <span class="app-icon">{{ app_icon(app.key) }}</span>
+          <span class="app-card-body">
+            <span class="app-card-name">{{ app.name }}</span>
+            <span class="app-card-summary">{{ app.summary }}</span>
+          </span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% for message in flash %}
+  <div class="flash flash-{{ message.level }}" role="status">
+    {{ message.message }}
+    <button class="flash-close" type="button" aria-label="Dismiss">&times;</button>
+  </div>
+{% endfor %}
+
+<main class="{% block main_class %}page{% endblock %}">
+  {% block content %}{% endblock %}
+</main>
+
+<script src="/static/js/kberp.js"></script>
+<script src="/static/js/kwl.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <menuitem id="menu_sales_root" name="Sales" sequence="30" web_icon="sales"
+            action="base.action_app_home"/>
+
+  <menuitem id="menu_sales_orders" name="Orders" parent="menu_sales_root" sequence="10"/>
+
+  <menuitem id="menu_sales_quotations" name="Quotations" parent="menu_sales_orders"
+            sequence="10" action="action_quotation"/>
+
+  <menuitem id="menu_sales_order_list" name="Orders" parent="menu_sales_orders"
+            sequence="20" action="action_sale_order"/>
+
+  <menuitem id="menu_sales_customers" name="Customers" parent="menu_sales_orders"
+            sequence="30" action="contacts.action_partner"/>
+
+  <menuitem id="menu_sales_to_invoice" name="To Invoice" parent="menu_sales_root" sequence="15"/>
+
+  <menuitem id="menu_sales_orders_to_invoice" name="Orders to Invoice"
+            parent="menu_sales_to_invoice" sequence="10" action="action_to_invoice"/>
+
+  <menuitem id="menu_sales_upsell" name="Orders to Upsell"
+            parent="menu_sales_to_invoice" sequence="20" action="action_upsell"/>
+
+  <menuitem id="menu_sales_products" name="Products" parent="menu_sales_root" sequence="20"/>
+
+  <menuitem id="menu_sales_product_list" name="Products" parent="menu_sales_products"
+            sequence="10" action="base.action_product_template"/>
+
+  <menuitem id="menu_sales_config" name="Configuration" parent="menu_sales_root"
+            sequence="100"/>
+
+  <menuitem id="menu_sales_settings" name="Settings" parent="menu_sales_config"
+            sequence="10" action="action_sales_settings"/>
+
+  <menuitem id="menu_sales_config_orders" name="Sales Orders" parent="menu_sales_config"
+            sequence="20"/>
+
+  <menuitem id="menu_sales_headers_footers" name="Headers/Footers"
+            parent="menu_sales_config_orders" sequence="10" action="action_header_footer"/>
+
+  <menuitem id="menu_sales_tags" name="Tags"
+            parent="menu_sales_config_orders" sequence="20" action="action_sales_tag"/>
+
+</odoo>

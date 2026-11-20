@@ -1,0 +1,3 @@
+name,external_id,default_code,type,list_price,standard_price,uom,category,barcode,description
+Steel Bolt M8,PROD-001,BOLT-M8,goods,12.50,7.25,Units,Hardware,5901234123457,Galvanised steel bolt
+Installation,PROD-002,SERV-INSTALL,service,1500,0,Hours,Services,,On-site installation

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_sale_order_list" model="core.ir_ui_view">
+    <field name="name">sales.order.list</field>
+    <field name="model">sales.order</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Quotations" create="1" delete="1">
+        <field name="name" string="Number"/>
+        <field name="partner_id" string="Customer"/>
+        <field name="date_order" string="Order Date"/>
+        <field name="validity_date" string="Expiration"/>
+        <field name="salesperson_id" string="Salesperson"/>
+        <field name="amount_total" string="Total"/>
+        <field name="state" string="Status"/>
+        <field name="invoice_status" string="Invoicing"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="view_sale_order_form" model="core.ir_ui_view">
+    <field name="name">sales.order.form</field>
+    <field name="model">sales.order</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Quotation">
+        <report name="quotation" string="Preview"/>
+        <header>
+          <button name="action_send" string="Send" type="object"/>
+          <button name="action_confirm" string="Confirm" type="object"/>
+          <button name="action_invoice" string="Create Invoice" type="object"/>
+          <button name="action_lock" string="Lock" type="object"/>
+          <button name="action_unlock" string="Unlock" type="object"/>
+          <button name="action_cancel" string="Cancel" type="object"/>
+          <button name="action_reset" string="Reset to Draft" type="object"/>
+        </header>
+        <sheet>
+          <group string="Quotation">
+            <field name="state" widget="status"/>
+            <field name="invoice_status" string="Invoicing"/>
+            <field name="locked"/>
+            <field name="partner_id"/>
+            <field name="pricelist_id"/>
+            <field name="currency_id"/>
+            <field name="validity_date"/>
+            <field name="salesperson_id"/>
+            <field name="reference"/>
+            <field name="invoice_policy"/>
+            <field name="tag_ids"/>
+            <field name="company_id"/>
+          </group>
+          <group string="Lines">
+            <field name="order_line" widget="lines">
+              <list string="Order Lines" editable="1">
+                <field name="product_id" string="Product"/>
+                <field name="name" string="Description"/>
+                <field name="qty" string="Quantity"/>
+                <field name="uom_id" string="Unit"/>
+                <field name="price_unit" string="Unit Price"/>
+                <field name="discount" string="Discount (%)"/>
+                <field name="tax_ids" string="Taxes"/>
+                <field name="qty_delivered" string="Delivered"/>
+                <field name="qty_invoiced" string="Invoiced"/>
+                <field name="subtotal" string="Subtotal" readonly="1"/>
+              </list>
+            </field>
+          </group>
+          <group string="Totals">
+            <field name="amount_untaxed" string="Untaxed" readonly="1"/>
+            <field name="amount_tax" string="Taxes" readonly="1"/>
+            <field name="amount_total" string="Total" readonly="1"/>
+          </group>
+          <notebook>
+            <page string="Addresses">
+              <group string="Shipping">
+                <field name="invoice_address_id"/>
+                <field name="delivery_address_id"/>
+              </group>
+            </page>
+            <page string="Notes">
+              <group string="Terms">
+                <field name="note"/>
+                <field name="date_order"/>
+                <field name="active"/>
+              </group>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_sale_order_kanban" model="core.ir_ui_view">
+    <field name="name">sales.order.kanban</field>
+    <field name="model">sales.order</field>
+    <field name="type">kanban</field>
+    <field name="arch" type="xml">
+      <kanban string="Quotations">
+        <field name="name"/>
+        <field name="partner_id"/>
+        <field name="date_order"/>
+        <field name="salesperson_id"/>
+        <field name="amount_total"/>
+        <field name="state"/>
+      </kanban>
+    </field>
+  </record>
+
+  <record id="view_sale_order_search" model="core.ir_ui_view">
+    <field name="name">sales.order.search</field>
+    <field name="model">sales.order</field>
+    <field name="type">search</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name" string="Number"/>
+        <field name="partner_id" string="Customer"/>
+        <field name="reference" string="Reference"/>
+        <filter name="draft" string="Quotations" domain="[('state', '=', 'draft')]"/>
+        <filter name="sent" string="Sent" domain="[('state', '=', 'sent')]"/>
+        <filter name="sale" string="Sales Orders" domain="[('state', '=', 'sale')]"/>
+        <filter name="cancelled" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
+        <groupby name="partner_id" string="Customer"/>
+        <groupby name="salesperson_id" string="Salesperson"/>
+        <groupby name="state" string="Status"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="action_quotation" model="core.ir_act_window">
+    <field name="name">Quotations</field>
+    <field name="res_model">sales.order</field>
+    <field name="view_mode">list,kanban,form,search</field>
+    <field name="domain">[('state', 'in', ['draft', 'sent'])]</field>
+    <field name="path">sales/quotations</field>
+  </record>
+
+  <record id="action_sale_order" model="core.ir_act_window">
+    <field name="name">Orders</field>
+    <field name="res_model">sales.order</field>
+    <field name="view_mode">list,kanban,form,search</field>
+    <field name="domain">[('state', '=', 'sale')]</field>
+    <field name="path">sales/orders</field>
+  </record>
+
+
+
+<record id="action_to_invoice" model="core.ir_act_window">
+    <field name="name">Orders to Invoice</field>
+    <field name="res_model">sales.order</field>
+    <field name="view_mode">list,form,search</field>
+    <field name="domain">[('invoice_status', '=', 'to invoice')]</field>
+    <field name="path">sales/to-invoice</field>
+  </record>
+
+  <record id="action_upsell" model="core.ir_act_window">
+    <field name="name">Orders to Upsell</field>
+    <field name="res_model">sales.order</field>
+    <field name="view_mode">list,form,search</field>
+    <field name="domain">[('invoice_status', '=', 'upselling')]</field>
+    <field name="path">sales/upsell</field>
+  </record>
+
+</odoo>

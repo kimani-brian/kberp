@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_purchase_order_list" model="core.ir_ui_view">
+    <field name="name">purchase.order.list</field>
+    <field name="model">purchase.order</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Requests for Quotation">
+        <field name="name" string="Number"/>
+        <field name="partner_id" string="Vendor"/>
+        <field name="buyer_id" string="Buyer"/>
+        <field name="date_order" string="Order Date"/>
+        <field name="expected_date" string="Expected"/>
+        <field name="amount_total" string="Total"/>
+        <field name="state" string="Status"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="view_purchase_order_form" model="core.ir_ui_view">
+    <field name="name">purchase.order.form</field>
+    <field name="model">purchase.order</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Request for Quotation">
+        <report name="quotation" string="Print"/>
+        <header>
+          <button name="action_send" string="Send" type="object"/>
+          <button name="action_confirm" string="Confirm" type="object"/>
+          <button name="action_approve" string="Approve" type="object"/>
+          <button name="action_reject" string="Reject" type="object"/>
+          <button name="action_create_bill" string="Create Bill" type="object"/>
+          <button name="action_lock" string="Lock" type="object"/>
+          <button name="action_unlock" string="Unlock" type="object"/>
+          <button name="action_cancel" string="Cancel" type="object"/>
+        </header>
+        <sheet>
+          <group string="Quotation">
+            <field name="state" widget="status"/>
+            <field name="partner_id"/>
+            <field name="currency_id"/>
+            <field name="payment_term"/>
+            <field name="buyer_id"/>
+            <field name="expected_date"/>
+            <field name="incoterm"/>
+            <field name="reference"/>
+            <field name="agreement_id"/>
+            <field name="approval_state"/>
+            <field name="approved_by"/>
+            <field name="approved_date"/>
+            <field name="bill_control"/>
+            <field name="warning"/>
+            <field name="company_id"/>
+          </group>
+          <group string="Lines">
+            <field name="order_line" widget="lines">
+              <list string="Order Lines" editable="1">
+                <field name="product_id" string="Product"/>
+                <field name="name" string="Description"/>
+                <field name="qty" string="Quantity"/>
+                <field name="uom_id" string="Unit"/>
+                <field name="price_unit" string="Unit Price"/>
+                <field name="tax_ids" string="Taxes"/>
+                <field name="lead_time" string="Lead Time"/>
+                <field name="qty_received" string="Received"/>
+                <field name="qty_billed" string="Billed"/>
+                <field name="subtotal" string="Subtotal"/>
+              </list>
+            </field>
+          </group>
+          <group string="Totals">
+            <field name="amount_untaxed" string="Untaxed" readonly="1"/>
+            <field name="amount_tax" string="Taxes" readonly="1"/>
+            <field name="amount_total" string="Total" readonly="1"/>
+          </group>
+          <notebook>
+            <page string="Status">
+              <group string="Follow-up">
+                <field name="receipt_status" string="Receipt"/>
+                <field name="invoice_status" string="Billing"/>
+                <field name="qty_received" string="Received"/>
+                <field name="qty_billed" string="Billed"/>
+              </group>
+            </page>
+            <page string="Notes">
+              <group string="Terms">
+                <field name="note"/>
+                <field name="active"/>
+              </group>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_purchase_order_kanban" model="core.ir_ui_view">
+    <field name="name">purchase.order.kanban</field>
+    <field name="model">purchase.order</field>
+    <field name="type">kanban</field>
+    <field name="arch" type="xml">
+      <kanban string="Requests for Quotation">
+        <field name="name"/>
+        <field name="partner_id"/>
+        <field name="date_order"/>
+        <field name="buyer_id"/>
+        <field name="amount_total"/>
+        <field name="state"/>
+      </kanban>
+    </field>
+  </record>
+
+  <record id="view_purchase_order_search" model="core.ir_ui_view">
+    <field name="name">purchase.order.search</field>
+    <field name="model">purchase.order</field>
+    <field name="type">search</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name" string="Number"/>
+        <field name="partner_id" string="Vendor"/>
+        <field name="reference" string="Reference"/>
+        <filter name="draft" string="Requests" domain="[('state', '=', 'draft')]"/>
+        <filter name="sent" string="Sent" domain="[('state', '=', 'sent')]"/>
+        <filter name="purchase" string="Purchase Orders" domain="[('state', '=', 'purchase')]"/>
+        <filter name="cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
+        <groupby name="partner_id" string="Vendor"/>
+        <groupby name="buyer_id" string="Buyer"/>
+        <groupby name="state" string="Status"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="action_rfq" model="core.ir_act_window">
+    <field name="name">Requests for Quotation</field>
+    <field name="res_model">purchase.order</field>
+    <field name="view_mode">list,kanban,form,search</field>
+    <field name="domain">[('state', 'in', ['draft', 'sent'])]</field>
+    <field name="path">purchase/rfqs</field>
+  </record>
+  <record id="action_purchase_order" model="core.ir_act_window">
+    <field name="name">Purchase Orders</field>
+    <field name="res_model">purchase.order</field>
+    <field name="view_mode">list,kanban,form,search</field>
+    <field name="domain">[('state', '=', 'purchase')]</field>
+    <field name="path">purchase/orders</field>
+  </record>
+
+  <record id="view_purchase_settings_list" model="core.ir_ui_view">
+    <field name="name">purchase.settings.list</field>
+    <field name="model">purchase.settings</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Purchase Settings"><field name="name" string="Name"/></list>
+    </field>
+  </record>
+  <record id="view_purchase_settings_form" model="core.ir_ui_view">
+    <field name="name">purchase.settings.form</field>
+    <field name="model">purchase.settings</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Purchase Settings"><sheet>
+        <group string="Orders">
+          <field name="name"/><field name="company_id"/>
+          <field name="bill_control"/><field name="lock_confirmed"/><field name="show_warnings"/>
+          <field name="approval_threshold"/><field name="receipt_reminder_days"/>
+          <field name="landed_cost_account_id"/>
+        </group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_purchase_settings" model="core.ir_act_window">
+    <field name="name">Settings</field>
+    <field name="res_model">purchase.settings</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">purchase/settings</field>
+  </record>
+
+  <record id="view_vendor_price_list" model="core.ir_ui_view">
+    <field name="name">purchase.vendor_price.list</field>
+    <field name="model">purchase.vendor_price</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Vendor Pricelists">
+        <field name="name" string="Name"/>
+        <field name="partner_id" string="Vendor"/>
+        <field name="product_id" string="Product"/>
+        <field name="min_qty" string="Min Qty"/>
+        <field name="price" string="Price"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_vendor_price_form" model="core.ir_ui_view">
+    <field name="name">purchase.vendor_price.form</field>
+    <field name="model">purchase.vendor_price</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Vendor Price"><sheet>
+        <group string="Vendor Price">
+          <field name="name"/><field name="partner_id"/><field name="product_id"/>
+          <field name="min_qty"/><field name="price"/><field name="currency_id"/>
+          <field name="lead_time"/><field name="date_start"/><field name="date_end"/>
+          <field name="active"/>
+        </group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_vendor_price" model="core.ir_act_window">
+    <field name="name">Vendor Pricelists</field>
+    <field name="res_model">purchase.vendor_price</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">purchase/vendor-prices</field>
+  </record>
+
+</odoo>

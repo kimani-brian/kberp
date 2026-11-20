@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <menuitem id="menu_accounting_root" name="Accounting" sequence="60" web_icon="accounting"
+            action="base.action_app_home"/>
+
+  <menuitem id="menu_accounting_dashboard" name="Dashboard" parent="menu_accounting_root"
+            sequence="10" action="base.action_app_home"/>
+
+  <menuitem id="menu_accounting_customers" name="Customers" parent="menu_accounting_root"
+            sequence="20"/>
+  <menuitem id="menu_accounting_invoices" name="Invoices" parent="menu_accounting_customers"
+            sequence="10" action="action_invoice"/>
+  <menuitem id="menu_accounting_credit_notes" name="Credit Notes"
+            parent="menu_accounting_customers" sequence="20" action="action_credit_note"/>
+  <menuitem id="menu_accounting_customer_payments" name="Payments"
+            parent="menu_accounting_customers" sequence="30" action="action_payment_inbound"/>
+
+  <menuitem id="menu_accounting_vendors" name="Vendors" parent="menu_accounting_root"
+            sequence="30"/>
+  <menuitem id="menu_accounting_bills" name="Bills" parent="menu_accounting_vendors"
+            sequence="10" action="action_bill"/>
+  <menuitem id="menu_accounting_refunds" name="Refunds" parent="menu_accounting_vendors"
+            sequence="20" action="action_refund"/>
+  <menuitem id="menu_accounting_vendor_payments" name="Payments"
+            parent="menu_accounting_vendors" sequence="30" action="action_payment_outbound"/>
+  <menuitem id="menu_accounting_customs_imports" name="Customs Imports"
+            parent="menu_accounting_vendors" sequence="40" action="action_customs_imports"/>
+
+  <menuitem id="menu_accounting_accounting" name="Accounting" parent="menu_accounting_root"
+            sequence="40"/>
+
+  <!-- Transactions -->
+  <menuitem id="menu_accounting_transactions" name="Transactions"
+            parent="menu_accounting_accounting" sequence="10"/>
+  <menuitem id="menu_accounting_journal_entries" name="Journal Entries"
+            parent="menu_accounting_transactions" sequence="10" action="action_journal_entry"/>
+  <menuitem id="menu_accounting_analytic_items" name="Analytic Items"
+            parent="menu_accounting_transactions" sequence="20" action="action_analytic_item"/>
+
+  <!-- Assets and liabilities -->
+  <menuitem id="menu_accounting_assets_liabilities" name="Assets &amp; Liabilities"
+            parent="menu_accounting_accounting" sequence="20"/>
+  <menuitem id="menu_accounting_assets" name="Assets"
+            parent="menu_accounting_assets_liabilities" sequence="10" action="action_asset"/>
+  <menuitem id="menu_accounting_loans" name="Loans"
+            parent="menu_accounting_assets_liabilities" sequence="20" action="action_loan"/>
+
+  <!-- Closing -->
+  <menuitem id="menu_accounting_closing" name="Closing"
+            parent="menu_accounting_accounting" sequence="30"/>
+  <menuitem id="menu_accounting_reconcile" name="Reconcile"
+            parent="menu_accounting_closing" sequence="10" action="action_bank_statement"/>
+  <menuitem id="menu_accounting_tax_returns" name="Tax Returns"
+            parent="menu_accounting_closing" sequence="20" action="action_tax_return"/>
+  <menuitem id="menu_accounting_lock_dates" name="Lock Dates…"
+            parent="menu_accounting_closing" sequence="30" action="action_lock_date"/>
+  <menuitem id="menu_accounting_secure_entries" name="Secure Entries"
+            parent="menu_accounting_closing" sequence="40" action="action_secured_entries"/>
+
+  <!-- Review -->
+  <menuitem id="menu_accounting_review" name="Review"
+            parent="menu_accounting_accounting" sequence="40"/>
+
+  <menuitem id="menu_accounting_review_control" name="Control"
+            parent="menu_accounting_review" sequence="10"/>
+  <menuitem id="menu_accounting_journal_items" name="Journal Items"
+            parent="menu_accounting_review_control" sequence="10" action="action_journal_items"/>
+  <menuitem id="menu_accounting_journal_audit" name="Journal Audit"
+            parent="menu_accounting_review_control" sequence="20" action="action_journal_audit"/>
+
+  <menuitem id="menu_accounting_review_audit" name="Audit"
+            parent="menu_accounting_review" sequence="20"/>
+  <menuitem id="menu_accounting_working_files" name="Working Files"
+            parent="menu_accounting_review_audit" sequence="10" action="action_working_files"/>
+
+  <menuitem id="menu_accounting_review_inventory" name="Inventory"
+            parent="menu_accounting_review" sequence="30"/>
+  <menuitem id="menu_accounting_inventory_valuation" name="Inventory Valuation"
+            parent="menu_accounting_review_inventory" sequence="10"
+            action="action_inventory_valuation"/>
+  <menuitem id="menu_accounting_depreciation_schedule" name="Depreciation Schedule"
+            parent="menu_accounting_review_inventory" sequence="20"
+            action="action_asset_line"/>
+  <menuitem id="menu_accounting_loans_analysis" name="Loans Analysis"
+            parent="menu_accounting_review_inventory" sequence="30"
+            action="action_loan_line"/>
+
+  <menuitem id="menu_accounting_review_regularization" name="Regularization Entries"
+            parent="menu_accounting_review" sequence="40"/>
+  <menuitem id="menu_accounting_unrealized_currencies" name="Unrealized Currencies"
+            parent="menu_accounting_review_regularization" sequence="10"
+            action="action_report_unrealized"/>
+  <menuitem id="menu_accounting_deferred_revenues" name="Deferred Revenues"
+            parent="menu_accounting_review_regularization" sequence="20"
+            action="action_deferred_revenue"/>
+  <menuitem id="menu_accounting_deferred_expenses" name="Deferred Expenses"
+            parent="menu_accounting_review_regularization" sequence="30"
+            action="action_deferred_expense"/>
+
+  <menuitem id="menu_accounting_review_purchases" name="Purchases"
+            parent="menu_accounting_review" sequence="50"/>
+  <menuitem id="menu_accounting_billed_not_received" name="Billed Not Received"
+            parent="menu_accounting_review_purchases" sequence="10"
+            action="action_report_billed_not_received"/>
+  <menuitem id="menu_accounting_bill_to_receive" name="Bill To Receive"
+            parent="menu_accounting_review_purchases" sequence="20"
+            action="action_report_bill_to_receive"/>
+
+  <menuitem id="menu_accounting_review_sales" name="Sales"
+            parent="menu_accounting_review" sequence="60"/>
+  <menuitem id="menu_accounting_invoices_to_issue" name="Invoices To Be Issued"
+            parent="menu_accounting_review_sales" sequence="10"
+            action="action_report_invoices_to_issue"/>
+  <menuitem id="menu_accounting_invoiced_not_delivered" name="Invoiced Not Delivered"
+            parent="menu_accounting_review_sales" sequence="20"
+            action="action_report_invoiced_not_delivered"/>
+
+  <menuitem id="menu_accounting_review_logs" name="Logs"
+            parent="menu_accounting_review" sequence="70"/>
+  <menuitem id="menu_accounting_audit_trail" name="Audit Trail"
+            parent="menu_accounting_review_logs" sequence="10" action="action_audit_trail"/>
+
+  <!-- Reporting -->
+  <menuitem id="menu_accounting_reporting" name="Reporting"
+            parent="menu_accounting_accounting" sequence="50"/>
+
+  <menuitem id="menu_accounting_reporting_statements" name="Statement Reports"
+            parent="menu_accounting_reporting" sequence="10"/>
+  <menuitem id="menu_accounting_cash_flow" name="Cash Flow Statement"
+            parent="menu_accounting_reporting_statements" sequence="10"
+            action="action_report_cash_flow"/>
+  <menuitem id="menu_accounting_balance_sheet" name="Balance Sheet"
+            parent="menu_accounting_reporting_statements" sequence="20"
+            action="action_report_balance_sheet"/>
+  <menuitem id="menu_accounting_profit_loss" name="Profit and Loss"
+            parent="menu_accounting_reporting_statements" sequence="30"
+            action="action_report_profit_loss"/>
+
+  <menuitem id="menu_accounting_reporting_ledgers" name="Ledgers"
+            parent="menu_accounting_reporting" sequence="20"/>
+  <menuitem id="menu_accounting_trial_balance" name="Trial Balance"
+            parent="menu_accounting_reporting_ledgers" sequence="10"
+            action="action_report_trial_balance"/>
+  <menuitem id="menu_accounting_general_ledger" name="General Ledger"
+            parent="menu_accounting_reporting_ledgers" sequence="20"
+            action="action_report_general_ledger"/>
+
+  <menuitem id="menu_accounting_reporting_partner" name="Partner Reports"
+            parent="menu_accounting_reporting" sequence="30"/>
+  <menuitem id="menu_accounting_partner_ledger" name="Partner Ledger"
+            parent="menu_accounting_reporting_partner" sequence="10"
+            action="action_report_partner_ledger"/>
+  <menuitem id="menu_accounting_aged_payable" name="Aged Payable"
+            parent="menu_accounting_reporting_partner" sequence="20"
+            action="action_report_aged_payable"/>
+  <menuitem id="menu_accounting_aged_receivable" name="Aged Receivable"
+            parent="menu_accounting_reporting_partner" sequence="30"
+            action="action_report_aged_receivable"/>
+
+  <menuitem id="menu_accounting_reporting_taxes" name="Taxes &amp; Fiscal"
+            parent="menu_accounting_reporting" sequence="40"/>
+  <menuitem id="menu_accounting_tax_report" name="Tax Report"
+            parent="menu_accounting_reporting_taxes" sequence="10"
+            action="action_report_tax"/>
+  <menuitem id="menu_accounting_ec_sales" name="EC Sales List"
+            parent="menu_accounting_reporting_taxes" sequence="20"
+            action="action_report_ec_sales"/>
+  <menuitem id="menu_accounting_fiscal_report" name="Fiscal Report"
+            parent="menu_accounting_reporting_taxes" sequence="30"
+            action="action_report_fiscal"/>
+
+  <menuitem id="menu_accounting_reporting_management" name="Management"
+            parent="menu_accounting_reporting" sequence="50"/>
+  <menuitem id="menu_accounting_invoice_analysis" name="Invoice Analysis"
+            parent="menu_accounting_reporting_management" sequence="10"
+            action="action_report_invoice_analysis"/>
+  <menuitem id="menu_accounting_analytic_report" name="Analytic Report"
+            parent="menu_accounting_reporting_management" sequence="20"
+            action="action_report_analytic"/>
+  <menuitem id="menu_accounting_executive_summary" name="Executive Summary"
+            parent="menu_accounting_reporting_management" sequence="30"
+            action="action_report_executive"/>
+
+  <!-- Configuration -->
+  <menuitem id="menu_accounting_config" name="Configuration" parent="menu_accounting_root"
+            sequence="100"/>
+  <menuitem id="menu_accounting_settings" name="Settings" parent="menu_accounting_config"
+            sequence="10" action="action_accounting_settings"/>
+
+  <menuitem id="menu_accounting_config_invoicing" name="Invoicing"
+            parent="menu_accounting_config" sequence="15"/>
+  <menuitem id="menu_accounting_payment_terms" name="Payment Terms"
+            parent="menu_accounting_config_invoicing" sequence="10" action="action_payment_term"/>
+  <menuitem id="menu_accounting_followup_levels" name="Follow-up Levels"
+            parent="menu_accounting_config_invoicing" sequence="20"
+            action="action_followup_level"/>
+  <menuitem id="menu_accounting_incoterms" name="Incoterms"
+            parent="menu_accounting_config_invoicing" sequence="30" action="action_incoterms"/>
+  <menuitem id="menu_accounting_product_categories" name="Product Categories"
+            parent="menu_accounting_config_invoicing" sequence="40"
+            action="base.action_product_category"/>
+
+  <menuitem id="menu_accounting_config_accounting" name="Accounting"
+            parent="menu_accounting_config" sequence="20"/>
+  <menuitem id="menu_accounting_chart" name="Chart of Accounts"
+            parent="menu_accounting_config_accounting" sequence="10" action="action_account"/>
+  <menuitem id="menu_accounting_taxes" name="Taxes"
+            parent="menu_accounting_config_accounting" sequence="20" action="action_tax"/>
+  <menuitem id="menu_accounting_tax_groups" name="Tax Groups"
+            parent="menu_accounting_config_accounting" sequence="30" action="action_tax_group"/>
+  <menuitem id="menu_accounting_tax_units" name="Tax Units"
+            parent="menu_accounting_config_accounting" sequence="35" action="action_tax_units"/>
+  <menuitem id="menu_accounting_journals" name="Journals"
+            parent="menu_accounting_config_accounting" sequence="40" action="action_journal"/>
+  <menuitem id="menu_accounting_fiscal_positions" name="Fiscal Positions"
+            parent="menu_accounting_config_accounting" sequence="25"
+            action="action_fiscal_position"/>
+  <menuitem id="menu_accounting_fiscal_years" name="Fiscal Years"
+            parent="menu_accounting_config_accounting" sequence="50" action="action_fiscal_year"/>
+  <menuitem id="menu_accounting_currencies" name="Currencies"
+            parent="menu_accounting_config_accounting" sequence="60" action="action_currency"/>
+  <menuitem id="menu_accounting_account_groups" name="Account Groups"
+            parent="menu_accounting_config_accounting" sequence="65"
+            action="action_account_groups"/>
+  <menuitem id="menu_accounting_account_tags" name="Account Tags"
+            parent="menu_accounting_config_accounting" sequence="70"
+            action="action_account_tags"/>
+  <menuitem id="menu_accounting_fiscal_categories" name="Fiscal Categories"
+            parent="menu_accounting_config_accounting" sequence="75"
+            action="action_fiscal_categories"/>
+  <menuitem id="menu_accounting_multi_ledger" name="Multi-Ledger"
+            parent="menu_accounting_config_accounting" sequence="80"
+            action="action_multi_ledger"/>
+  <menuitem id="menu_accounting_cash_roundings" name="Cash Roundings"
+            parent="menu_accounting_config_accounting" sequence="85"
+            action="action_cash_roundings"/>
+  <menuitem id="menu_accounting_checks" name="Checks"
+            parent="menu_accounting_config_accounting" sequence="90" action="action_checks"/>
+  <menuitem id="menu_accounting_return_types" name="Return Types"
+            parent="menu_accounting_config_accounting" sequence="95"
+            action="action_return_types"/>
+  <menuitem id="menu_accounting_budgets" name="Financial Budgets"
+            parent="menu_accounting_config_accounting" sequence="100"
+            action="action_budget"/>
+  <menuitem id="menu_accounting_asset_models" name="Asset Models"
+            parent="menu_accounting_config_accounting" sequence="105"
+            action="action_asset_model"/>
+  <menuitem id="menu_accounting_reports" name="Accounting Reports"
+            parent="menu_accounting_config_accounting" sequence="110" action="action_report"/>
+  <menuitem id="menu_accounting_horizontal_groups" name="Horizontal Groups"
+            parent="menu_accounting_config_accounting" sequence="115"
+            action="action_horizontal_groups"/>
+  <menuitem id="menu_accounting_online_sync" name="Online Synchronization"
+            parent="menu_accounting_config_accounting" sequence="120"
+            action="action_online_sync"/>
+
+  <menuitem id="menu_accounting_config_etims" name="KRA eTIMS"
+            parent="menu_accounting_config" sequence="30"/>
+  <menuitem id="menu_accounting_oscu_codes" name="KE OSCU Codes"
+            parent="menu_accounting_config_etims" sequence="10" action="action_oscu_codes"/>
+  <menuitem id="menu_accounting_oscu_notices" name="KE OSCU Notices"
+            parent="menu_accounting_config_etims" sequence="20" action="action_oscu_notices"/>
+
+  <menuitem id="menu_accounting_config_payments" name="Online Payments"
+            parent="menu_accounting_config" sequence="40"/>
+  <menuitem id="menu_accounting_payment_providers" name="Payment Providers"
+            parent="menu_accounting_config_payments" sequence="10"
+            action="action_payment_provider"/>
+  <menuitem id="menu_accounting_payment_methods" name="Payment Methods"
+            parent="menu_accounting_config_payments" sequence="20"
+            action="action_payment_method"/>
+  <menuitem id="menu_accounting_payment_tokens" name="Payment Tokens"
+            parent="menu_accounting_config_payments" sequence="30"
+            action="action_payment_token"/>
+  <menuitem id="menu_accounting_payment_transactions" name="Payment Transactions"
+            parent="menu_accounting_config_payments" sequence="40"
+            action="action_payment_transaction"/>
+
+  <menuitem id="menu_accounting_config_analytic" name="Analytic Accounting"
+            parent="menu_accounting_config" sequence="50"/>
+  <menuitem id="menu_accounting_analytic_models" name="Analytic Distribution Models"
+            parent="menu_accounting_config_analytic" sequence="10"
+            action="action_analytic_model"/>
+  <menuitem id="menu_accounting_analytic_accounts" name="Analytic Accounts"
+            parent="menu_accounting_config_analytic" sequence="20"
+            action="action_analytic_item"/>
+  <menuitem id="menu_accounting_analytic_plans" name="Analytic Plans"
+            parent="menu_accounting_config_analytic" sequence="30"
+            action="action_analytic_plan"/>
+
+</odoo>

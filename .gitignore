@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Environment
+.env
+.env.local
+
+# Node / assets
+node_modules/
+static/dist/
+static/.vite/
+
+# Runtime
+var/
+*.log
+*.pid
+
+# Editors
+.idea/
+.vscode/
+.DS_Store
+
+# Docs artefacts
+/tmp/
+
+# Generated
+graphify-out/

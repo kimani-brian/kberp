@@ -1,0 +1,16 @@
+.venv
+.git
+.github
+__pycache__
+*.pyc
+.pytest_cache
+.mypy_cache
+.ruff_cache
+graphify-out
+tests
+docs
+scripts
+*.md
+!README.md
+docker-compose.yml
+.env

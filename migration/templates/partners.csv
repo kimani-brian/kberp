@@ -1,0 +1,3 @@
+name,external_id,is_company,email,phone,vat,street,city,country_code,parent_external_id,tags
+Acme Ltd,PART-001,true,accounts@acme.test,+254700000001,P051234567X,Enterprise Road,Nairobi,KE,,Wholesale;Key account
+Jane Wanjiru,PART-002,false,jane@acme.test,+254700000002,,Enterprise Road,Nairobi,KE,PART-001,

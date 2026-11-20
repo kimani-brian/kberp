@@ -1,0 +1,3 @@
+date,account_code,partner_external_id,label,debit,credit
+2026-01-01,110000,,Opening bank balance,250000.00,0
+2026-01-01,300000,,Opening equity,0,250000.00

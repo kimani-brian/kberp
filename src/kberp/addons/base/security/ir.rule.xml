@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+  <!-- Contacts are shared when they carry no company, and visible only inside
+       the owner's company when they do. `$company` is replaced with the
+       signed-in user's company id by Env.rule_domain. -->
+  <record id="rule_core_partner_company" model="core.ir_rule">
+    <field name="name">Contacts: own company</field>
+    <field name="model">core.partner</field>
+    <field name="domain">["|", ["company_id", "=", false], ["company_id", "in", "$company"]]</field>
+    <field name="is_global">True</field>
+  </record>
+
+</odoo>

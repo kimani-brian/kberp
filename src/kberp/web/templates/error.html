@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block main_class %}page{% endblock %}
+
+{% block content %}
+<section class="panel empty-state">
+  <p class="error-code">{{ code }}</p>
+  <h1>{{ heading }}</h1>
+  <p class="muted">{{ message }}</p>
+  <p class="form-actions" style="justify-content: center;">
+    <a class="btn btn-primary" href="/apps">Back to apps</a>
+    {% if user %}<a class="btn" href="javascript:history.back()">Go back</a>{% endif %}
+  </p>
+</section>
+{% endblock %}

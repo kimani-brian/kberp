@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% from "_icons.html" import app_icon %}
+
+{% block body_class %}launcher-body{% endblock %}
+{% block main_class %}page launcher-page{% endblock %}
+
+{% block content %}
+<section class="launcher-head">
+  <h1 class="launcher-title">Good to see you, {{ user.name.split(" ")[0] }}</h1>
+  <p class="launcher-sub">What would you like to work on?</p>
+</section>
+
+<section class="launcher-grid" aria-label="Applications">
+  {% for app in apps %}
+    <a class="app-card" href="/apps/{{ app.key }}" style="--app-accent: {{ app_color(app.key) }}">
+      <span class="app-icon">{{ app_icon(app.key) }}</span>
+      <span class="app-card-body">
+        <span class="app-card-name">{{ app.name }}</span>
+        <span class="app-card-summary">{{ app.summary }}</span>
+      </span>
+    </a>
+  {% endfor %}
+</section>
+
+<section class="launcher-foot">
+  <h2 class="section-title">Build status</h2>
+  <p class="muted">
+    P0 walking skeleton. Contacts is live; Sales, Accounting, Purchase and Inventory
+    open their application shells and unlock their menus in later phases.
+  </p>
+</section>
+{% endblock %}

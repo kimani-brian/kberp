@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <menuitem id="menu_purchase_root" name="Purchase" sequence="135" web_icon="purchase"
+            action="base.action_app_home"/>
+
+  <menuitem id="menu_purchase_orders" name="Orders" parent="menu_purchase_root" sequence="10"/>
+
+  <menuitem id="menu_purchase_rfqs" name="Requests for Quotation"
+            parent="menu_purchase_orders" sequence="10" action="action_rfq"/>
+
+  <menuitem id="menu_purchase_order_list" name="Purchase Orders"
+            parent="menu_purchase_orders" sequence="20" action="action_purchase_order"/>
+
+  <menuitem id="menu_purchase_agreements" name="Purchase Agreements"
+            parent="menu_purchase_orders" sequence="25" action="action_agreement"/>
+
+  <menuitem id="menu_purchase_vendors" name="Vendors"
+            parent="menu_purchase_orders" sequence="30" action="contacts.action_partner"/>
+
+  <menuitem id="menu_purchase_products" name="Products" parent="menu_purchase_root"
+            sequence="20"/>
+  <menuitem id="menu_purchase_product_list" name="Products"
+            parent="menu_purchase_products" sequence="10" action="base.action_product_template"/>
+  <menuitem id="menu_purchase_variants" name="Product Variants"
+            parent="menu_purchase_products" sequence="20" action="base.action_product_template"/>
+
+  <menuitem id="menu_purchase_reporting" name="Reporting" parent="menu_purchase_root"
+            sequence="90"/>
+  <menuitem id="menu_purchase_analysis" name="Purchase"
+            parent="menu_purchase_reporting" sequence="10" action="action_analysis"/>
+
+  <menuitem id="menu_purchase_config" name="Configuration" parent="menu_purchase_root"
+            sequence="100"/>
+  <menuitem id="menu_purchase_settings" name="Settings" parent="menu_purchase_config"
+            sequence="10" action="action_purchase_settings"/>
+  <menuitem id="menu_purchase_vendor_prices" name="Vendor Pricelists"
+            parent="menu_purchase_config" sequence="20" action="action_vendor_price"/>
+  <menuitem id="menu_purchase_landed_costs" name="Landed Costs"
+            parent="menu_purchase_config" sequence="30" action="action_landed_cost"/>
+  <menuitem id="menu_purchase_config_products" name="Products"
+            parent="menu_purchase_config" sequence="40"/>
+  <menuitem id="menu_purchase_attributes" name="Attributes"
+            parent="menu_purchase_config_products" sequence="10" action="base.action_product_attribute"/>
+  <menuitem id="menu_purchase_categories" name="Categories"
+            parent="menu_purchase_config_products" sequence="20" action="base.action_product_category"/>
+  <menuitem id="menu_purchase_units" name="Units &amp; Packagings"
+            parent="menu_purchase_config_products" sequence="30" action="base.action_uom"/>
+
+</odoo>

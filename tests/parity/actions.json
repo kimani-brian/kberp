@@ -1,0 +1,1046 @@
+{
+  "phase": "F1",
+  "note": "Action labels and targets at F1; regenerate with scripts/refresh_parity.py.",
+  "actions": [
+    {
+      "xml_id": "accounting.action_account",
+      "name": "Chart of Accounts",
+      "model": "accounting.account",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/chart"
+    },
+    {
+      "xml_id": "accounting.action_account_groups",
+      "name": "Account Groups",
+      "model": "accounting.config_item",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'account_group')]",
+      "path": "accounting/account-groups"
+    },
+    {
+      "xml_id": "accounting.action_account_tags",
+      "name": "Account Tags",
+      "model": "accounting.config_item",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'account_tag')]",
+      "path": "accounting/account-tags"
+    },
+    {
+      "xml_id": "accounting.action_accounting_settings",
+      "name": "Settings",
+      "model": "accounting.settings",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/settings"
+    },
+    {
+      "xml_id": "accounting.action_analytic_item",
+      "name": "Analytic Items",
+      "model": "accounting.analytic_account",
+      "view_mode": "list,form,search",
+      "domain": "[]",
+      "path": "accounting/analytic-items"
+    },
+    {
+      "xml_id": "accounting.action_analytic_model",
+      "name": "Analytic Distribution Models",
+      "model": "accounting.config_item",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'analytic_model')]",
+      "path": "accounting/analytic-models"
+    },
+    {
+      "xml_id": "accounting.action_analytic_plan",
+      "name": "Analytic Plans",
+      "model": "accounting.analytic_plan",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/analytic-plans"
+    },
+    {
+      "xml_id": "accounting.action_asset",
+      "name": "Assets",
+      "model": "accounting.asset",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/assets"
+    },
+    {
+      "xml_id": "accounting.action_asset_line",
+      "name": "Depreciation Schedule",
+      "model": "accounting.asset_line",
+      "view_mode": "list",
+      "domain": "[]",
+      "path": "accounting/depreciation-schedule"
+    },
+    {
+      "xml_id": "accounting.action_asset_model",
+      "name": "Asset Models",
+      "model": "accounting.asset_model",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/asset-models"
+    },
+    {
+      "xml_id": "accounting.action_audit_trail",
+      "name": "Audit Trail",
+      "model": "accounting.audit_log",
+      "view_mode": "list",
+      "domain": "[]",
+      "path": "accounting/audit-trail"
+    },
+    {
+      "xml_id": "accounting.action_bank_statement",
+      "name": "Reconcile",
+      "model": "accounting.bank_statement",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/reconcile"
+    },
+    {
+      "xml_id": "accounting.action_bill",
+      "name": "Bills",
+      "model": "accounting.move",
+      "view_mode": "list,form,search",
+      "domain": "[('move_type', '=', 'in_invoice')]",
+      "path": "accounting/bills"
+    },
+    {
+      "xml_id": "accounting.action_budget",
+      "name": "Financial Budgets",
+      "model": "accounting.budget",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/budgets"
+    },
+    {
+      "xml_id": "accounting.action_cash_roundings",
+      "name": "Cash Roundings",
+      "model": "accounting.config_item",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'cash_rounding')]",
+      "path": "accounting/cash-roundings"
+    },
+    {
+      "xml_id": "accounting.action_checks",
+      "name": "Checks",
+      "model": "accounting.config_item",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'check')]",
+      "path": "accounting/checks"
+    },
+    {
+      "xml_id": "accounting.action_credit_note",
+      "name": "Credit Notes",
+      "model": "accounting.move",
+      "view_mode": "list,form,search",
+      "domain": "[('move_type', '=', 'out_refund')]",
+      "path": "accounting/credit-notes"
+    },
+    {
+      "xml_id": "accounting.action_currency",
+      "name": "Currencies",
+      "model": "core.currency",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/currencies"
+    },
+    {
+      "xml_id": "accounting.action_customs_imports",
+      "name": "Customs Imports",
+      "model": "purchase.landed_cost",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/customs-imports"
+    },
+    {
+      "xml_id": "accounting.action_deferred_expense",
+      "name": "Deferred Expenses",
+      "model": "accounting.deferral",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'expense')]",
+      "path": "accounting/deferred-expenses"
+    },
+    {
+      "xml_id": "accounting.action_deferred_revenue",
+      "name": "Deferred Revenues",
+      "model": "accounting.deferral",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'revenue')]",
+      "path": "accounting/deferred-revenues"
+    },
+    {
+      "xml_id": "accounting.action_edi_document",
+      "name": "eTIMS Documents",
+      "model": "accounting.edi_document",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/etims"
+    },
+    {
+      "xml_id": "accounting.action_fiscal_categories",
+      "name": "Fiscal Categories",
+      "model": "accounting.config_item",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'fiscal_category')]",
+      "path": "accounting/fiscal-categories"
+    },
+    {
+      "xml_id": "accounting.action_fiscal_position",
+      "name": "Fiscal Positions",
+      "model": "accounting.fiscal_position",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/fiscal-positions"
+    },
+    {
+      "xml_id": "accounting.action_fiscal_year",
+      "name": "Fiscal Years",
+      "model": "accounting.fiscal_year",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/fiscal-years"
+    },
+    {
+      "xml_id": "accounting.action_followup_level",
+      "name": "Follow-up Levels",
+      "model": "accounting.followup_level",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/followup-levels"
+    },
+    {
+      "xml_id": "accounting.action_horizontal_groups",
+      "name": "Horizontal Groups",
+      "model": "accounting.config_item",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'horizontal_group')]",
+      "path": "accounting/horizontal-groups"
+    },
+    {
+      "xml_id": "accounting.action_incoterms",
+      "name": "Incoterms",
+      "model": "accounting.config_item",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'incoterm')]",
+      "path": "accounting/incoterms"
+    },
+    {
+      "xml_id": "accounting.action_inventory_valuation",
+      "name": "Inventory Valuation",
+      "model": "inventory.valuation_layer",
+      "view_mode": "list",
+      "domain": "[]",
+      "path": "accounting/inventory-valuation"
+    },
+    {
+      "xml_id": "accounting.action_invoice",
+      "name": "Invoices",
+      "model": "accounting.move",
+      "view_mode": "list,form,search",
+      "domain": "[('move_type', '=', 'out_invoice')]",
+      "path": "accounting/invoices"
+    },
+    {
+      "xml_id": "accounting.action_journal",
+      "name": "Journals",
+      "model": "accounting.journal",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/journals"
+    },
+    {
+      "xml_id": "accounting.action_journal_audit",
+      "name": "Journal Audit",
+      "model": "accounting.audit_log",
+      "view_mode": "list",
+      "domain": "[]",
+      "path": "accounting/journal-audit"
+    },
+    {
+      "xml_id": "accounting.action_journal_entry",
+      "name": "Journal Entries",
+      "model": "accounting.move",
+      "view_mode": "list,form,search",
+      "domain": "[('move_type', '=', 'entry')]",
+      "path": "accounting/entries"
+    },
+    {
+      "xml_id": "accounting.action_journal_items",
+      "name": "Journal Items",
+      "model": "accounting.move_line",
+      "view_mode": "list,search",
+      "domain": "[]",
+      "path": "accounting/journal-items"
+    },
+    {
+      "xml_id": "accounting.action_loan",
+      "name": "Loans",
+      "model": "accounting.loan",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/loans"
+    },
+    {
+      "xml_id": "accounting.action_loan_line",
+      "name": "Loans Analysis",
+      "model": "accounting.loan_line",
+      "view_mode": "list",
+      "domain": "[]",
+      "path": "accounting/loans-analysis"
+    },
+    {
+      "xml_id": "accounting.action_lock_date",
+      "name": "Lock Dates",
+      "model": "accounting.lock_date",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/lock-dates"
+    },
+    {
+      "xml_id": "accounting.action_multi_ledger",
+      "name": "Multi-Ledger",
+      "model": "accounting.config_item",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'multi_ledger')]",
+      "path": "accounting/multi-ledger"
+    },
+    {
+      "xml_id": "accounting.action_online_sync",
+      "name": "Online Synchronization",
+      "model": "accounting.config_item",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'online_sync')]",
+      "path": "accounting/online-synchronization"
+    },
+    {
+      "xml_id": "accounting.action_oscu_codes",
+      "name": "KE OSCU Codes",
+      "model": "accounting.config_item",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'oscu_code')]",
+      "path": "accounting/oscu-codes"
+    },
+    {
+      "xml_id": "accounting.action_oscu_notices",
+      "name": "KE OSCU Notices",
+      "model": "accounting.config_item",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'oscu_notice')]",
+      "path": "accounting/oscu-notices"
+    },
+    {
+      "xml_id": "accounting.action_payment_inbound",
+      "name": "Customer Payments",
+      "model": "accounting.payment",
+      "view_mode": "list,form",
+      "domain": "[('payment_type', '=', 'inbound')]",
+      "path": "accounting/customer-payments"
+    },
+    {
+      "xml_id": "accounting.action_payment_method",
+      "name": "Payment Methods",
+      "model": "accounting.payment_method",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/payment-methods"
+    },
+    {
+      "xml_id": "accounting.action_payment_outbound",
+      "name": "Vendor Payments",
+      "model": "accounting.payment",
+      "view_mode": "list,form",
+      "domain": "[('payment_type', '=', 'outbound')]",
+      "path": "accounting/vendor-payments"
+    },
+    {
+      "xml_id": "accounting.action_payment_provider",
+      "name": "Payment Providers",
+      "model": "accounting.payment_provider",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/payment-providers"
+    },
+    {
+      "xml_id": "accounting.action_payment_term",
+      "name": "Payment Terms",
+      "model": "accounting.payment_term",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/payment-terms"
+    },
+    {
+      "xml_id": "accounting.action_payment_token",
+      "name": "Payment Tokens",
+      "model": "accounting.payment_token",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/payment-tokens"
+    },
+    {
+      "xml_id": "accounting.action_payment_transaction",
+      "name": "Payment Transactions",
+      "model": "accounting.payment_transaction",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/payment-transactions"
+    },
+    {
+      "xml_id": "accounting.action_reconciliation_model",
+      "name": "Reconciliation Models",
+      "model": "accounting.reconciliation_model",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/reconciliation-models"
+    },
+    {
+      "xml_id": "accounting.action_refund",
+      "name": "Refunds",
+      "model": "accounting.move",
+      "view_mode": "list,form,search",
+      "domain": "[('move_type', '=', 'in_refund')]",
+      "path": "accounting/refunds"
+    },
+    {
+      "xml_id": "accounting.action_report",
+      "name": "Accounting Reports",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/reports"
+    },
+    {
+      "xml_id": "accounting.action_report_aged_payable",
+      "name": "Aged Payable",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'aged_payable')]",
+      "path": "accounting/reports/aged-payable"
+    },
+    {
+      "xml_id": "accounting.action_report_aged_receivable",
+      "name": "Aged Receivable",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'aged_receivable')]",
+      "path": "accounting/reports/aged-receivable"
+    },
+    {
+      "xml_id": "accounting.action_report_analytic",
+      "name": "Analytic Report",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'analytic_report')]",
+      "path": "accounting/reports/analytic-report"
+    },
+    {
+      "xml_id": "accounting.action_report_balance_sheet",
+      "name": "Balance Sheet",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'balance_sheet')]",
+      "path": "accounting/reports/balance-sheet"
+    },
+    {
+      "xml_id": "accounting.action_report_bill_to_receive",
+      "name": "Bill To Receive",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'bill_to_receive')]",
+      "path": "accounting/reports/bill-to-receive"
+    },
+    {
+      "xml_id": "accounting.action_report_billed_not_received",
+      "name": "Billed Not Received",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'billed_not_received')]",
+      "path": "accounting/reports/billed-not-received"
+    },
+    {
+      "xml_id": "accounting.action_report_cash_flow",
+      "name": "Cash Flow Statement",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'cash_flow')]",
+      "path": "accounting/reports/cash-flow"
+    },
+    {
+      "xml_id": "accounting.action_report_ec_sales",
+      "name": "EC Sales List",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'ec_sales_list')]",
+      "path": "accounting/reports/ec-sales-list"
+    },
+    {
+      "xml_id": "accounting.action_report_executive",
+      "name": "Executive Summary",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'executive_summary')]",
+      "path": "accounting/reports/executive-summary"
+    },
+    {
+      "xml_id": "accounting.action_report_fiscal",
+      "name": "Fiscal Report",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'fiscal_report')]",
+      "path": "accounting/reports/fiscal-report"
+    },
+    {
+      "xml_id": "accounting.action_report_general_ledger",
+      "name": "General Ledger",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'general_ledger')]",
+      "path": "accounting/reports/general-ledger"
+    },
+    {
+      "xml_id": "accounting.action_report_invoice_analysis",
+      "name": "Invoice Analysis",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'invoice_analysis')]",
+      "path": "accounting/reports/invoice-analysis"
+    },
+    {
+      "xml_id": "accounting.action_report_invoiced_not_delivered",
+      "name": "Invoiced Not Delivered",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'invoiced_not_delivered')]",
+      "path": "accounting/reports/invoiced-not-delivered"
+    },
+    {
+      "xml_id": "accounting.action_report_invoices_to_issue",
+      "name": "Invoices To Be Issued",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'invoices_to_issue')]",
+      "path": "accounting/reports/invoices-to-issue"
+    },
+    {
+      "xml_id": "accounting.action_report_partner_ledger",
+      "name": "Partner Ledger",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'partner_ledger')]",
+      "path": "accounting/reports/partner-ledger"
+    },
+    {
+      "xml_id": "accounting.action_report_profit_loss",
+      "name": "Profit and Loss",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'profit_and_loss')]",
+      "path": "accounting/reports/profit-and-loss"
+    },
+    {
+      "xml_id": "accounting.action_report_tax",
+      "name": "Tax Report",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'tax_report')]",
+      "path": "accounting/reports/tax-report"
+    },
+    {
+      "xml_id": "accounting.action_report_trial_balance",
+      "name": "Trial Balance",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'trial_balance')]",
+      "path": "accounting/reports/trial-balance"
+    },
+    {
+      "xml_id": "accounting.action_report_unrealized",
+      "name": "Unrealized Currencies",
+      "model": "accounting.report",
+      "view_mode": "list,form",
+      "domain": "[('report_type', '=', 'unrealized_currencies')]",
+      "path": "accounting/reports/unrealized-currencies"
+    },
+    {
+      "xml_id": "accounting.action_return_types",
+      "name": "Return Types",
+      "model": "accounting.config_item",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'return_type')]",
+      "path": "accounting/return-types"
+    },
+    {
+      "xml_id": "accounting.action_secured_entries",
+      "name": "Secure Entries",
+      "model": "accounting.move",
+      "view_mode": "list,form,search",
+      "domain": "[('secured', '=', True)]",
+      "path": "accounting/secure-entries"
+    },
+    {
+      "xml_id": "accounting.action_tax",
+      "name": "Taxes",
+      "model": "accounting.tax",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/taxes"
+    },
+    {
+      "xml_id": "accounting.action_tax_group",
+      "name": "Tax Groups",
+      "model": "accounting.tax_group",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/tax-groups"
+    },
+    {
+      "xml_id": "accounting.action_tax_return",
+      "name": "Tax Returns",
+      "model": "accounting.tax_return",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "accounting/tax-returns"
+    },
+    {
+      "xml_id": "accounting.action_tax_units",
+      "name": "Tax Units",
+      "model": "accounting.config_item",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'tax_unit')]",
+      "path": "accounting/tax-units"
+    },
+    {
+      "xml_id": "accounting.action_working_files",
+      "name": "Working Files",
+      "model": "accounting.config_item",
+      "view_mode": "list,form",
+      "domain": "[('kind', '=', 'working_file')]",
+      "path": "accounting/working-files"
+    },
+    {
+      "xml_id": "base.action_outbox_event",
+      "name": "Outbox Events",
+      "model": "platform.outbox_event",
+      "view_mode": "list,search",
+      "domain": "[]",
+      "path": "events"
+    },
+    {
+      "xml_id": "base.action_product_attribute",
+      "name": "Attributes",
+      "model": "core.product_attribute",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "product-attributes"
+    },
+    {
+      "xml_id": "base.action_product_category",
+      "name": "Product Categories",
+      "model": "core.product_category",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "product-categories"
+    },
+    {
+      "xml_id": "base.action_product_template",
+      "name": "Products",
+      "model": "core.product_template",
+      "view_mode": "list,form,search",
+      "domain": "[]",
+      "path": "products"
+    },
+    {
+      "xml_id": "base.action_uom",
+      "name": "Units of Measure",
+      "model": "core.uom",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "uom"
+    },
+    {
+      "xml_id": "contacts.action_bank",
+      "name": "Banks",
+      "model": "core.bank",
+      "view_mode": "list,form,search",
+      "domain": "[]",
+      "path": "banks"
+    },
+    {
+      "xml_id": "contacts.action_bank_account",
+      "name": "Bank Accounts",
+      "model": "core.bank_account",
+      "view_mode": "list,form,search",
+      "domain": "[]",
+      "path": "bank-accounts"
+    },
+    {
+      "xml_id": "contacts.action_country",
+      "name": "Countries",
+      "model": "core.country",
+      "view_mode": "list,form,search",
+      "domain": "[]",
+      "path": "countries"
+    },
+    {
+      "xml_id": "contacts.action_industry",
+      "name": "Industries",
+      "model": "core.industry",
+      "view_mode": "list,form,search",
+      "domain": "[]",
+      "path": "industries"
+    },
+    {
+      "xml_id": "contacts.action_partner",
+      "name": "Contacts",
+      "model": "core.partner",
+      "view_mode": "list,kanban,form,search",
+      "domain": "[]",
+      "path": "contacts"
+    },
+    {
+      "xml_id": "contacts.action_partner_tag",
+      "name": "Contact Tags",
+      "model": "core.partner_tag",
+      "view_mode": "list,form,search",
+      "domain": "[]",
+      "path": "contact-tags"
+    },
+    {
+      "xml_id": "contacts.action_state",
+      "name": "Fed. States",
+      "model": "core.state",
+      "view_mode": "list,form,search",
+      "domain": "[]",
+      "path": "states"
+    },
+    {
+      "xml_id": "inventory.action_barcode_nomenclature",
+      "name": "Barcode Nomenclatures",
+      "model": "inventory.barcode_nomenclature",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/barcodes"
+    },
+    {
+      "xml_id": "inventory.action_count",
+      "name": "Physical Inventory",
+      "model": "inventory.stock_count",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/counts"
+    },
+    {
+      "xml_id": "inventory.action_delivery",
+      "name": "Deliveries",
+      "model": "inventory.picking",
+      "view_mode": "list,kanban,form,search",
+      "domain": "[('picking_type', '=', 'out')]",
+      "path": "inventory/deliveries"
+    },
+    {
+      "xml_id": "inventory.action_delivery_method",
+      "name": "Delivery Methods",
+      "model": "inventory.delivery_method",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/delivery-methods"
+    },
+    {
+      "xml_id": "inventory.action_internal",
+      "name": "Internal",
+      "model": "inventory.picking",
+      "view_mode": "list,kanban,form,search",
+      "domain": "[('picking_type', '=', 'internal')]",
+      "path": "inventory/internal"
+    },
+    {
+      "xml_id": "inventory.action_inventory_settings",
+      "name": "Settings",
+      "model": "inventory.settings",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/settings"
+    },
+    {
+      "xml_id": "inventory.action_location",
+      "name": "Locations",
+      "model": "inventory.location",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/locations"
+    },
+    {
+      "xml_id": "inventory.action_lot",
+      "name": "Lots / Serial Numbers",
+      "model": "inventory.lot",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/lots"
+    },
+    {
+      "xml_id": "inventory.action_moves_analysis",
+      "name": "Moves Analysis",
+      "model": "inventory.move",
+      "view_mode": "list,form,search",
+      "domain": "[]",
+      "path": "inventory/moves-analysis"
+    },
+    {
+      "xml_id": "inventory.action_moves_history",
+      "name": "Moves History",
+      "model": "inventory.move",
+      "view_mode": "list,form,search",
+      "domain": "[]",
+      "path": "inventory/moves-history"
+    },
+    {
+      "xml_id": "inventory.action_operation_type",
+      "name": "Operations Types",
+      "model": "inventory.operation_type",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/operation-types"
+    },
+    {
+      "xml_id": "inventory.action_orderpoint",
+      "name": "Replenishment",
+      "model": "inventory.orderpoint",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/replenishment"
+    },
+    {
+      "xml_id": "inventory.action_package",
+      "name": "Packages",
+      "model": "inventory.package",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/packages"
+    },
+    {
+      "xml_id": "inventory.action_package_type",
+      "name": "Package Types",
+      "model": "inventory.package_type",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/package-types"
+    },
+    {
+      "xml_id": "inventory.action_performance",
+      "name": "Performance",
+      "model": "inventory.picking",
+      "view_mode": "list,kanban,form,search",
+      "domain": "[]",
+      "path": "inventory/performance"
+    },
+    {
+      "xml_id": "inventory.action_putaway",
+      "name": "Putaway Rules",
+      "model": "inventory.putaway_rule",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/putaway"
+    },
+    {
+      "xml_id": "inventory.action_receipt",
+      "name": "Receipts",
+      "model": "inventory.picking",
+      "view_mode": "list,kanban,form,search",
+      "domain": "[('picking_type', '=', 'in')]",
+      "path": "inventory/receipts"
+    },
+    {
+      "xml_id": "inventory.action_route",
+      "name": "Routes",
+      "model": "inventory.route",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/routes"
+    },
+    {
+      "xml_id": "inventory.action_rule",
+      "name": "Rules",
+      "model": "inventory.rule",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/rules"
+    },
+    {
+      "xml_id": "inventory.action_scrap",
+      "name": "Scrap",
+      "model": "inventory.scrap",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/scrap"
+    },
+    {
+      "xml_id": "inventory.action_stock_report",
+      "name": "Stock",
+      "model": "inventory.quant",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/stock"
+    },
+    {
+      "xml_id": "inventory.action_stock_valuation",
+      "name": "Stock Valuation",
+      "model": "inventory.valuation_layer",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/valuation"
+    },
+    {
+      "xml_id": "inventory.action_storage_category",
+      "name": "Storage Categories",
+      "model": "inventory.storage_category",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/storage-categories"
+    },
+    {
+      "xml_id": "inventory.action_traceability",
+      "name": "Traceability",
+      "model": "inventory.move",
+      "view_mode": "list,form,search",
+      "domain": "[('lot_id', '!=', False)]",
+      "path": "inventory/traceability"
+    },
+    {
+      "xml_id": "inventory.action_transfer",
+      "name": "Transfers",
+      "model": "inventory.picking",
+      "view_mode": "list,kanban,form,search",
+      "domain": "[]",
+      "path": "inventory/transfers"
+    },
+    {
+      "xml_id": "inventory.action_warehouse",
+      "name": "Warehouses",
+      "model": "inventory.warehouse",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/warehouses"
+    },
+    {
+      "xml_id": "inventory.action_zip_prefix",
+      "name": "Zip Prefix",
+      "model": "inventory.zip_prefix",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "inventory/zip-prefix"
+    },
+    {
+      "xml_id": "purchase.action_agreement",
+      "name": "Purchase Agreements",
+      "model": "purchase.agreement",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "purchase/agreements"
+    },
+    {
+      "xml_id": "purchase.action_analysis",
+      "name": "Purchase",
+      "model": "purchase.analysis",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "purchase/analysis"
+    },
+    {
+      "xml_id": "purchase.action_landed_cost",
+      "name": "Landed Costs",
+      "model": "purchase.landed_cost",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "purchase/landed-costs"
+    },
+    {
+      "xml_id": "purchase.action_purchase_order",
+      "name": "Purchase Orders",
+      "model": "purchase.order",
+      "view_mode": "list,kanban,form,search",
+      "domain": "[('state', '=', 'purchase')]",
+      "path": "purchase/orders"
+    },
+    {
+      "xml_id": "purchase.action_purchase_settings",
+      "name": "Settings",
+      "model": "purchase.settings",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "purchase/settings"
+    },
+    {
+      "xml_id": "purchase.action_rfq",
+      "name": "Requests for Quotation",
+      "model": "purchase.order",
+      "view_mode": "list,kanban,form,search",
+      "domain": "[('state', 'in', ['draft', 'sent'])]",
+      "path": "purchase/rfqs"
+    },
+    {
+      "xml_id": "purchase.action_vendor_price",
+      "name": "Vendor Pricelists",
+      "model": "purchase.vendor_price",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "purchase/vendor-prices"
+    },
+    {
+      "xml_id": "sales.action_header_footer",
+      "name": "Headers/Footers",
+      "model": "sales.header_footer",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "sales/headers-footers"
+    },
+    {
+      "xml_id": "sales.action_quotation",
+      "name": "Quotations",
+      "model": "sales.order",
+      "view_mode": "list,kanban,form,search",
+      "domain": "[('state', 'in', ['draft', 'sent'])]",
+      "path": "sales/quotations"
+    },
+    {
+      "xml_id": "sales.action_sale_order",
+      "name": "Orders",
+      "model": "sales.order",
+      "view_mode": "list,kanban,form,search",
+      "domain": "[('state', '=', 'sale')]",
+      "path": "sales/orders"
+    },
+    {
+      "xml_id": "sales.action_sales_settings",
+      "name": "Settings",
+      "model": "sales.settings",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "sales/settings"
+    },
+    {
+      "xml_id": "sales.action_sales_tag",
+      "name": "Tags",
+      "model": "sales.tag",
+      "view_mode": "list,form",
+      "domain": "[]",
+      "path": "sales/tags"
+    },
+    {
+      "xml_id": "sales.action_to_invoice",
+      "name": "Orders to Invoice",
+      "model": "sales.order",
+      "view_mode": "list,form,search",
+      "domain": "[('invoice_status', '=', 'to invoice')]",
+      "path": "sales/to-invoice"
+    },
+    {
+      "xml_id": "sales.action_upsell",
+      "name": "Orders to Upsell",
+      "model": "sales.order",
+      "view_mode": "list,form,search",
+      "domain": "[('invoice_status', '=', 'upselling')]",
+      "path": "sales/upsell"
+    }
+  ]
+}

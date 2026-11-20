@@ -1,0 +1,364 @@
+{% extends "base.html" %}
+
+{% block main_class %}page{% endblock %}
+
+{% macro line_widget(field) -%}
+  <div class="line-editor" data-field="{{ field.name }}">
+    <div class="table-wrap">
+      <table class="data-table line-table">
+        <thead>
+          <tr>
+            {% for sub in field.subfields %}<th scope="col">{{ sub.label }}</th>{% endfor %}
+            <th scope="col" class="line-remove-col"><span class="visually-hidden">Remove</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for line in field.lines %}
+            <tr>
+              {% for sub in field.subfields %}
+                <td>{{ line_input(sub, line[sub.name], field.name ~ '[' ~ line.id ~ '][' ~ sub.name ~ ']') }}</td>
+              {% endfor %}
+              <td class="line-remove-col">
+                <label class="line-remove" title="Remove this line">
+                  <input type="checkbox" name="{{ field.name }}[{{ line.id }}][_delete]">
+                  <span aria-hidden="true">×</span><span class="visually-hidden">Remove line</span>
+                </label>
+              </td>
+            </tr>
+          {% endfor %}
+          {% for index in range(2) %}
+            <tr class="line-new">
+              {% for sub in field.subfields %}
+                <td>{{ line_input(sub, none, field.name ~ '[new-' ~ index ~ '][' ~ sub.name ~ ']') }}</td>
+              {% endfor %}
+              <td class="line-remove-col"></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if field.editable %}<button class="btn btn-sm add-line-btn" type="button">Add line</button>{% endif %}
+    <p class="muted line-hint">Quantities and prices recalculate the totals when you save.</p>
+  </div>
+{%- endmacro %}
+
+{% macro line_input(sub, value, input_name) -%}
+  {%- set raw = value.id if value is mapping else (value | map(attribute='id') | list if value is iterable and value is not string and value is not none else value) -%}
+  {%- if sub.readonly -%}
+    <span class="readonly-value">{{ raw if raw is not none else '' }}</span>
+  {%- elif sub.type == 'many2many' -%}
+    <select class="input input-sm" name="{{ input_name }}" multiple size="3">
+      {% for option in sub.options %}
+        <option value="{{ option.value }}" {% if option.value in (raw or []) %}selected{% endif %}>{{ option.label }}</option>
+      {% endfor %}
+    </select>
+  {%- elif sub.type in ('many2one', 'selection') -%}
+    <select class="input input-sm" name="{{ input_name }}">
+      <option value="">—</option>
+      {% for option in sub.options %}
+        <option value="{{ option.value }}" {% if option.value == raw %}selected{% endif %}>{{ option.label }}</option>
+      {% endfor %}
+    </select>
+  {%- elif sub.type in ('monetary', 'float', 'integer') -%}
+    <input class="input input-sm input-number" type="number" step="{{ '1' if sub.type == 'integer' else '0.01' }}"
+           name="{{ input_name }}" value="{{ raw if raw is not none else '' }}">
+  {%- elif sub.type == 'boolean' -%}
+    <input type="checkbox" name="{{ input_name }}" {% if raw %}checked{% endif %}>
+  {%- else -%}
+    <input class="input input-sm" type="text" name="{{ input_name }}" value="{{ raw if raw is not none else '' }}">
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro widget(field) -%}
+  {%- if field.readonly -%}
+    <span class="readonly-value">{{ field.value if field.value is not none else "" }}</span>
+  {%- elif field.widget == "barcode" -%}
+    <div class="barcode-scan">
+      <input class="input" type="text" name="{{ field.name }}" data-barcode-input
+             placeholder="Scan or type a barcode" aria-label="Scan barcode">
+      <button class="btn btn-sm" type="button" data-barcode-scan>Add line</button>
+    </div>
+  {%- elif field.widget == "status" -%}
+    <div class="status-bar" role="status" aria-label="{{ field.label }}">
+      {% for option in field.options %}
+        <span class="status-pill {{ 'status-active' if field.value == option.value else '' }}">{{ option.label }}</span>
+      {% endfor %}
+    </div>
+  {%- elif field.type == "one2many" -%}
+    {{ line_widget(field) }}
+  {%- elif field.widget == "radio" -%}
+    <div class="radio-group" role="radiogroup" aria-label="{{ field.label }}">
+      <label class="radio">
+        <input type="radio" name="{{ field.name }}" value="1" {% if field.value %}checked{% endif %}>
+        <span>Company</span>
+      </label>
+      <label class="radio">
+        <input type="radio" name="{{ field.name }}" value="0" {% if not field.value %}checked{% endif %}>
+        <span>Person</span>
+      </label>
+    </div>
+  {%- elif field.type == "boolean" -%}
+    <label class="checkbox">
+      <input type="checkbox" name="{{ field.name }}" {% if field.value %}checked{% endif %}>
+      <span>{{ field.label }}</span>
+    </label>
+  {%- elif field.type == "selection" -%}
+    <select class="input" name="{{ field.name }}" {% if field.required %}required{% endif %}>
+      <option value="">—</option>
+      {% for option in field.options %}
+        <option value="{{ option.value }}" {% if field.value == option.value %}selected{% endif %}>{{ option.label }}</option>
+      {% endfor %}
+    </select>
+  {%- elif field.type == "many2one" -%}
+    <select class="input" name="{{ field.name }}" {% if field.required %}required{% endif %}>
+      <option value="">—</option>
+      {% for option in field.options %}
+        <option value="{{ option.value }}" {% if field.value == option.value %}selected{% endif %}>{{ option.label }}</option>
+      {% endfor %}
+    </select>
+  {%- elif field.type == "many2many" -%}
+    <select class="input" name="{{ field.name }}" multiple size="6">
+      {% for option in field.options %}
+        <option value="{{ option.value }}" {% if option.value in (field.value or []) %}selected{% endif %}>{{ option.label }}</option>
+      {% endfor %}
+    </select>
+  {%- elif field.type == "text" -%}
+    <textarea class="input input-textarea" name="{{ field.name }}" rows="{{ field.rows }}">{{ field.value or "" }}</textarea>
+  {%- elif field.type in ("monetary", "float") -%}
+    <input class="input input-number" type="number" step="0.01" name="{{ field.name }}"
+           value="{{ field.value if field.value is not none else '' }}" {% if field.required %}required{% endif %}>
+  {%- elif field.type == "integer" -%}
+    <input class="input input-number" type="number" step="1" name="{{ field.name }}"
+           value="{{ field.value if field.value is not none else '' }}" {% if field.required %}required{% endif %}>
+  {%- elif field.type == "date" -%}
+    <input class="input" type="date" name="{{ field.name }}"
+           value="{{ field.value.isoformat() if field.value else '' }}" {% if field.required %}required{% endif %}>
+  {%- else -%}
+    <input class="input" type="text" name="{{ field.name }}"
+           value="{{ field.value if field.value is not none else '' }}" {% if field.required %}required{% endif %}>
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro render_groups(groups) -%}
+  {% for group in groups %}
+    <section class="panel form-group">
+      {% if group.title %}<h2 class="section-title">{{ group.title }}</h2>{% endif %}
+      <div class="form-grid">
+        {% for field in group.fields %}
+          <div class="field {{ 'field-wide' if field.type in ('text', 'one2many') or field.widget == 'status' else '' }}">
+            {% if field.widget == "radio" %}
+              <span class="field-label">{{ field.label }}</span>
+            {% elif field.type != "boolean" and field.widget != "status" %}
+              <label class="field-label" for="f-{{ field.name }}">
+                {{ field.label }}{% if field.required %} <span class="required">*</span>{% endif %}
+              </label>
+            {% endif %}
+            {{ widget(field) }}
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+{%- endmacro %}
+
+{% block content %}
+{% set base_url = "/apps/" ~ app_key ~ "/action/" ~ action.id %}
+{% set suffix = "?menu=" ~ menu_id if menu_id else "" %}
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  {% for crumb in breadcrumbs %}
+    {% if crumb.url %}<a href="{{ crumb.url }}">{{ crumb.name }}</a>
+    {% else %}<span aria-current="page">{{ crumb.name }}</span>{% endif %}
+    {% if not loop.last %}<span class="crumb-sep">/</span>{% endif %}
+  {% endfor %}
+</nav>
+
+<header class="page-head">
+  <div>
+    <h1>
+      {% if record_id %}{{ record.name or ("Record " ~ record_id) }}{% else %}New {{ spec.string | lower }}{% endif %}
+    </h1>
+    {% if record_id %}<p class="muted">#{{ record_id }}</p>{% endif %}
+  </div>
+</header>
+
+{% if record_id and smart_buttons %}
+<div class="smart-buttons" role="list">
+  {% for button in smart_buttons %}
+    <div class="smart-button" role="listitem">
+      <strong>{{ button.count }}</strong>
+      <span>{{ button.label }}</span>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<form method="post" class="record-form"
+      action="{{ base_url }}{{ '/' ~ record_id if record_id else '/new' }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  {% if menu_id %}<input type="hidden" name="menu" value="{{ menu_id }}">{% endif %}
+
+  {% if spec.reports and record_id %}
+    <div class="form-header-actions" role="group" aria-label="Reports">
+      {% for report in spec.reports %}
+        <a class="btn" target="_blank" rel="noopener"
+           href="{{ base_url }}/{{ record_id }}/report/{{ report.name }}">{{ report.label }}</a>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if spec.buttons and record_id %}
+    <div class="form-header-actions" role="group" aria-label="Actions">
+      {% for button in spec.buttons %}
+        {% if button.visible %}
+          <button class="btn {{ 'btn-primary' if button.name == 'action_confirm' else '' }}"
+                  type="submit"
+                  formaction="{{ base_url }}/{{ record_id }}/button/{{ button.name }}">{{ button.label }}</button>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {{ render_groups(spec.groups) }}
+
+  {% if spec.pages %}
+    <div class="form-tabs">
+      {% for page in spec.pages %}
+        <input class="tab-input" type="radio" name="form-tab"
+               id="form-tab-{{ loop.index }}" {% if loop.first %}checked{% endif %}>
+        <label class="tab-label" for="form-tab-{{ loop.index }}">{{ page.title }}</label>
+      {% endfor %}
+      <div class="tab-panels">
+        {% for page in spec.pages %}
+          <div class="tab-panel tab-panel-{{ loop.index }}" data-tab="{{ loop.index }}">
+            {{ render_groups(page.groups) }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="form-actions">
+    {% if can_write %}<button class="btn btn-primary" type="submit">Save</button>{% endif %}
+    <a class="btn" href="{{ base_url }}{{ suffix }}">Discard</a>
+  </div>
+</form>
+
+{% if record_id %}
+<section class="panel chatter">
+  <div class="chatter-head-row">
+    <h2 class="section-title">Chatter</h2>
+    <form method="post" action="{{ base_url }}/{{ record_id }}/follow">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      {% if menu_id %}<input type="hidden" name="menu" value="{{ menu_id }}">{% endif %}
+      <button class="btn btn-sm" type="submit">Follow</button>
+    </form>
+  </div>
+
+  {% if followers %}
+    <div class="followers" aria-label="Followers">
+      <span class="muted">Followers</span>
+      {% for follower in followers %}
+        <span class="follower-chip">
+          <span class="follower-avatar" aria-hidden="true">{{ (follower.partner_id.name if follower.partner_id else "?")[:1] | upper }}</span>
+          {{ follower.partner_id.name if follower.partner_id else "Unknown" }}
+        </span>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="activity-block">
+    <h3 class="subsection-title">Next activities</h3>
+    {% if activities %}
+      <ul class="activity-list">
+        {% for activity in activities %}
+          <li class="activity">
+            <div>
+              <strong>{{ activity.activity_type_id.name if activity.activity_type_id else "Activity" }}</strong>
+              <span>{{ activity.summary or "" }}</span>
+              <span class="muted">
+                {{ "due " ~ activity.date_deadline | fmt("date") if activity.date_deadline else "no date" }}
+              </span>
+            </div>
+            <form method="post" action="{{ base_url }}/{{ record_id }}/activity/{{ activity.id }}/done">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+              {% if menu_id %}<input type="hidden" name="menu" value="{{ menu_id }}">{% endif %}
+              <button class="btn btn-sm" type="submit">Done</button>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="muted">Nothing scheduled.</p>
+    {% endif %}
+
+    {% if activity_types %}
+    <details class="activity-form">
+      <summary>Schedule an activity</summary>
+      <form method="post" action="{{ base_url }}/{{ record_id }}/activity">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        {% if menu_id %}<input type="hidden" name="menu" value="{{ menu_id }}">{% endif %}
+        <div class="form-grid">
+          <div class="field">
+            <label class="field-label" for="activity-type">Activity</label>
+            <select class="input" id="activity-type" name="activity_type_id" required>
+              {% for activity_type in activity_types %}
+                <option value="{{ activity_type.id }}">{{ activity_type.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="field">
+            <label class="field-label" for="activity-summary">Summary</label>
+            <input class="input" id="activity-summary" type="text" name="summary">
+          </div>
+          <div class="field">
+            <label class="field-label" for="activity-due">Due date</label>
+            <input class="input" id="activity-due" type="date" name="date_deadline">
+          </div>
+          <div class="field field-wide">
+            <label class="field-label" for="activity-note">Note</label>
+            <input class="input" id="activity-note" type="text" name="note">
+          </div>
+        </div>
+        <button class="btn btn-sm" type="submit">Schedule</button>
+      </form>
+    </details>
+    {% endif %}
+  </div>
+
+  <h3 class="subsection-title">Messages</h3>
+  <form class="note-form" method="post" action="{{ base_url }}/{{ record_id }}/note">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    {% if menu_id %}<input type="hidden" name="menu" value="{{ menu_id }}">{% endif %}
+    <label class="visually-hidden" for="chatter-body">Add a note</label>
+    <textarea class="input input-textarea" id="chatter-body" name="body" rows="3"
+              placeholder="Log a note…"></textarea>
+    <button class="btn" type="submit">Add note</button>
+  </form>
+
+  {% if messages %}
+    <ul class="chatter-list">
+      {% for message in messages %}
+        <li class="chatter-message">
+          <div class="chatter-head">
+            <span class="avatar">{{ (message.author_id.name if message.author_id else "S")[:1] | upper }}</span>
+            <strong>{{ message.author_id.name if message.author_id else "System" }}</strong>
+            <span class="muted">{{ message.create_date | fmt("datetime") }}</span>
+          </div>
+          <p class="chatter-body">{{ message.body }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">No messages yet.</p>
+  {% endif %}
+</section>
+
+<form method="post" class="danger-zone"
+      action="{{ base_url }}/{{ record_id }}/delete"
+      onsubmit="return confirm('Delete this record permanently?');">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <button class="btn btn-danger" type="submit">Delete</button>
+</form>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_outbox_event_list" model="core.ir_ui_view">
+    <field name="name">platform.outbox_event.list</field>
+    <field name="model">platform.outbox_event</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Outbox Events" create="0" delete="0">
+        <field name="event_type" string="Event"/>
+        <field name="state" string="State"/>
+        <field name="attempts" string="Attempts"/>
+        <field name="create_date" string="Created"/>
+        <field name="processed_at" string="Processed"/>
+        <field name="error" string="Last Error"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="view_outbox_event_search" model="core.ir_ui_view">
+    <field name="name">platform.outbox_event.search</field>
+    <field name="model">platform.outbox_event</field>
+    <field name="type">search</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="event_type" string="Event"/>
+        <filter name="pending" string="Pending" domain="[('state', '=', 'pending')]"/>
+        <filter name="failed" string="Failed" domain="[('state', '=', 'failed')]"/>
+        <filter name="processed" string="Processed" domain="[('state', '=', 'processed')]"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="action_outbox_event" model="core.ir_act_window">
+    <field name="name">Outbox Events</field>
+    <field name="res_model">platform.outbox_event</field>
+    <field name="view_mode">list,search</field>
+    <field name="path">events</field>
+  </record>
+
+</odoo>

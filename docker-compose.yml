@@ -1,0 +1,74 @@
+services:
+  db:
+    image: postgres:16
+    container_name: kberp_db
+    environment:
+      POSTGRES_DB: ${KB_DB_NAME:-kberp}
+      POSTGRES_USER: ${KB_DB_USER:-kberp}
+      POSTGRES_PASSWORD: ${KB_DB_PASSWORD:-kberp}
+    ports:
+      - "${KB_DB_PORT:-5433}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${KB_DB_USER:-kberp} -d ${KB_DB_NAME:-kberp}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    container_name: kberp_redis
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  web:
+    build: .
+    container_name: kberp_web
+    command: ["kberp", "run", "--host", "0.0.0.0", "--port", "8069"]
+    environment:
+      KB_DB_HOST: db
+      KB_DB_PORT: 5432
+      KB_DB_USER: ${KB_DB_USER:-kberp}
+      KB_DB_PASSWORD: ${KB_DB_PASSWORD:-kberp}
+      KB_DB_NAME: ${KB_DB_NAME:-kberp}
+      KB_SECRET_KEY: ${KB_SECRET_KEY:-dev-secret}
+      KB_ADMIN_PASSWORD: ${KB_ADMIN_PASSWORD:-admin}
+      KB_REDIS_URL: redis://redis:6379/0
+    ports:
+      - "8069:8069"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  worker:
+    build: .
+    container_name: kberp_worker
+    command: ["kberp", "worker"]
+    environment:
+      KB_DB_HOST: db
+      KB_DB_PORT: 5432
+      KB_DB_USER: ${KB_DB_USER:-kberp}
+      KB_DB_PASSWORD: ${KB_DB_PASSWORD:-kberp}
+      KB_DB_NAME: ${KB_DB_NAME:-kberp}
+      KB_REDIS_URL: redis://redis:6379/0
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  db-data:
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 10.99.7.0/24

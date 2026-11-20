@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% from "_icons.html" import app_icon, icon %}
+
+{% block main_class %}page app-home-page{% endblock %}
+
+{% macro render_menu_links(node) -%}
+  {%- if node.url -%}
+    <a class="quick-link" href="{{ node.url }}">{{ node.name }}</a>
+  {%- endif -%}
+  {%- for child in node.children -%}{{ render_menu_links(child) }}{%- endfor -%}
+{%- endmacro %}
+
+{% block content %}
+{% if breadcrumbs %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  {% for crumb in breadcrumbs %}
+    {% if crumb.url %}<a href="{{ crumb.url }}">{{ crumb.name }}</a>
+    {% else %}<span aria-current="page">{{ crumb.name }}</span>{% endif %}
+    {% if not loop.last %}<span class="crumb-sep">/</span>{% endif %}
+  {% endfor %}
+</nav>
+{% endif %}
+
+<section class="app-hero" style="--app-accent: {{ app_color(current_app.key) }}">
+  <span class="app-hero-icon">{{ app_icon(current_app.key, 56) }}</span>
+  <div>
+    <h1>{{ current_app.name }}</h1>
+    {% if app %}<p class="muted">{{ app.summary }}</p>{% endif %}
+    {% if phase %}<p class="phase-note">Delivery phase: {{ phase }}</p>{% endif %}
+  </div>
+</section>
+
+{% if dashboard %}
+<section class="panel">
+  <h2 class="section-title">{{ dashboard_title or 'At a glance' }}</h2>
+  <div class="kpi-grid">
+    {% for kpi in dashboard.kpis %}
+      <div class="kpi-card">
+        <strong>{{ kpi.value }}</strong>
+        <span class="muted">{{ kpi.label }}</span>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if menus %}
+<section class="panel">
+  <h2 class="section-title">Available screens</h2>
+  <div class="quick-grid">
+    {% for node in menus %}
+      {{ render_menu_links(node) }}
+    {% endfor %}
+  </div>
+</section>
+{% else %}
+<section class="panel empty-state">
+  <h2>No screens yet</h2>
+  <p class="muted">
+    This application is registered and its shell works. Its menus arrive with
+    {{ phase or "the next delivery phase" }}.
+  </p>
+</section>
+{% endif %}
+{% endblock %}

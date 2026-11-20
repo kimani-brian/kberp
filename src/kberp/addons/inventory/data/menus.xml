@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <menuitem id="menu_inventory_root" name="Inventory" sequence="140" web_icon="inventory"
+            action="base.action_app_home"/>
+
+  <menuitem id="menu_inventory_overview" name="Overview" parent="menu_inventory_root"
+            sequence="10" action="base.action_app_home"/>
+
+  <menuitem id="menu_inventory_operations" name="Operations" parent="menu_inventory_root"
+            sequence="20"/>
+  <menuitem id="menu_inventory_transfers" name="Transfers" parent="menu_inventory_operations"
+            sequence="10"/>
+  <menuitem id="menu_inventory_receipts" name="Receipts" parent="menu_inventory_transfers"
+            sequence="10" action="action_receipt"/>
+  <menuitem id="menu_inventory_deliveries" name="Deliveries" parent="menu_inventory_transfers"
+            sequence="20" action="action_delivery"/>
+  <menuitem id="menu_inventory_internal" name="Internal" parent="menu_inventory_transfers"
+            sequence="30" action="action_internal"/>
+
+  <menuitem id="menu_inventory_adjustments" name="Adjustments"
+            parent="menu_inventory_operations" sequence="20"/>
+  <menuitem id="menu_inventory_counts" name="Physical Inventory"
+            parent="menu_inventory_adjustments" sequence="10" action="action_count"/>
+  <menuitem id="menu_inventory_scrap" name="Scrap"
+            parent="menu_inventory_adjustments" sequence="20" action="action_scrap"/>
+
+  <menuitem id="menu_inventory_procurement" name="Procurement"
+            parent="menu_inventory_operations" sequence="30"/>
+  <menuitem id="menu_inventory_replenishment" name="Replenishment"
+            parent="menu_inventory_procurement" sequence="10" action="action_orderpoint"/>
+  <menuitem id="menu_inventory_scheduler" name="Run Scheduler"
+            parent="menu_inventory_procurement" sequence="15" action="action_orderpoint"/>
+  <menuitem id="menu_inventory_references" name="References"
+            parent="menu_inventory_procurement" sequence="20" action="action_route"/>
+
+  <menuitem id="menu_inventory_products" name="Products" parent="menu_inventory_root"
+            sequence="30"/>
+  <menuitem id="menu_inventory_product_list" name="Products" parent="menu_inventory_products"
+            sequence="10" action="base.action_product_template"/>
+  <menuitem id="menu_inventory_lots" name="Lots / Serial Numbers"
+            parent="menu_inventory_products" sequence="20" action="action_lot"/>
+  <menuitem id="menu_inventory_packages" name="Packages"
+            parent="menu_inventory_products" sequence="30" action="action_package"/>
+  <menuitem id="menu_inventory_variants" name="Product Variants"
+            parent="menu_inventory_products" sequence="40" action="base.action_product_template"/>
+
+  <menuitem id="menu_inventory_reporting" name="Reporting" parent="menu_inventory_root"
+            sequence="40"/>
+  <menuitem id="menu_inventory_stock_report" name="Stock" parent="menu_inventory_reporting"
+            sequence="10" action="action_stock_report"/>
+  <menuitem id="menu_inventory_location_report" name="Locations" parent="menu_inventory_reporting"
+            sequence="20" action="action_location"/>
+  <menuitem id="menu_inventory_moves_history" name="Moves History"
+            parent="menu_inventory_reporting" sequence="30" action="action_moves_history"/>
+  <menuitem id="menu_inventory_moves_analysis" name="Moves Analysis"
+            parent="menu_inventory_reporting" sequence="40" action="action_moves_analysis"/>
+  <menuitem id="menu_inventory_traceability" name="Traceability"
+            parent="menu_inventory_reporting" sequence="50" action="action_traceability"/>
+  <menuitem id="menu_inventory_stock_valuation" name="Stock Valuation"
+            parent="menu_inventory_reporting" sequence="60" action="action_stock_valuation"/>
+  <menuitem id="menu_inventory_performance" name="Performance"
+            parent="menu_inventory_reporting" sequence="70" action="action_performance"/>
+
+  <menuitem id="menu_inventory_config" name="Configuration" parent="menu_inventory_root"
+            sequence="100"/>
+  <menuitem id="menu_inventory_settings" name="Settings" parent="menu_inventory_config"
+            sequence="10" action="action_inventory_settings"/>
+  <menuitem id="menu_inventory_warehouse_management" name="Warehouse Management"
+            parent="menu_inventory_config" sequence="20"/>
+  <menuitem id="menu_inventory_warehouses" name="Warehouses"
+            parent="menu_inventory_warehouse_management" sequence="10" action="action_warehouse"/>
+  <menuitem id="menu_inventory_operation_types" name="Operations Types"
+            parent="menu_inventory_warehouse_management" sequence="20" action="action_operation_type"/>
+  <menuitem id="menu_inventory_locations" name="Locations"
+            parent="menu_inventory_warehouse_management" sequence="30" action="action_location"/>
+  <menuitem id="menu_inventory_delivery_config" name="Delivery"
+            parent="menu_inventory_config" sequence="30"/>
+  <menuitem id="menu_inventory_package_types" name="Package Types"
+            parent="menu_inventory_delivery_config" sequence="10" action="action_package_type"/>
+  <menuitem id="menu_inventory_delivery_methods" name="Delivery Methods"
+            parent="menu_inventory_delivery_config" sequence="20" action="action_delivery_method"/>
+  <menuitem id="menu_inventory_zip_prefix" name="Zip Prefix"
+            parent="menu_inventory_delivery_config" sequence="30" action="action_zip_prefix"/>
+  <menuitem id="menu_inventory_config_routes" name="Routes"
+            parent="menu_inventory_warehouse_management" sequence="40" action="action_route"/>
+  <menuitem id="menu_inventory_config_rules" name="Rules"
+            parent="menu_inventory_warehouse_management" sequence="50" action="action_rule"/>
+  <menuitem id="menu_inventory_storage_categories" name="Storage Categories"
+            parent="menu_inventory_warehouse_management" sequence="60" action="action_storage_category"/>
+  <menuitem id="menu_inventory_putaway" name="Putaway Rules"
+            parent="menu_inventory_warehouse_management" sequence="70" action="action_putaway"/>
+  <menuitem id="menu_inventory_config_products" name="Products"
+            parent="menu_inventory_config" sequence="40"/>
+  <menuitem id="menu_inventory_categories" name="Categories"
+            parent="menu_inventory_config_products" sequence="10" action="base.action_product_category"/>
+  <menuitem id="menu_inventory_attributes" name="Attributes"
+            parent="menu_inventory_config_products" sequence="20" action="base.action_product_category"/>
+  <menuitem id="menu_inventory_units" name="Units &amp; Packagings"
+            parent="menu_inventory_config_products" sequence="30" action="base.action_uom"/>
+  <menuitem id="menu_inventory_barcodes" name="Barcode Nomenclatures"
+            parent="menu_inventory_config_products" sequence="40" action="action_barcode_nomenclature"/>
+
+</odoo>

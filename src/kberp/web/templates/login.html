@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="/static/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/css/kberp.css">
+</head>
+<body class="login-body">
+  <main class="login-card">
+    <div class="login-brand">KB&nbsp;ERP</div>
+    <p class="login-tagline">Contacts · Sales · Accounting · Purchase · Inventory</p>
+
+    {% if error %}
+      <div class="flash flash-danger" role="alert">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" action="/web/login" class="login-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label class="field">
+        <span class="field-label">Email or login</span>
+        <input class="input" type="text" name="login" autocomplete="username"
+               autofocus required value="">
+      </label>
+      <label class="field">
+        <span class="field-label">Password</span>
+        <input class="input" type="password" name="password" autocomplete="current-password" required>
+      </label>
+      <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+
+    <p class="login-hint">P0 demo: <code>admin</code> / <code>admin</code></p>
+  </main>
+</body>
+</html>

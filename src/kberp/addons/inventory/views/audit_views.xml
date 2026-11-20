@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_count_list" model="core.ir_ui_view">
+    <field name="name">inventory.stock_count.list</field>
+    <field name="model">inventory.stock_count</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Physical Inventory">
+        <field name="name" string="Number"/>
+        <field name="date" string="Date"/>
+        <field name="location_id" string="Location"/>
+        <field name="state" string="Status"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_count_form" model="core.ir_ui_view">
+    <field name="name">inventory.stock_count.form</field>
+    <field name="model">inventory.stock_count</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Physical Inventory">
+        <header><button name="action_validate" string="Validate Count" type="object"/></header>
+        <sheet>
+          <group string="Count">
+            <field name="state" widget="status"/>
+            <field name="name"/>
+            <field name="date"/>
+            <field name="location_id"/>
+            <field name="company_id"/>
+          </group>
+          <group string="Counted Lines">
+            <field name="line_ids">
+              <list string="Lines" editable="1">
+                <field name="product_id" string="Product"/>
+                <field name="lot_id" string="Lot / Serial"/>
+                <field name="expected_qty" string="Expected"/>
+                <field name="counted_qty" string="Counted"/>
+                <field name="difference" string="Difference"/>
+              </list>
+            </field>
+          </group>
+          <notebook>
+            <page string="Notes"><group string="Notes"><field name="note"/></group></page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="action_count" model="core.ir_act_window">
+    <field name="name">Physical Inventory</field>
+    <field name="res_model">inventory.stock_count</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">inventory/counts</field>
+  </record>
+
+  <record id="view_scrap_list" model="core.ir_ui_view">
+    <field name="name">inventory.scrap.list</field>
+    <field name="model">inventory.scrap</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Scrap">
+        <field name="name" string="Number"/>
+        <field name="date" string="Date"/>
+        <field name="product_id" string="Product"/>
+        <field name="qty" string="Quantity"/>
+        <field name="reason" string="Reason"/>
+        <field name="state" string="Status"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_scrap_form" model="core.ir_ui_view">
+    <field name="name">inventory.scrap.form</field>
+    <field name="model">inventory.scrap</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Scrap">
+        <header><button name="action_validate" string="Validate Scrap" type="object"/></header>
+        <sheet>
+          <group string="Scrap">
+            <field name="state" widget="status"/>
+            <field name="name"/>
+            <field name="date"/>
+            <field name="product_id"/>
+            <field name="qty"/>
+            <field name="location_id"/>
+            <field name="lot_id"/>
+            <field name="reason"/>
+            <field name="company_id"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="action_scrap" model="core.ir_act_window">
+    <field name="name">Scrap</field>
+    <field name="res_model">inventory.scrap</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">inventory/scrap</field>
+  </record>
+
+  <record id="view_lot_list" model="core.ir_ui_view">
+    <field name="name">inventory.lot.list</field>
+    <field name="model">inventory.lot</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Lots / Serial Numbers">
+        <field name="name" string="Lot / Serial"/>
+        <field name="product_id" string="Product"/>
+        <field name="expiry_date" string="Expiry"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_lot_form" model="core.ir_ui_view">
+    <field name="name">inventory.lot.form</field>
+    <field name="model">inventory.lot</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Lot / Serial Number"><sheet>
+        <group string="Lot">
+          <field name="name"/><field name="product_id"/>
+          <field name="expiry_date"/><field name="company_id"/><field name="active"/>
+        </group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_lot" model="core.ir_act_window">
+    <field name="name">Lots / Serial Numbers</field>
+    <field name="res_model">inventory.lot</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">inventory/lots</field>
+  </record>
+
+  <record id="view_package_type_list" model="core.ir_ui_view">
+    <field name="name">inventory.package_type.list</field>
+    <field name="model">inventory.package_type</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Package Types"><field name="name" string="Type"/></list>
+    </field>
+  </record>
+  <record id="view_package_type_form" model="core.ir_ui_view">
+    <field name="name">inventory.package_type.form</field>
+    <field name="model">inventory.package_type</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Package Type"><sheet>
+        <group string="Type"><field name="name"/><field name="max_weight"/><field name="active"/></group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_package_type" model="core.ir_act_window">
+    <field name="name">Package Types</field>
+    <field name="res_model">inventory.package_type</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">inventory/package-types</field>
+  </record>
+
+  <record id="view_package_list" model="core.ir_ui_view">
+    <field name="name">inventory.package.list</field>
+    <field name="model">inventory.package</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Packages">
+        <field name="name" string="Package"/>
+        <field name="package_type_id" string="Type"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_package_form" model="core.ir_ui_view">
+    <field name="name">inventory.package.form</field>
+    <field name="model">inventory.package</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Package"><sheet>
+        <group string="Package">
+          <field name="name"/><field name="package_type_id"/>
+          <field name="company_id"/><field name="active"/>
+        </group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_package" model="core.ir_act_window">
+    <field name="name">Packages</field>
+    <field name="res_model">inventory.package</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">inventory/packages</field>
+  </record>
+
+  <record id="view_move_list" model="core.ir_ui_view">
+    <field name="name">inventory.move.list</field>
+    <field name="model">inventory.move</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Moves">
+        <field name="picking_id" string="Transfer"/>
+        <field name="product_id" string="Product"/>
+        <field name="qty" string="Demand"/>
+        <field name="done_qty" string="Done"/>
+        <field name="lot_id" string="Lot / Serial"/>
+        <field name="package_id" string="Package"/>
+        <field name="source_location_id" string="From"/>
+        <field name="dest_location_id" string="To"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_move_form" model="core.ir_ui_view">
+    <field name="name">inventory.move.form</field>
+    <field name="model">inventory.move</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Stock Move"><sheet>
+        <group string="Move">
+          <field name="picking_id"/><field name="product_id"/>
+          <field name="qty"/><field name="done_qty"/><field name="uom_id"/>
+          <field name="lot_id"/><field name="package_id"/>
+          <field name="source_location_id"/><field name="dest_location_id"/>
+        </group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="view_move_search" model="core.ir_ui_view">
+    <field name="name">inventory.move.search</field>
+    <field name="model">inventory.move</field>
+    <field name="type">search</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="product_id" string="Product"/>
+        <field name="lot_id" string="Lot / Serial"/>
+        <field name="source_location_id" string="From"/>
+        <field name="dest_location_id" string="To"/>
+        <filter name="done" string="Done" domain="[('picking_id.state', '=', 'done')]"/>
+      </search>
+    </field>
+  </record>
+  <record id="action_moves_history" model="core.ir_act_window">
+    <field name="name">Moves History</field>
+    <field name="res_model">inventory.move</field>
+    <field name="view_mode">list,form,search</field>
+    <field name="path">inventory/moves-history</field>
+  </record>
+  <record id="action_moves_analysis" model="core.ir_act_window">
+    <field name="name">Moves Analysis</field>
+    <field name="res_model">inventory.move</field>
+    <field name="view_mode">list,form,search</field>
+    <field name="path">inventory/moves-analysis</field>
+  </record>
+  <record id="action_traceability" model="core.ir_act_window">
+    <field name="name">Traceability</field>
+    <field name="res_model">inventory.move</field>
+    <field name="view_mode">list,form,search</field>
+    <field name="domain">[('lot_id', '!=', False)]</field>
+    <field name="path">inventory/traceability</field>
+  </record>
+
+</odoo>

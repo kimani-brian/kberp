@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="followup_level_reminder" model="accounting.followup_level">
+    <field name="name">Reminder</field>
+    <field name="delay_days">0</field>
+    <field name="active">True</field>
+  </record>
+  <record id="followup_level_first" model="accounting.followup_level">
+    <field name="name">First Notice</field>
+    <field name="delay_days">15</field>
+    <field name="active">True</field>
+  </record>
+  <record id="followup_level_second" model="accounting.followup_level">
+    <field name="name">Second Notice</field>
+    <field name="delay_days">30</field>
+    <field name="active">True</field>
+  </record>
+  <record id="followup_level_final" model="accounting.followup_level">
+    <field name="name">Final Notice</field>
+    <field name="delay_days">45</field>
+    <field name="active">True</field>
+  </record>
+
+  <record id="analytic_plan_operations" model="accounting.analytic_plan">
+    <field name="name">Operations</field>
+    <field name="code">OPS</field>
+    <field name="active">True</field>
+  </record>
+
+  <record id="payment_provider_demo" model="accounting.payment_provider">
+    <field name="name">Demo Payments</field>
+    <field name="code">demo</field>
+    <field name="state">test</field>
+    <field name="active">True</field>
+  </record>
+  <record id="payment_method_card" model="accounting.payment_method">
+    <field name="name">Card</field>
+    <field name="code">card</field>
+    <field name="provider_id" ref="payment_provider_demo"/>
+    <field name="active">True</field>
+  </record>
+
+  <record id="reconciliation_model_bank_fee" model="accounting.reconciliation_model">
+    <field name="name">Bank fees</field>
+    <field name="rule_type">label</field>
+    <field name="pattern">fee</field>
+    <field name="sequence">10</field>
+    <field name="active">True</field>
+  </record>
+
+  <record id="config_item_incoterm_fob" model="accounting.config_item">
+    <field name="kind">incoterm</field>
+    <field name="code">FOB</field>
+    <field name="name">Free On Board</field>
+    <field name="active">True</field>
+  </record>
+  <record id="config_item_incoterm_cif" model="accounting.config_item">
+    <field name="kind">incoterm</field>
+    <field name="code">CIF</field>
+    <field name="name">Cost, Insurance and Freight</field>
+    <field name="active">True</field>
+  </record>
+  <record id="config_item_oscu_code" model="accounting.config_item">
+    <field name="kind">oscu_code</field>
+    <field name="code">01</field>
+    <field name="name">Normal supply</field>
+    <field name="active">True</field>
+  </record>
+  <record id="config_item_working_file" model="accounting.config_item">
+    <field name="kind">working_file</field>
+    <field name="code">WF-01</field>
+    <field name="name">Year-end working papers</field>
+    <field name="active">True</field>
+  </record>
+  <record id="config_item_account_group" model="accounting.config_item">
+    <field name="kind">account_group</field>
+    <field name="code">AG-01</field>
+    <field name="name">Current assets</field>
+    <field name="active">True</field>
+  </record>
+  <record id="config_item_cash_rounding" model="accounting.config_item">
+    <field name="kind">cash_rounding</field>
+    <field name="code">CR-01</field>
+    <field name="name">Round to nearest shilling</field>
+    <field name="amount">1</field>
+    <field name="active">True</field>
+  </record>
+  <record id="config_item_analytic_model" model="accounting.config_item">
+    <field name="kind">analytic_model</field>
+    <field name="code">AM-01</field>
+    <field name="name">Operations split</field>
+    <field name="active">True</field>
+  </record>
+
+</odoo>

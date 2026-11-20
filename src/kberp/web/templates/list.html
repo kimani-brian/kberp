@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+
+{% block main_class %}page{% endblock %}
+
+{% macro list_url(base_url, q, filter_name, menu_id, view, group_by, offset=None) -%}
+{{ base_url }}?{% if q %}q={{ q | urlencode }}&{% endif %}{% if filter_name %}filter={{ filter_name | urlencode }}&{% endif %}{% if menu_id %}menu={{ menu_id }}&{% endif %}{% if view == "kanban" %}view=kanban&{% endif %}{% if group_by %}group_by={{ group_by | urlencode }}&{% endif %}{% if offset %}offset={{ offset }}{% endif %}
+{%- endmacro %}
+
+{% macro record_table(records, spec, base_url, menu_id) -%}
+<div class="table-wrap">
+  <table class="data-table">
+    <thead>
+      <tr>
+        {% for col in spec.columns %}<th scope="col">{{ col.label }}</th>{% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in records %}
+        <tr>
+          {% for col in spec.columns %}
+            {% set value = record[col.name] %}
+            <td class="col-{{ col.type }}{{ ' col-primary' if loop.first else '' }}">
+              {% if col.type == "statistics" %}
+                {% set stats = value or {} %}
+                {% if stats.addresses or stats.bank_accounts %}
+                  <span class="stat-badges">
+                    {% if stats.addresses %}
+                      <span class="stat-badge">{{ stats.addresses }} address{{ "" if stats.addresses == 1 else "es" }}</span>
+                    {% endif %}
+                    {% if stats.bank_accounts %}
+                      <span class="stat-badge">{{ stats.bank_accounts }} bank</span>
+                    {% endif %}
+                  </span>
+                {% else %}
+                  <span class="muted">—</span>
+                {% endif %}
+              {% elif loop.first %}
+                <a href="{{ base_url }}/{{ record.id }}{{ '?menu=' ~ menu_id if menu_id else '' }}">
+                  {{ value | fmt(col.type, col.selection) or "(no name)" }}
+                </a>
+              {% else %}
+                {{ value | fmt(col.type, col.selection) }}
+              {% endif %}
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{%- endmacro %}
+
+{% macro kanban_cards(records, kanban, base_url, menu_id) -%}
+<div class="kanban-grid">
+  {% for record in records %}
+    <a class="kanban-card" href="{{ base_url }}/{{ record.id }}{{ '?menu=' ~ menu_id if menu_id else '' }}">
+      <span class="kanban-avatar" aria-hidden="true">{{ (record["name"] or "?")[:1] | upper }}</span>
+      {% for field in kanban.fields %}
+        {% set value = record[field.name] %}
+        {% if field.name == "name" %}
+          <h3 class="kanban-name">{{ value or "(no name)" }}</h3>
+        {% elif field.name == "parent_id" and value %}
+          <span class="kanban-parent">{{ value.name }}</span>
+        {% elif field.name == "tag_ids" and value %}
+          <span class="kanban-tags">
+            {% for tag in value %}<span class="kanban-tag">{{ tag.name }}</span>{% endfor %}
+          </span>
+        {% elif value and field.name not in ("name", "parent_id", "tag_ids") %}
+          <span class="kanban-line">{{ value | fmt(field.type) }}</span>
+        {% endif %}
+      {% endfor %}
+      {% set stats = record["statistics"] or {} %}
+      {% if stats.addresses or stats.bank_accounts %}
+        <span class="kanban-stats">
+          {% if stats.addresses %}{{ stats.addresses }} address{{ "" if stats.addresses == 1 else "es" }}{% endif %}
+          {% if stats.addresses and stats.bank_accounts %}<span aria-hidden="true">·</span>{% endif %}
+          {% if stats.bank_accounts %}{{ stats.bank_accounts }} bank{% endif %}
+        </span>
+      {% endif %}
+    </a>
+  {% endfor %}
+</div>
+{%- endmacro %}
+
+{% block content %}
+{% set base_url = "/apps/" ~ app_key ~ "/action/" ~ action.id %}
+{% set suffix = "?menu=" ~ menu_id if menu_id else "" %}
+{% set is_kanban = view == "kanban" and kanban %}
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  {% for crumb in breadcrumbs %}
+    {% if crumb.url %}<a href="{{ crumb.url }}">{{ crumb.name }}</a>
+    {% else %}<span aria-current="page">{{ crumb.name }}</span>{% endif %}
+    {% if not loop.last %}<span class="crumb-sep">/</span>{% endif %}
+  {% endfor %}
+</nav>
+
+<header class="page-head">
+  <div>
+    <h1>{{ spec.string }}</h1>
+    <p class="muted">{{ total }} record{{ "" if total == 1 else "s" }}</p>
+  </div>
+  <div class="page-actions">
+    {% if kanban %}
+      <div class="view-toggle" role="group" aria-label="View">
+        <a class="btn btn-sm {{ 'btn-primary' if view == 'list' else '' }}"
+           href="{{ list_url(base_url, q, selected_filter, menu_id, 'list', selected_group) }}">List</a>
+        <a class="btn btn-sm {{ 'btn-primary' if view == 'kanban' else '' }}"
+           href="{{ list_url(base_url, q, selected_filter, menu_id, 'kanban', selected_group) }}">Kanban</a>
+      </div>
+    {% endif %}
+    {% if spec.can_create %}
+      <a class="btn btn-primary" href="{{ base_url }}/new">
+        {{ icon("plus", 16) }} New
+      </a>
+    {% endif %}
+  </div>
+</header>
+
+<form class="searchbar" method="get" action="{{ base_url }}" role="search">
+  {% if menu_id %}<input type="hidden" name="menu" value="{{ menu_id }}">{% endif %}
+  {% if view == "kanban" %}<input type="hidden" name="view" value="kanban">{% endif %}
+  {% if selected_group %}<input type="hidden" name="group_by" value="{{ selected_group }}">{% endif %}
+  <label class="search-input">
+    {{ icon("search", 16) }}
+    <input class="input" type="search" name="q" value="{{ q }}"
+           placeholder="Search {{ spec.string | lower }}…" aria-label="Search">
+  </label>
+  {% if selected_filter %}<input type="hidden" name="filter" value="{{ selected_filter }}">{% endif %}
+  <button class="btn" type="submit">Search</button>
+  {% if search.filters %}
+    <div class="filter-chips">
+      {% for flt in search.filters %}
+        <a class="chip {{ 'chip-active' if flt.name == selected_filter else '' }}"
+           href="{{ list_url(base_url, q, flt.name, menu_id, view, selected_group) }}">
+          {{ flt.label }}
+        </a>
+      {% endfor %}
+      {% if q or selected_filter %}
+        <a class="chip chip-clear"
+           href="{{ list_url(base_url, '', '', menu_id, view, selected_group) }}">Clear</a>
+      {% endif %}
+    </div>
+  {% endif %}
+  {% if search.group_bys %}
+    <div class="groupby-chips">
+      <span class="muted">Group by</span>
+      {% for group in search.group_bys %}
+        <a class="chip {{ 'chip-active' if group.name == selected_group else '' }}"
+           href="{{ list_url(base_url, q, selected_filter, menu_id, view, '' if group.name == selected_group else group.name) }}">
+          {{ group.label }}
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+</form>
+
+{% if groups %}
+  {% for group in groups %}
+    <section class="record-group">
+      <h2 class="group-head">
+        <span>{{ group.label }}</span>
+        <span class="group-count">{{ group.count }}</span>
+      </h2>
+      {% if is_kanban %}
+        {{ kanban_cards(group.records, kanban, base_url, menu_id) }}
+      {% else %}
+        {{ record_table(group.records, spec, base_url, menu_id) }}
+      {% endif %}
+    </section>
+  {% endfor %}
+{% elif records %}
+  {% if is_kanban %}
+    {{ kanban_cards(records, kanban, base_url, menu_id) }}
+  {% else %}
+    {{ record_table(records, spec, base_url, menu_id) }}
+  {% endif %}
+{% else %}
+  <div class="empty-state panel">
+    <h2>Nothing here yet</h2>
+    <p class="muted">
+      {% if q or selected_filter %}No records match this search.
+      {% else %}Create the first record to get started.{% endif %}
+    </p>
+  </div>
+{% endif %}
+
+{% if total > limit and not groups %}
+<nav class="pager" aria-label="Pagination">
+  {% if offset > 0 %}
+    <a class="btn btn-sm" href="{{ list_url(base_url, q, selected_filter, menu_id, view, selected_group, prev_offset) }}">Previous</a>
+  {% else %}
+    <span class="btn btn-sm btn-disabled">Previous</span>
+  {% endif %}
+  <span class="pager-info">{{ offset + 1 }}–{{ [offset + limit, total] | min }} of {{ total }}</span>
+  {% if next_offset is not none %}
+    <a class="btn btn-sm" href="{{ list_url(base_url, q, selected_filter, menu_id, view, selected_group, next_offset) }}">Next</a>
+  {% else %}
+    <span class="btn btn-sm btn-disabled">Next</span>
+  {% endif %}
+</nav>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_agreement_list" model="core.ir_ui_view">
+    <field name="name">purchase.agreement.list</field>
+    <field name="model">purchase.agreement</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Purchase Agreements">
+        <field name="name" string="Agreement"/>
+        <field name="partner_id" string="Vendor"/>
+        <field name="agreement_type" string="Type"/>
+        <field name="date_start" string="From"/>
+        <field name="date_end" string="To"/>
+        <field name="state" string="Status"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_agreement_form" model="core.ir_ui_view">
+    <field name="name">purchase.agreement.form</field>
+    <field name="model">purchase.agreement</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Purchase Agreement">
+        <header>
+          <button name="action_start" string="Start" type="object"/>
+          <button name="action_call_off" string="Call Off Remaining" type="object"/>
+          <button name="action_close" string="Close" type="object"/>
+          <button name="action_cancel" string="Cancel" type="object"/>
+        </header>
+        <sheet>
+          <group string="Agreement">
+            <field name="name"/>
+            <field name="partner_id"/>
+            <field name="agreement_type"/>
+            <field name="date_start"/>
+            <field name="date_end"/>
+            <field name="state" widget="status"/>
+            <field name="currency_id"/>
+            <field name="company_id"/>
+          </group>
+          <group string="Lines">
+            <field name="line_ids" widget="lines">
+              <list string="Agreed Lines" editable="1">
+                <field name="product_id" string="Product"/>
+                <field name="name" string="Description"/>
+                <field name="qty" string="Agreed"/>
+                <field name="qty_called" string="Called Off" readonly="1"/>
+                <field name="qty_remaining" string="Remaining" readonly="1"/>
+                <field name="uom_id" string="Unit"/>
+                <field name="price_unit" string="Unit Price"/>
+                <field name="tax_ids" string="Taxes"/>
+              </list>
+            </field>
+          </group>
+          <group string="Terms">
+            <field name="note"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="action_agreement" model="core.ir_act_window">
+    <field name="name">Purchase Agreements</field>
+    <field name="res_model">purchase.agreement</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">purchase/agreements</field>
+  </record>
+
+  <record id="view_landed_cost_list" model="core.ir_ui_view">
+    <field name="name">purchase.landed_cost.list</field>
+    <field name="model">purchase.landed_cost</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Landed Costs">
+        <field name="name" string="Cost"/>
+        <field name="picking_id" string="Receipt"/>
+        <field name="date" string="Date"/>
+        <field name="split_method" string="Split"/>
+        <field name="amount_total" string="Amount"/>
+        <field name="state" string="Status"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_landed_cost_form" model="core.ir_ui_view">
+    <field name="name">purchase.landed_cost.form</field>
+    <field name="model">purchase.landed_cost</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Landed Cost">
+        <header>
+          <button name="action_post" string="Post" type="object"/>
+        </header>
+        <sheet>
+          <group string="Cost">
+            <field name="name"/>
+            <field name="picking_id"/>
+            <field name="vendor_id"/>
+            <field name="date"/>
+            <field name="split_method"/>
+            <field name="account_id"/>
+            <field name="journal_id"/>
+            <field name="company_id"/>
+            <field name="currency_id"/>
+            <field name="state" widget="status"/>
+            <field name="valuation_move_id"/>
+          </group>
+          <group string="Lines">
+            <field name="line_ids" widget="lines">
+              <list string="Cost Lines" editable="1">
+                <field name="name" string="Description"/>
+                <field name="product_id" string="Product"/>
+                <field name="amount" string="Amount"/>
+                <field name="account_id" string="Account"/>
+                <field name="split_method" string="Split"/>
+              </list>
+            </field>
+          </group>
+          <group string="Total">
+            <field name="amount_total" readonly="1"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="action_landed_cost" model="core.ir_act_window">
+    <field name="name">Landed Costs</field>
+    <field name="res_model">purchase.landed_cost</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">purchase/landed-costs</field>
+  </record>
+
+  <record id="view_analysis_list" model="core.ir_ui_view">
+    <field name="name">purchase.analysis.list</field>
+    <field name="model">purchase.analysis</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Purchase Analysis">
+        <field name="name" string="Analysis"/>
+        <field name="date_from" string="From"/>
+        <field name="date_to" string="To"/>
+        <field name="group_by" string="Group By"/>
+        <field name="state" string="Status"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_analysis_form" model="core.ir_ui_view">
+    <field name="name">purchase.analysis.form</field>
+    <field name="model">purchase.analysis</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Purchase Analysis">
+        <header>
+          <button name="action_run" string="Run Analysis" type="object"/>
+        </header>
+        <sheet>
+          <group string="Analysis">
+            <field name="name"/>
+            <field name="date_from"/>
+            <field name="date_to"/>
+            <field name="group_by"/>
+            <field name="state" widget="status"/>
+            <field name="company_id"/>
+          </group>
+          <group string="Rows">
+            <field name="line_ids" widget="lines">
+              <list string="Rows" editable="1">
+                <field name="label" string="Group"/>
+                <field name="qty" string="Quantity"/>
+                <field name="amount" string="Amount"/>
+              </list>
+            </field>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="action_analysis" model="core.ir_act_window">
+    <field name="name">Purchase</field>
+    <field name="res_model">purchase.analysis</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">purchase/analysis</field>
+  </record>
+
+</odoo>

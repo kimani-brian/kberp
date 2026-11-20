@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="seq_sales_order" model="core.ir_sequence">
+    <field name="name">Sales Order</field>
+    <field name="prefix"></field>
+    <field name="padding">5</field>
+  </record>
+
+  <record id="pricelist_base" model="core.pricelist">
+    <field name="name">Base Pricelist</field>
+    <field name="active">True</field>
+  </record>
+
+  <record id="seq_sales_settings" model="sales.settings">
+    <field name="name">Sales Settings</field>
+    <field name="validity_days">30</field>
+    <field name="invoice_policy">ordered</field>
+    <field name="allow_discount">True</field>
+  </record>
+
+</odoo>

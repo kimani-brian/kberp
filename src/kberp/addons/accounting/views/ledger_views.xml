@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_account_list" model="core.ir_ui_view">
+    <field name="name">accounting.account.list</field>
+    <field name="model">accounting.account</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Chart of Accounts">
+        <field name="code" string="Code"/>
+        <field name="name" string="Account"/>
+        <field name="type" string="Type"/>
+        <field name="parent_id" string="Parent"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_account_form" model="core.ir_ui_view">
+    <field name="name">accounting.account.form</field>
+    <field name="model">accounting.account</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Account"><sheet>
+        <group string="Account">
+          <field name="code"/><field name="name"/><field name="type"/>
+          <field name="parent_id"/><field name="company_id"/><field name="active"/>
+        </group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_account" model="core.ir_act_window">
+    <field name="name">Chart of Accounts</field>
+    <field name="res_model">accounting.account</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">accounting/chart</field>
+  </record>
+
+  <record id="view_journal_list" model="core.ir_ui_view">
+    <field name="name">accounting.journal.list</field>
+    <field name="model">accounting.journal</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Journals">
+        <field name="code" string="Code"/>
+        <field name="name" string="Journal"/>
+        <field name="type" string="Type"/>
+        <field name="sequence_id" string="Sequence"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_journal_form" model="core.ir_ui_view">
+    <field name="name">accounting.journal.form</field>
+    <field name="model">accounting.journal</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Journal"><sheet>
+        <group string="Journal">
+          <field name="name"/><field name="code"/><field name="type"/>
+          <field name="sequence_id"/><field name="default_account_id"/>
+          <field name="company_id"/><field name="active"/>
+        </group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_journal" model="core.ir_act_window">
+    <field name="name">Journals</field>
+    <field name="res_model">accounting.journal</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">accounting/journals</field>
+  </record>
+
+  <record id="view_tax_list" model="core.ir_ui_view">
+    <field name="name">accounting.tax.list</field>
+    <field name="model">accounting.tax</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Taxes">
+        <field name="name" string="Tax"/>
+        <field name="amount" string="Amount"/>
+        <field name="amount_type" string="Type"/>
+        <field name="price_include" string="Included"/>
+        <field name="group_id" string="Group"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_tax_form" model="core.ir_ui_view">
+    <field name="name">accounting.tax.form</field>
+    <field name="model">accounting.tax</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Tax"><sheet>
+        <group string="Tax">
+          <field name="name"/><field name="amount"/><field name="amount_type"/>
+          <field name="price_include"/><field name="rounding"/>
+          <field name="group_id"/><field name="company_id"/><field name="active"/>
+        </group>
+        <group string="Repartition">
+          <field name="repartition_ids">
+            <list string="Repartition">
+              <field name="label" string="Label"/>
+              <field name="account_id" string="Account"/>
+              <field name="factor" string="Factor"/>
+            </list>
+          </field>
+        </group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_tax" model="core.ir_act_window">
+    <field name="name">Taxes</field>
+    <field name="res_model">accounting.tax</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">accounting/taxes</field>
+  </record>
+
+  <record id="view_tax_group_list" model="core.ir_ui_view">
+    <field name="name">accounting.tax_group.list</field>
+    <field name="model">accounting.tax_group</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Tax Groups"><field name="name" string="Group"/></list>
+    </field>
+  </record>
+  <record id="view_tax_group_form" model="core.ir_ui_view">
+    <field name="name">accounting.tax_group.form</field>
+    <field name="model">accounting.tax_group</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Tax Group"><sheet>
+        <group string="Group"><field name="name"/><field name="sequence"/></group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_tax_group" model="core.ir_act_window">
+    <field name="name">Tax Groups</field>
+    <field name="res_model">accounting.tax_group</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">accounting/tax-groups</field>
+  </record>
+
+  <record id="view_fiscal_year_list" model="core.ir_ui_view">
+    <field name="name">accounting.fiscal_year.list</field>
+    <field name="model">accounting.fiscal_year</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Fiscal Years">
+        <field name="name" string="Year"/>
+        <field name="date_start" string="Start"/>
+        <field name="date_end" string="End"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_fiscal_year_form" model="core.ir_ui_view">
+    <field name="name">accounting.fiscal_year.form</field>
+    <field name="model">accounting.fiscal_year</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Fiscal Year"><sheet>
+        <group string="Period">
+          <field name="name"/><field name="date_start"/>
+          <field name="date_end"/><field name="company_id"/>
+        </group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_fiscal_year" model="core.ir_act_window">
+    <field name="name">Fiscal Years</field>
+    <field name="res_model">accounting.fiscal_year</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">accounting/fiscal-years</field>
+  </record>
+
+  <record id="view_move_list" model="core.ir_ui_view">
+    <field name="name">accounting.move.list</field>
+    <field name="model">accounting.move</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Journal Entries">
+        <field name="name" string="Number"/>
+        <field name="date" string="Date"/>
+        <field name="journal_id" string="Journal"/>
+        <field name="partner_id" string="Partner"/>
+        <field name="amount_total" string="Total"/>
+        <field name="secured" string="Secured"/>
+        <field name="state" string="Status"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_move_form" model="core.ir_ui_view">
+    <field name="name">accounting.move.form</field>
+    <field name="model">accounting.move</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Journal Entry">
+        <header>
+          <button name="action_post" string="Post" type="object"/>
+          <button name="action_cancel" string="Cancel" type="object"/>
+          <button name="action_reverse" string="Reverse" type="object"/>
+          <button name="action_register_payment" string="Register Payment" type="object"/>
+          <button name="action_credit_note" string="Credit Note" type="object"/>
+          <button name="action_secure" string="Secure" type="object"/>
+          <button name="action_send_followup" string="Follow Up" type="object"/>
+          <button name="action_generate_etims" string="eTIMS" type="object"/>
+          <button name="action_write_off" string="Write Off" type="object"/>
+        </header>
+        <sheet>
+          <group string="Entry">
+            <field name="state" widget="status"/>
+            <field name="payment_state" string="Payment"/>
+            <field name="journal_id"/>
+            <field name="date"/>
+            <field name="partner_id"/>
+            <field name="move_type"/>
+            <field name="due_date"/>
+            <field name="currency_id"/>
+            <field name="currency_rate"/>
+            <field name="payment_term_id"/>
+            <field name="fiscal_position_id"/>
+            <field name="company_id"/>
+            <field name="origin"/>
+            <field name="secured" string="Secured"/>
+          </group>
+          <group string="Lines">
+            <field name="line_ids" widget="lines">
+              <list string="Lines" editable="1">
+                <field name="account_id" string="Account"/>
+                <field name="name" string="Label"/>
+                <field name="product_id" string="Product"/>
+                <field name="analytic_account_id" string="Analytic Account"/>
+                <field name="tax_id" string="Tax"/>
+                <field name="qty" string="Quantity"/>
+                <field name="price_unit" string="Unit Price"/>
+                <field name="tax_ids" string="Taxes"/>
+                <field name="debit" string="Debit"/>
+                <field name="credit" string="Credit"/>
+              </list>
+            </field>
+          </group>
+          <group string="Totals">
+            <field name="amount_untaxed" string="Untaxed" readonly="1"/>
+            <field name="amount_tax" string="Taxes" readonly="1"/>
+            <field name="amount_total" string="Total" readonly="1"/>
+            <field name="amount_residual" string="Residual" readonly="1"/>
+            <field name="amount_debit" string="Debit" readonly="1"/>
+            <field name="amount_credit" string="Credit" readonly="1"/>
+          </group>
+          <notebook>
+            <page string="Notes">
+              <group string="Internal Notes"><field name="note"/></group>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="view_move_search" model="core.ir_ui_view">
+    <field name="name">accounting.move.search</field>
+    <field name="model">accounting.move</field>
+    <field name="type">search</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name" string="Number"/>
+        <field name="partner_id" string="Partner"/>
+        <field name="origin" string="Source"/>
+        <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+        <filter name="posted" string="Posted" domain="[('state', '=', 'posted')]"/>
+        <filter name="cancel" string="Cancelled" domain="[('state', '=', 'cancel')]"/>
+        <groupby name="journal_id" string="Journal"/>
+        <groupby name="partner_id" string="Partner"/>
+        <groupby name="state" string="Status"/>
+      </search>
+    </field>
+  </record>
+  <record id="action_invoice" model="core.ir_act_window">
+    <field name="name">Invoices</field>
+    <field name="res_model">accounting.move</field>
+    <field name="view_mode">list,form,search</field>
+    <field name="domain">[('move_type', '=', 'out_invoice')]</field>
+    <field name="path">accounting/invoices</field>
+  </record>
+  <record id="action_bill" model="core.ir_act_window">
+    <field name="name">Bills</field>
+    <field name="res_model">accounting.move</field>
+    <field name="view_mode">list,form,search</field>
+    <field name="domain">[('move_type', '=', 'in_invoice')]</field>
+    <field name="path">accounting/bills</field>
+  </record>
+  <record id="action_journal_entry" model="core.ir_act_window">
+    <field name="name">Journal Entries</field>
+    <field name="res_model">accounting.move</field>
+    <field name="view_mode">list,form,search</field>
+    <field name="domain">[('move_type', '=', 'entry')]</field>
+    <field name="path">accounting/entries</field>
+  </record>
+
+  <record id="view_accounting_settings_list" model="core.ir_ui_view">
+    <field name="name">accounting.settings.list</field>
+    <field name="model">accounting.settings</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Accounting Settings"><field name="name" string="Name"/></list>
+    </field>
+  </record>
+  <record id="view_accounting_settings_form" model="core.ir_ui_view">
+    <field name="name">accounting.settings.form</field>
+    <field name="model">accounting.settings</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Accounting Settings"><sheet>
+        <group string="Default Accounts">
+          <field name="name"/><field name="company_id"/>
+          <field name="receivable_account_id"/><field name="payable_account_id"/>
+          <field name="income_account_id"/><field name="expense_account_id"/>
+          <field name="tax_account_id"/><field name="bank_account_id"/>
+        </group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_accounting_settings" model="core.ir_act_window">
+    <field name="name">Settings</field>
+    <field name="res_model">accounting.settings</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">accounting/settings</field>
+  </record>
+
+  <record id="view_currency_list" model="core.ir_ui_view">
+    <field name="name">core.currency.list</field>
+    <field name="model">core.currency</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Currencies">
+        <field name="code" string="Code"/>
+        <field name="name" string="Currency"/>
+        <field name="rate" string="Rate"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_currency_form" model="core.ir_ui_view">
+    <field name="name">core.currency.form</field>
+    <field name="model">core.currency</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Currency"><sheet>
+        <group string="Currency">
+          <field name="code"/><field name="name"/>
+          <field name="symbol"/><field name="decimal_places"/><field name="rate"/>
+        </group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_currency" model="core.ir_act_window">
+    <field name="name">Currencies</field>
+    <field name="res_model">core.currency</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">accounting/currencies</field>
+  </record>
+
+
+  <record id="action_credit_note" model="core.ir_act_window">
+    <field name="name">Credit Notes</field>
+    <field name="res_model">accounting.move</field>
+    <field name="view_mode">list,form,search</field>
+    <field name="domain">[('move_type', '=', 'out_refund')]</field>
+    <field name="path">accounting/credit-notes</field>
+  </record>
+  <record id="action_refund" model="core.ir_act_window">
+    <field name="name">Refunds</field>
+    <field name="res_model">accounting.move</field>
+    <field name="view_mode">list,form,search</field>
+    <field name="domain">[('move_type', '=', 'in_refund')]</field>
+    <field name="path">accounting/refunds</field>
+  </record>
+
+  <record id="view_payment_list" model="core.ir_ui_view">
+    <field name="name">accounting.payment.list</field>
+    <field name="model">accounting.payment</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Payments">
+        <field name="name" string="Number"/>
+        <field name="date" string="Date"/>
+        <field name="partner_id" string="Partner"/>
+        <field name="journal_id" string="Journal"/>
+        <field name="amount" string="Amount"/>
+        <field name="state" string="Status"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_payment_form" model="core.ir_ui_view">
+    <field name="name">accounting.payment.form</field>
+    <field name="model">accounting.payment</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Payment">
+        <header><button name="action_cancel" string="Cancel" type="object"/></header>
+        <sheet>
+          <group string="Payment">
+            <field name="state" widget="status"/>
+            <field name="name"/>
+            <field name="payment_type"/>
+            <field name="partner_id"/>
+            <field name="journal_id"/>
+            <field name="amount"/>
+            <field name="amount_company"/>
+            <field name="currency_id"/>
+            <field name="currency_rate"/>
+            <field name="date"/>
+            <field name="method"/>
+            <field name="memo"/>
+            <field name="company_id"/>
+          </group>
+          <group string="Allocations">
+            <field name="payment_line_ids">
+              <list string="Allocations">
+                <field name="move_id" string="Invoice"/>
+                <field name="amount" string="Allocated"/>
+              </list>
+            </field>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="action_payment_inbound" model="core.ir_act_window">
+    <field name="name">Customer Payments</field>
+    <field name="res_model">accounting.payment</field>
+    <field name="view_mode">list,form</field>
+    <field name="domain">[('payment_type', '=', 'inbound')]</field>
+    <field name="path">accounting/customer-payments</field>
+  </record>
+  <record id="action_payment_outbound" model="core.ir_act_window">
+    <field name="name">Vendor Payments</field>
+    <field name="res_model">accounting.payment</field>
+    <field name="view_mode">list,form</field>
+    <field name="domain">[('payment_type', '=', 'outbound')]</field>
+    <field name="path">accounting/vendor-payments</field>
+  </record>
+
+  <record id="view_payment_term_list" model="core.ir_ui_view">
+    <field name="name">accounting.payment_term.list</field>
+    <field name="model">accounting.payment_term</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Payment Terms">
+        <field name="name" string="Terms"/>
+        <field name="days" string="Days"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_payment_term_form" model="core.ir_ui_view">
+    <field name="name">accounting.payment_term.form</field>
+    <field name="model">accounting.payment_term</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Payment Terms"><sheet>
+        <group string="Terms">
+          <field name="name"/><field name="days"/><field name="active"/>
+        </group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_payment_term" model="core.ir_act_window">
+    <field name="name">Payment Terms</field>
+    <field name="res_model">accounting.payment_term</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">accounting/payment-terms</field>
+  </record>
+
+  <record id="view_fiscal_position_list" model="core.ir_ui_view">
+    <field name="name">accounting.fiscal_position.list</field>
+    <field name="model">accounting.fiscal_position</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Fiscal Positions">
+        <field name="name" string="Position"/>
+        <field name="country_id" string="Country"/>
+      </list>
+    </field>
+  </record>
+  <record id="view_fiscal_position_form" model="core.ir_ui_view">
+    <field name="name">accounting.fiscal_position.form</field>
+    <field name="model">accounting.fiscal_position</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Fiscal Position"><sheet>
+        <group string="Fiscal Position">
+          <field name="name"/><field name="country_id"/><field name="active"/>
+        </group>
+        <group string="Mapping">
+          <field name="source_tax_id"/><field name="dest_tax_id"/>
+          <field name="source_account_id"/><field name="dest_account_id"/>
+        </group>
+      </sheet></form>
+    </field>
+  </record>
+  <record id="action_fiscal_position" model="core.ir_act_window">
+    <field name="name">Fiscal Positions</field>
+    <field name="res_model">accounting.fiscal_position</field>
+    <field name="view_mode">list,form</field>
+    <field name="path">accounting/fiscal-positions</field>
+  </record>
+
+</odoo>

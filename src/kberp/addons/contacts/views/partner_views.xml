@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_partner_list" model="core.ir_ui_view">
+    <field name="name">core.partner.list</field>
+    <field name="model">core.partner</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="Contacts">
+        <field name="complete_name" string="Name"/>
+        <field name="email" string="Email"/>
+        <field name="phone" string="Phone"/>
+        <field name="salesperson_id" string="Salesperson"/>
+        <field name="city" string="City"/>
+        <field name="country_id" string="Country"/>
+        <field name="tag_ids" string="Tags"/>
+        <field name="statistics" string="Statistics"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="view_partner_form" model="core.ir_ui_view">
+    <field name="name">core.partner.form</field>
+    <field name="model">core.partner</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="Contact">
+        <sheet>
+          <group string="Identity">
+            <field name="is_company" widget="radio" string="Contact type"/>
+            <field name="parent_id"/>
+            <field name="name"/>
+            <field name="function"/>
+            <field name="type"/>
+            <field name="active"/>
+          </group>
+          <notebook>
+            <page string="Contacts">
+              <group string="Address">
+                <field name="street"/>
+                <field name="street2"/>
+                <field name="city"/>
+                <field name="zip"/>
+                <field name="state_id"/>
+                <field name="country_id"/>
+              </group>
+              <group string="Communication">
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="mobile"/>
+                <field name="website"/>
+                <field name="lang"/>
+              </group>
+            </page>
+            <page string="Sales &amp; Purchase">
+              <group string="Relationship">
+                <field name="salesperson_id"/>
+                <field name="industry_id"/>
+                <field name="tag_ids"/>
+                <field name="company_id"/>
+              </group>
+            </page>
+            <page string="Invoicing">
+              <group string="Tax and Registration">
+                <field name="vat"/>
+                <field name="company_registry"/>
+              </group>
+            </page>
+            <page string="Notes">
+              <group string="Internal Notes">
+                <field name="comment"/>
+              </group>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_partner_kanban" model="core.ir_ui_view">
+    <field name="name">core.partner.kanban</field>
+    <field name="model">core.partner</field>
+    <field name="type">kanban</field>
+    <field name="arch" type="xml">
+      <kanban string="Contacts">
+        <field name="name"/>
+        <field name="parent_id"/>
+        <field name="email"/>
+        <field name="phone"/>
+        <field name="city"/>
+        <field name="country_id"/>
+        <field name="tag_ids"/>
+      </kanban>
+    </field>
+  </record>
+
+  <record id="view_partner_search" model="core.ir_ui_view">
+    <field name="name">core.partner.search</field>
+    <field name="model">core.partner</field>
+    <field name="type">search</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name" string="Search"/>
+        <field name="email" string="Email"/>
+        <field name="phone" string="Phone"/>
+        <filter name="companies" string="Companies" domain="[('is_company', '=', True)]"/>
+        <filter name="persons" string="Persons" domain="[('is_company', '=', False)]"/>
+        <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+        <groupby name="salesperson_id" string="Salesperson"/>
+        <groupby name="parent_id" string="Company"/>
+        <groupby name="country_id" string="Country"/>
+        <groupby name="tag_ids" string="Tags"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="action_partner" model="core.ir_act_window">
+    <field name="name">Contacts</field>
+    <field name="res_model">core.partner</field>
+    <field name="view_mode">list,kanban,form,search</field>
+    <field name="path">contacts</field>
+  </record>
+
+</odoo>
