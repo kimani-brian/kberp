@@ -2,6 +2,7 @@
 <odoo>
 
   <menuitem id="menu_accounting_root" name="Accounting" sequence="60" web_icon="accounting"
+            groups="accounting.group_accounting_user,accounting.group_accounting_manager,accounting.group_accounting_auditor"
             action="base.action_app_home"/>
 
   <menuitem id="menu_accounting_dashboard" name="Dashboard" parent="menu_accounting_root"

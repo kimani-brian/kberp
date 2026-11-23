@@ -6,12 +6,13 @@
   <meta name="kberp-csrf" content="{{ csrf_token }}">
   <meta name="kberp-user" content="{{ user.id if user else '' }}">
   <title>{{ title }}</title>
-  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/static/vendor/bootstrap.min.css">
-  <link rel="stylesheet" href="/static/css/kberp.css">
+  <link rel="icon" href="/static/favicon.svg?v={{ build_id }}" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/vendor/bootstrap.min.css?v={{ build_id }}">
+  <link rel="stylesheet" href="/static/css/kberp.css?v={{ build_id }}">
 </head>
 <body class="{% block body_class %}{% endblock %}">
 {% from "_icons.html" import app_icon, icon %}
+<a class="skip-link" href="#main-content">Skip to content</a>
 
 {% if user %}
 <header class="topbar">
@@ -53,6 +54,7 @@
   </nav>
 
   <div class="topbar-right">
+    {% if debug %}<span class="build-stamp" title="Running build {{ build_id }}">{{ build_id }}</span>{% endif %}
     {% if settings_url %}
       <a class="topbar-link" href="{{ settings_url }}">Settings</a>
     {% endif %}
@@ -100,11 +102,11 @@
   </div>
 {% endfor %}
 
-<main class="{% block main_class %}page{% endblock %}">
+<main id="main-content" class="{% block main_class %}page{% endblock %}">
   {% block content %}{% endblock %}
 </main>
 
-<script src="/static/js/kberp.js"></script>
-<script src="/static/js/kwl.js"></script>
+<script src="/static/js/kberp.js?v={{ build_id }}"></script>
+<script src="/static/js/kwl.js?v={{ build_id }}"></script>
 </body>
 </html>

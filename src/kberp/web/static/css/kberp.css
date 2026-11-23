@@ -131,6 +131,15 @@ code { font-family: var(--kb-mono); font-size: 12px; }
 }
 .topbar-link:hover { background: var(--kb-surface-alt); color: var(--kb-text); }
 
+.build-stamp {
+  color: var(--kb-text-muted);
+  font: 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .04em;
+  padding: 4px 6px;
+  border: 1px solid var(--kb-border);
+  border-radius: var(--kb-radius-sm);
+}
+
 .avatar {
   display: inline-flex;
   align-items: center;
@@ -148,7 +157,10 @@ code { font-family: var(--kb-mono); font-size: 12px; }
 .user-btn:hover { background: var(--kb-surface-alt); }
 
 /* -- Menubar and dropdowns --------------------------------------------- */
-.menubar { display: flex; align-items: center; gap: 2px; min-width: 0; overflow: hidden; }
+/* Dropdown panels are absolutely positioned children. `overflow: hidden`
+   here clips them to the 52 px bar, so a click opens a panel the user cannot
+   see; keep the bar visible and let the panels escape it. */
+.menubar { display: flex; align-items: center; gap: 2px; min-width: 0; overflow: visible; }
 
 .menu { position: relative; }
 
@@ -343,8 +355,6 @@ code { font-family: var(--kb-mono); font-size: 12px; }
 .launcher-grid-compact .app-card { min-height: 0; flex-direction: row; align-items: center; padding: var(--kb-space-4); }
 .launcher-grid-compact .app-icon { width: 40px; height: 40px; flex: 0 0 40px; }
 
-.launcher-foot { border-top: 1px solid var(--kb-border); padding-top: var(--kb-space-4); }
-
 /* -- App home ---------------------------------------------------------- */
 .app-hero {
   --app-accent: var(--kb-primary);
@@ -359,18 +369,6 @@ code { font-family: var(--kb-mono); font-size: 12px; }
   border-radius: var(--kb-radius-md);
 }
 .app-hero-icon { color: var(--app-accent); display: inline-flex; }
-.phase-note { margin: 6px 0 0; font-size: 12px; color: var(--kb-text-muted); }
-
-.quick-grid { display: flex; flex-wrap: wrap; gap: var(--kb-space-2); }
-.quick-link {
-  padding: 8px 14px;
-  border: 1px solid var(--kb-border);
-  border-radius: 999px;
-  background: var(--kb-surface-alt);
-  color: var(--kb-text);
-  font-size: 13px;
-}
-.quick-link:hover { border-color: var(--kb-primary); color: var(--kb-primary); }
 
 /* -- Tables ------------------------------------------------------------ */
 .table-wrap {
@@ -1028,3 +1026,19 @@ main.page.kwl-enter { opacity: 0; }
     max-width: none;
   }
 }
+
+/* Keyboard users can jump the menubar; the link stays out of the way until
+   it receives focus. */
+.skip-link {
+  position: absolute;
+  left: var(--kb-space-4);
+  top: -48px;
+  z-index: 2000;
+  padding: var(--kb-space-2) var(--kb-space-4);
+  border-radius: var(--kb-radius-md);
+  background: var(--kb-primary);
+  color: #fff;
+  text-decoration: none;
+  transition: top .15s ease;
+}
+.skip-link:focus { top: var(--kb-space-2); }

@@ -40,6 +40,16 @@ PAGE_SIZE = 40
 GROUP_LIMIT = 12
 GROUP_PAGE_SIZE = 12
 
+# An app whose data is not readable by every internal user is gated at the app
+# URL as well as by model ACLs, so a copied deep link cannot bypass the menus.
+APP_GROUPS = {
+    "accounting": {
+        "accounting.group_accounting_user",
+        "accounting.group_accounting_manager",
+        "accounting.group_accounting_auditor",
+    },
+}
+
 log = logging.getLogger("kberp.web")
 
 # Smart buttons shown on a contact. A button appears only when its model
@@ -63,16 +73,6 @@ SMART_BUTTONS: tuple[tuple[str, str, str | None, list[Any]], ...] = (
     ),
     ("lots", "Lots/Serials", "inventory.lot", []),
 )
-
-# Which delivery phase brings each app's business menus (see phases.md).
-PHASE_HINT = {
-    "contacts": "C1 - Contact directory core",
-    "sales": "S1 - Quotations and sales orders are live",
-    "accounting": "A1 - Ledger core, taxes and posting are live",
-    "purchase": "P1 - RFQ core and receipt request",
-    "inventory": "I2 - Counts, scrap, lots and traceability are live",
-}
-
 
 class Application:
     def __init__(self, settings: Settings):
@@ -188,6 +188,10 @@ class Application:
                     redirect_response = self._require_login(request)
                     if redirect_response is not None:
                         response = redirect_response
+                    elif endpoint != "app_home" and not self._app_allowed(
+                        values.get("app_key"), self._require_state(request)["user"]
+                    ):
+                        raise AccessError("your user has no access to this app")
                     else:
                         response = handler(request, **values)
                 else:
@@ -279,6 +283,8 @@ class Application:
             "current_app": None,
             "settings_url": "/settings" if user and user.get("is_admin") else None,
             "title": "KB ERP",
+            "build_id": self.settings.build_id,
+            "debug": self.settings.debug,
         }
         context.update(extra)
         return context
@@ -314,7 +320,6 @@ class Application:
                     "name": manifest.label,
                     "sequence": manifest.sequence,
                     "summary": manifest.summary,
-                    "phase": PHASE_HINT.get(manifest.icon, ""),
                 }
             )
         return apps
@@ -334,6 +339,16 @@ class Application:
             return True
         allowed = {g.strip() for g in groups.split(",") if g.strip()}
         return bool(allowed & set(user.get("group_xmlids") or []))
+
+    def _app_allowed(self, app_key: str | None, user: dict[str, Any] | None) -> bool:
+        required = APP_GROUPS.get(app_key or "")
+        if not required:
+            return True
+        if user is None:
+            return False
+        if user.get("is_admin"):
+            return True
+        return bool(required & set(user.get("group_xmlids") or []))
 
     def _menu_rows(self, env: Env, user: dict[str, Any] | None) -> list[dict[str, Any]]:
         menus = env["core.ir_ui_menu"]
@@ -449,7 +464,7 @@ class Application:
         checks["redis"] = redis_detail
         ready = ready and redis_ok
         return Response(
-            json.dumps({"ready": ready, "checks": checks}),
+            json.dumps({"ready": ready, "checks": checks, "build_id": self.settings.build_id}),
             status=200 if ready else 503,
             mimetype="application/json",
         )
@@ -521,7 +536,13 @@ class Application:
         csrf = new_csrf_token()
         response = self._render(
             "login.html",
-            {"csrf_token": csrf, "error": error, "title": "Sign in - KB ERP", "apps": []},
+            {
+                "csrf_token": csrf,
+                "error": error,
+                "title": "Sign in - KB ERP",
+                "apps": [],
+                "build_id": self.settings.build_id,
+            },
         )
         response.set_cookie("kberp_csrf", csrf, httponly=True, samesite="Lax")
         return response
@@ -549,9 +570,11 @@ class Application:
         env = self._env(request)
         root = self._app_root_menu(env, app_key)
         menu_id = request.args.get("menu", type=int)
+        user = self._require_state(request)["user"]
+        visible = root is not None and self._visible(root.get("groups"), user)
         menus = (
-            self._menu_tree(env, root["id"], self._require_state(request)["user"], app_key)
-            if root
+            self._menu_tree(env, root["id"], user, app_key)
+            if root and visible
             else []
         )
         return self._render(
@@ -561,26 +584,107 @@ class Application:
                 title=f"{manifest.label} - KB ERP",
                 current_app={"key": app_key, "name": manifest.label},
                 menus=menus,
-                app=manifest,
-                phase=PHASE_HINT.get(app_key, ""),
-                dashboard=(
-                    self._accounting_dashboard(env)
-                    if app_key == "accounting"
-                    else self._inventory_dashboard(env)
-                    if app_key == "inventory"
-                    else None
-                ),
-                dashboard_title=(
-                    "Ledger at a glance"
-                    if app_key == "accounting"
-                    else "Stock at a glance"
-                    if app_key == "inventory"
-                    else ""
-                ),
+                dashboard=self._app_dashboard(env, app_key) if visible else None,
+                dashboard_title=self._dashboard_title(app_key),
                 menu_id=menu_id,
                 breadcrumbs=[{"name": manifest.label, "url": None}],
             ),
         )
+
+    def _dashboard_title(self, app_key: str) -> str:
+        return {
+            "contacts": "Directory at a glance",
+            "sales": "Sales at a glance",
+            "accounting": "Ledger at a glance",
+            "purchase": "Purchasing at a glance",
+            "inventory": "Stock at a glance",
+            "settings": "Administration at a glance",
+        }.get(app_key, "At a glance")
+
+    def _app_dashboard(self, env: Env, app_key: str) -> dict[str, Any] | None:
+        builders = {
+            "contacts": self._contacts_dashboard,
+            "sales": self._sales_dashboard,
+            "accounting": self._accounting_dashboard,
+            "purchase": self._purchase_dashboard,
+            "inventory": self._inventory_dashboard,
+            "settings": self._settings_dashboard,
+        }
+        build = builders.get(app_key)
+        return build(env) if build else None
+
+    def _contacts_dashboard(self, env: Env) -> dict[str, Any]:
+        partners = env["core.partner"]
+        return {
+            "kpis": [
+                {"label": "Contacts", "value": str(partners.search_count([]))},
+                {
+                    "label": "Companies",
+                    "value": str(partners.search_count([("is_company", "=", True)])),
+                },
+                {
+                    "label": "People",
+                    "value": str(partners.search_count([("is_company", "=", False)])),
+                },
+                {
+                    "label": "Bank accounts",
+                    "value": str(env["core.bank_account"].search_count([])),
+                },
+            ]
+        }
+
+    def _sales_dashboard(self, env: Env) -> dict[str, Any]:
+        orders = env["sales.order"]
+        confirmed = orders.read(orders.search([("state", "=", "sale")]))
+        total = sum(float(row.get("amount_total") or 0) for row in confirmed)
+        return {
+            "kpis": [
+                {"label": "Quotations", "value": str(orders.search_count([("state", "=", "draft")]))},
+                {"label": "Sales orders", "value": str(len(confirmed))},
+                {
+                    "label": "To invoice",
+                    "value": str(orders.search_count([("invoice_status", "=", "to invoice")])),
+                },
+                {"label": "Order value", "value": f"{total:,.2f}"},
+            ]
+        }
+
+    def _purchase_dashboard(self, env: Env) -> dict[str, Any]:
+        orders = env["purchase.order"]
+        return {
+            "kpis": [
+                {
+                    "label": "Open RFQs",
+                    "value": str(orders.search_count([("state", "in", ["draft", "sent"])])),
+                },
+                {
+                    "label": "Confirmed orders",
+                    "value": str(orders.search_count([("state", "=", "purchase")])),
+                },
+                {
+                    "label": "Awaiting receipt",
+                    "value": str(
+                        orders.search_count(
+                            [("state", "=", "purchase"), ("receipt_status", "!=", "full")]
+                        )
+                    ),
+                },
+                {
+                    "label": "Agreements",
+                    "value": str(env["purchase.agreement"].search_count([])),
+                },
+            ]
+        }
+
+    def _settings_dashboard(self, env: Env) -> dict[str, Any]:
+        return {
+            "kpis": [
+                {"label": "Users", "value": str(env["core.user"].search_count([]))},
+                {"label": "Groups", "value": str(env["core.res_groups"].search_count([]))},
+                {"label": "Companies", "value": str(env["core.company"].search_count([]))},
+                {"label": "Apps", "value": str(len(self.registry.apps()))},
+            ]
+        }
 
     def _accounting_dashboard(self, env: Env) -> dict[str, Any]:
         from ..addons.accounting.services.posting import balances
@@ -658,7 +762,8 @@ class Application:
                 current_app={"key": "settings", "name": "Settings"},
                 menus=menus,
                 app=None,
-                phase="P0 - Platform, shell and launcher",
+                dashboard=self._settings_dashboard(env),
+                dashboard_title=self._dashboard_title("settings"),
                 menu_id=None,
                 breadcrumbs=[{"name": "Settings", "url": None}],
                 is_settings=True,
@@ -730,7 +835,7 @@ class Application:
         selected_group = group_by if group_by in group_names else ""
         domain = views.parse_domain(action.get("domain"))
         if q:
-            domain = domain + self._text_domain(search["search_fields"], q)
+            domain = domain + self._text_domain(env, model, search["search_fields"], q)
         for flt in search["filters"]:
             if flt["name"] == selected:
                 domain = domain + flt["domain"]
@@ -799,9 +904,40 @@ class Application:
             )
         return records
 
-    def _text_domain(self, search_fields: list[dict[str, Any]], q: str) -> list[Any]:
-        names = [f["name"] for f in search_fields] or ["name"]
-        leaves = [(name, "ilike", q) for name in names]
+    def _text_domain(
+        self, env: Env, model: Any, search_fields: list[dict[str, Any]], q: str
+    ) -> list[Any]:
+        """Turn a free-text search into a domain that fits each field type.
+
+        Text-like columns can take ILIKE. A many2one is an integer column, so
+        ILIKE would raise a PostgreSQL type error; resolve the term against the
+        related model's display name and search its ids instead.
+        """
+        leaves: list[Any] = []
+        for field in search_fields:
+            name = field["name"]
+            definition = model._fields.get(name)
+            kind = getattr(definition, "type", "")
+            if kind == "many2one":
+                comodel_name = getattr(definition, "comodel", None)
+                if not comodel_name or comodel_name not in env.registry.models:
+                    continue
+                comodel = env[comodel_name]
+                rec_name = getattr(comodel, "_rec_name", "name") or "name"
+                if rec_name not in comodel._fields:
+                    rec_name = "name"
+                if rec_name not in comodel._fields:
+                    continue
+                ids = comodel.search([(rec_name, "ilike", q)], limit=views.M2O_LIMIT)
+                if ids:
+                    leaves.append((name, "in", ids))
+            elif kind in {"char", "text", "selection"}:
+                leaves.append((name, "ilike", q))
+        if not leaves:
+            if "name" in model._fields:
+                leaves = [("name", "ilike", q)]
+            else:
+                return [("id", "=", -1)]
         if len(leaves) == 1:
             return leaves
         return ["|"] * (len(leaves) - 1) + leaves

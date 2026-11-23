@@ -74,7 +74,7 @@
     <span class="readonly-value">{{ field.value if field.value is not none else "" }}</span>
   {%- elif field.widget == "barcode" -%}
     <div class="barcode-scan">
-      <input class="input" type="text" name="{{ field.name }}" data-barcode-input
+      <input class="input" type="text" id="f-{{ field.name }}" name="{{ field.name }}" data-barcode-input
              placeholder="Scan or type a barcode" aria-label="Scan barcode">
       <button class="btn btn-sm" type="button" data-barcode-scan>Add line</button>
     </div>
@@ -89,52 +89,52 @@
   {%- elif field.widget == "radio" -%}
     <div class="radio-group" role="radiogroup" aria-label="{{ field.label }}">
       <label class="radio">
-        <input type="radio" name="{{ field.name }}" value="1" {% if field.value %}checked{% endif %}>
+        <input type="radio" id="f-{{ field.name }}-yes" name="{{ field.name }}" value="1" {% if field.value %}checked{% endif %}>
         <span>Company</span>
       </label>
       <label class="radio">
-        <input type="radio" name="{{ field.name }}" value="0" {% if not field.value %}checked{% endif %}>
+        <input type="radio" id="f-{{ field.name }}-no" name="{{ field.name }}" value="0" {% if not field.value %}checked{% endif %}>
         <span>Person</span>
       </label>
     </div>
   {%- elif field.type == "boolean" -%}
     <label class="checkbox">
-      <input type="checkbox" name="{{ field.name }}" {% if field.value %}checked{% endif %}>
+      <input type="checkbox" id="f-{{ field.name }}" name="{{ field.name }}" {% if field.value %}checked{% endif %}>
       <span>{{ field.label }}</span>
     </label>
   {%- elif field.type == "selection" -%}
-    <select class="input" name="{{ field.name }}" {% if field.required %}required{% endif %}>
+    <select class="input" id="f-{{ field.name }}" name="{{ field.name }}" {% if field.required %}required{% endif %}>
       <option value="">—</option>
       {% for option in field.options %}
         <option value="{{ option.value }}" {% if field.value == option.value %}selected{% endif %}>{{ option.label }}</option>
       {% endfor %}
     </select>
   {%- elif field.type == "many2one" -%}
-    <select class="input" name="{{ field.name }}" {% if field.required %}required{% endif %}>
+    <select class="input" id="f-{{ field.name }}" name="{{ field.name }}" {% if field.required %}required{% endif %}>
       <option value="">—</option>
       {% for option in field.options %}
         <option value="{{ option.value }}" {% if field.value == option.value %}selected{% endif %}>{{ option.label }}</option>
       {% endfor %}
     </select>
   {%- elif field.type == "many2many" -%}
-    <select class="input" name="{{ field.name }}" multiple size="6">
+    <select class="input" id="f-{{ field.name }}" name="{{ field.name }}" multiple size="6">
       {% for option in field.options %}
         <option value="{{ option.value }}" {% if option.value in (field.value or []) %}selected{% endif %}>{{ option.label }}</option>
       {% endfor %}
     </select>
   {%- elif field.type == "text" -%}
-    <textarea class="input input-textarea" name="{{ field.name }}" rows="{{ field.rows }}">{{ field.value or "" }}</textarea>
+    <textarea class="input input-textarea" id="f-{{ field.name }}" name="{{ field.name }}" rows="{{ field.rows }}">{{ field.value or "" }}</textarea>
   {%- elif field.type in ("monetary", "float") -%}
-    <input class="input input-number" type="number" step="0.01" name="{{ field.name }}"
+    <input class="input input-number" type="number" step="0.01" id="f-{{ field.name }}" name="{{ field.name }}"
            value="{{ field.value if field.value is not none else '' }}" {% if field.required %}required{% endif %}>
   {%- elif field.type == "integer" -%}
-    <input class="input input-number" type="number" step="1" name="{{ field.name }}"
+    <input class="input input-number" type="number" step="1" id="f-{{ field.name }}" name="{{ field.name }}"
            value="{{ field.value if field.value is not none else '' }}" {% if field.required %}required{% endif %}>
   {%- elif field.type == "date" -%}
-    <input class="input" type="date" name="{{ field.name }}"
+    <input class="input" type="date" id="f-{{ field.name }}" name="{{ field.name }}"
            value="{{ field.value.isoformat() if field.value else '' }}" {% if field.required %}required{% endif %}>
   {%- else -%}
-    <input class="input" type="text" name="{{ field.name }}"
+    <input class="input" type="text" id="f-{{ field.name }}" name="{{ field.name }}"
            value="{{ field.value if field.value is not none else '' }}" {% if field.required %}required{% endif %}>
   {%- endif -%}
 {%- endmacro %}

@@ -56,9 +56,19 @@ class Settings:
     # unless this is set; in development it is open for convenience.
     metrics_token: str = ""
 
+    # Short hash of the source baked into the container, shown in the top bar so
+    # a stale container cannot masquerade as the current build.
+    build_id: str = "dev"
+
     @classmethod
     def from_env(cls) -> Settings:
         addons = Path(_env("KB_ADDONS_PATH", str(BASE_DIR / "addons")))
+        build_id = _env("KB_BUILD_ID", "")
+        if not build_id:
+            for candidate in (BASE_DIR.parents[1] / "BUILD_ID", Path("/app/BUILD_ID")):
+                if candidate.is_file():
+                    build_id = candidate.read_text(encoding="utf-8").strip()
+                    break
         return cls(
             db_host=_env("KB_DB_HOST", "localhost"),
             db_port=_env_int("KB_DB_PORT", 5433),
@@ -75,6 +85,7 @@ class Settings:
             mail_dir=Path(_env("KB_MAIL_DIR", str(BASE_DIR.parents[1] / "var" / "mail"))),
             redis_url=_env("KB_REDIS_URL", ""),
             metrics_token=_env("KB_METRICS_TOKEN", ""),
+            build_id=build_id or "dev",
         )
 
     def conninfo(self) -> str:

@@ -2,10 +2,10 @@
 
 | Field | Value |
 |---|---|
-| Current phase | **A3 — Closing, reporting, compliance and full parity** |
-| Current increment | **A3 complete — statements, lock dates, assets, bank matching and eTIMS** |
-| Status | P0, C1, S1, A1, I1, S2, A2, P1, P2, I2, I3, P3 and A3 complete; all five apps reach their planned menu parity |
-| Last updated | 2026-11-19 |
+| Current phase | **F1 — Parity, hardening, migration, UAT and go-live** |
+| Current increment | **F1 complete from the repository side; human sign-offs remain** |
+| Status | P0, C1, S1, A1, I1, S2, A2, P1, P2, I2, I3, P3, A3 and F1 complete; all five apps at 100 % menu and action parity |
+| Last updated | 2026-11-21 |
 | Document of record | [`phases.md`](phases.md) §5 |
 
 This file is the living build log. It records what exists, the evidence that it
@@ -48,7 +48,13 @@ CLI surface:
 | `kberp run [--host --port --reload]` | Development Werkzeug server |
 | `kberp worker [--once --interval]` | Outbox drain and scheduled jobs |
 | `kberp emit <event> [--payload JSON]` | Enqueue a transactional outbox event |
-| `kberp check [menus\|views\|all]` | Parity and referential metadata checks |
+| `kberp check [menus\|views\|parity\|security\|all]` | Parity, referential metadata and ACL/rule audit |
+| `kberp import <kind> --file CSV [--commit] [--validate]` | Dry-run or commit partner/product/opening-balance/stock-count imports |
+| `kberp import-templates [--dir DIR]` | Write the four CSV import templates |
+| `scripts/backup_drill.py [--keep]` | Dump, restore, compare all tables and measure RPO/RTO |
+
+Operational procedures live in `docs/runbook.md`, `docs/cutover.md` and
+`docs/rollback.md`; the F1 evidence summary is `docs/f1-evidence.md`.
 
 ---
 
@@ -699,6 +705,80 @@ payments; eTIMS generation is posted-invoice-only and idempotent.
 
 ---
 
+## 3m. F1 exit criteria (phases.md §11)
+
+| Criterion | State | Evidence |
+|---|---|---|
+| Full parity audit: 100 % of in-scope menus, labels and settings groups | Met | `kberp check all` — menus 202/202, actions 130/130, five apps, settings group Technical; `tests/parity/actions.json` |
+| Performance targets met on production-sized data | Met | `bench_lists.py` 16 lists, worst p95 87.5 ms on 10,006 partners; `bench_posting.py` p95 96.4 ms; `bench_events.py` p95 27.6 ms |
+| No open critical or high security finding | Met | `kberp check security` — 111 models, 233 ACLs, 8 rules, 0 findings; Accounting app-level URL gate; `tests/test_security.py` |
+| UAT-01…09 pass | Met (automated) | `tests/test_uat.py` — 9 passed; stakeholder signatures are a separate cutover gate |
+| Backup restore and RPO/RTO drills evidenced | Met | `make backup-drill` — 118 tables, 0 mismatches, WAL `archive_timeout=60`, RPO and RTO MET |
+| Migration balances reconcile with the source | Partial | All four importers and reconciliation logic tested on synthetic files; an anonymised production dry run is required at cutover |
+| Accessibility and observability | Met | `tests/test_accessibility.py` (7 passed), `tests/test_observability.py`, request IDs and token-protected `/metrics` |
+| Product owner, tech lead, accountant and warehouse lead sign off | Human | Blank signature table in `docs/cutover.md` §6 |
+
+F1 is complete from the repository side. The remaining items are human
+sign-offs and an external penetration test, documented in
+`docs/f1-evidence.md` §7.
+
+### Demo-readiness check
+
+A browser smoke that clicks the real UI now runs with `make smoke` (requires a
+running stack and Chrome; set `CHROME_PATH` if needed). It signs in, opens all
+five apps and their first screens, checks search and kanban, creates a contact,
+creates and confirms a quotation, then creates and posts its invoice through
+object buttons. It also checks for console/network errors and that the build
+stamp matches the running image. All 21 checks pass against the rebuilt
+containers.
+
+`make smoke-menus` clicks every top-bar menu button and link in all five apps
+(**132 controls**) and `make smoke-controls` clicks every page-header control
+on each app's primary list (**50 controls**). Both pass with no blank screens,
+access-denied pages or JavaScript errors. `make smoke-all` runs all three
+suites: **203 browser checks in total**.
+
+The first demo attempt exposed the one operational trap worth recording: the
+Compose `web` and `worker` containers had been built five days earlier and were
+serving old Python and an old `kwl.js`, so clicks hit stale handlers. The fix is
+`make deploy` after any source change, followed by a hard refresh. Every page
+now shows a source-hash stamp in the top bar; `make build-id` prints the hash of
+the working tree, and `/readyz` returns the hash the running container was
+built from. All three must match.
+
+The browser run also caught a genuine defect the HTTP-level tests missed:
+searching an Accounting list returned a 500 because its search view lists
+`partner_id` and the text domain applied `ILIKE` to an integer id.
+`_text_domain` now resolves many2one terms against the related model's display
+name and uses an `in` domain for the ids. Regression coverage:
+`test_invoice_search_handles_many2one_fields`.
+
+A second browser-only defect explained the "top buttons do nothing" report:
+`.menubar` had `overflow: hidden`, which clipped every absolutely positioned
+dropdown to the 52 px top bar. The menu state and links were correct in the DOM
+— and the first version of the menu smoke test passed — but the user could not
+see the panel. The menubar now uses `overflow: visible`, and the smoke test
+checks `document.elementFromPoint()` inside the panel so a clipped panel fails
+the run. Static assets are also requested with `?v={{ build_id }}` so a rebuild
+invalidates the browser cache instead of leaving old CSS/JS behind.
+
+### Production UI pass
+
+App homes no longer look like build artefacts. The "Available screens" chip
+panel, the "No screens yet" placeholder, the "Delivery phase: A1…" note, the
+app-summary line and the launcher's "Build status / walking skeleton" text are
+gone. Each app home now opens on a real dashboard — Directory, Sales, Ledger,
+Purchasing or Stock — with live KPI cards; Settings has its own administration
+dashboard. Navigation lives in the top menubar, which is where an Odoo-shaped
+product expects it. The source-hash stamp is shown only when `KB_DEBUG=1`; in a
+production deployment it disappears from the interface.
+
+Regression coverage: `test_every_app_shell_renders` asserts the production
+copy and KPI cards, and the browser smoke suites navigate via the menubar
+instead of the removed quick links.
+
+---
+
 ## 4. Deliberate deviations and follow-ups
 
 | Area | Shipped | Deferred / follow-up |
@@ -724,7 +804,10 @@ payments; eTIMS generation is posted-invoice-only and idempotent.
 | Long-tail configuration | Account groups, tags, fiscal categories, multi-ledger, roundings, checks, return types, horizontal groups, online sync, incoterms, tax units and analytic models as filtered `config_item` views | Dedicated models per screen once their behaviour differs from a coded list |
 | Delivery grouping | One draft picking per order, with an origin idempotency key; operation types now own the sequences and locations | Per-warehouse grouping rules and routes (I3) |
 | Stock operations | Quants, reservation, backorders, counts, scrap, lots, packages, traceability, replenishment, perpetual valuation, barcode and the full configuration set | Multi-step quality routes, wave picking and camera scanning |
-| Deployment | Compose db/redis/web/worker on a pinned `10.99.7.0/24` network | Nginx, TLS, production secrets and metrics beyond `/healthz` and `/readyz` |
+| Deployment | Compose db/redis/web/worker on a pinned `10.99.7.0/24` network, WAL archiving with a 60 s timeout, `/metrics`, request IDs and a restore drill | Nginx and TLS must be supplied at the proxy; production secrets and durable off-host WAL storage are deployment duties |
+| Hardening | ACL/rule audit, app-level Accounting gate, dry-run importers and production settings checklist in `docs/runbook.md` | External penetration test, browser matrix and signed UAT remain human gates |
+| Reporting | Print-ready HTML quotations and purchase orders with a local mail drop | `wkhtmltopdf` PDF rendering and SMTP delivery are not wired in |
+| i18n and retention | UTC storage and English UI; audit log is write-once in the database | Per-user locale/timezone UI and versioned attachments (NFR-010, NFR-011, NFR-016) |
 
 The Compose subnet is explicit because this host exhausted Docker's default
 address pools; do not remove it.
@@ -754,6 +837,16 @@ address pools; do not remove it.
 | `tests/test_inventory_i3.py` | Configuration seed, idempotent scheduler RFQs, perpetual valuation with balanced entries and no internal entries, barcode parsing and scanning, putaway and I3 screens |
 | `tests/test_purchase_p3.py` | Agreement call-offs and validity, threshold approvals and manager sign-off, API bypass guard, vendor analysis reconciliation, landed-cost allocation and balanced postings |
 | `tests/test_accounting_a3.py` | Lock-date rejection, secured immutability, balance sheet and P&L reconciliation, trial balance and aged receivable, tax report/return, eTIMS posted-only and idempotency, write-off, statement import/match, and balanced asset/loan/deferral postings |
+| `tests/test_security.py` | High-finding audit, ACL coverage, record rules, production defaults and the Accounting app-level gate |
+| `tests/test_parity.py` (F1 additions) | 130-action label fixture, settings groups, app count and scorecard output |
+| `tests/test_migration.py` | Four CSV importers, dry-run safety, external-ID/natural-key dedupe, balanced opening entries, draft stock counts and reconciliation |
+| `tests/test_uat.py` | UAT-01…09 end to end: launcher and parity, contacts, quote to cash, RFQ to payment, counts and valuation, payment reconciliation, archive guard, restricted user and reports |
+| `tests/test_accessibility.py` | WCAG 2.2 AA structural audit: language, landmark, skip link, labels, unique ids, button names and headings |
+| `tests/test_observability.py` | Request IDs, structured logs, health endpoints and the token-protected metrics endpoint |
+
+Benchmarks and the restore drill live in `scripts/bench_posting.py`,
+`scripts/bench_lists.py`, `scripts/bench_events.py` and
+`scripts/backup_drill.py`; their output is recorded in `docs/f1-evidence.md`.
 
 The suite runs against a throwaway database (`kberp_test_ci`) that is dropped and
 rebuilt once per session, so it never touches development data.
@@ -902,9 +995,23 @@ sees it; both paths were verified in Compose.
 
 ---
 
+## 6m. F1 demo script (phases.md §11)
+
+| # | Action | Observed |
+|---|---|---|
+| 1 | Open the launcher and tour all five apps | Menus and labels match the baseline; `kberp check all` reports 100 % parity |
+| 2 | Run quote → delivery → invoice → payment | Documents linked by origin; trial balance and residual reconcile |
+| 3 | Run RFQ → receipt → bill → payment | Approval gate, receipt status and bill payment state are correct |
+| 4 | Run a count, scrap and valuation report | Quants, valuation layers and ledger agree |
+| 5 | Sign in as a restricted user and an auditor | Menus filter, writes are rejected and deep links give a readable 403 |
+| 6 | Run `make backup-drill` | The dump restores into a scratch database, all 118 tables compare and the app boots against the copy |
+
+---
+
 ## 7. Next
 
-1. **F1 — Parity, hardening and go-live** (`phases.md` §11): run the full
-   parity audit across all five apps, harden the deployment (secrets, TLS and
-   backups), exercise the migration and rollback plan, and complete UAT-01…09
-   against the assembled system.
+The repository side of GA is complete. Before production go-live, complete the
+human gates in `docs/cutover.md`: rehearse the four imports on anonymised
+customer data, run the external penetration test and browser matrix, and collect
+the four role signatures. Keep `docs/runbook.md` and `docs/rollback.md` beside
+the change log for the cutover window and hypercare.

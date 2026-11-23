@@ -40,6 +40,16 @@ def main() -> int:
             cur.execute("DELETE FROM platform.outbox_event WHERE event_type = 'platform.ping'")
 
         worker = Worker(db, registry, batch_size=1)
+        # Other events (demo data, earlier runs) can sit in the same queue. Drain
+        # them first, otherwise a measured pass may process somebody else's row
+        # while our own ping stays pending.
+        for _ in range(1000):
+            with db.cursor() as cur:
+                cur.execute("SELECT count(*) FROM platform.outbox_event WHERE state = 'pending'")
+                if cur.fetchone()[0] == 0:
+                    break
+            if not worker.process_outbox()["processed"]:
+                break
         timings: list[float] = []
         for index in range(RUNS):
             event_id = emit(env, "platform.ping", {"seq": index})

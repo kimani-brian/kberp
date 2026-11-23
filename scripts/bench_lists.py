@@ -16,11 +16,12 @@ import statistics
 import sys
 import time
 
+from bench_list import PARTNERS, seed
+
 from kberp.config import Settings
 from kberp.db import Database
 from kberp.env import Env
 from kberp.registry import Registry
-from bench_list import PARTNERS, seed
 
 RUNS = 10
 BUDGET_MS = 800
@@ -104,7 +105,6 @@ def main() -> int:
                 ids = model.search([], limit=LIST_LIMIT)
                 model.read(ids)
                 timings.append((time.perf_counter() - start) * 1000)
-            per_load = (len(queries) - before) / RUNS
             p50 = statistics.median(timings)
             p95 = sorted(timings)[max(int(len(timings) * 0.95) - 1, 0)]
             results.append((model_name, p50, p95))

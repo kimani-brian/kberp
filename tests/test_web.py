@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import json
 import re
 import uuid
@@ -79,35 +80,27 @@ def test_launcher_lists_five_apps_in_sequence(admin):
         assert f'href="/apps/{key}"' in grid
 
 
-def test_every_app_shell_renders(admin, env):
-    aid = _contacts_action(env)
-    for key, name in (
-        ("contacts", "Contacts"),
-        ("sales", "Sales"),
-        ("accounting", "Accounting"),
-        ("purchase", "Purchase"),
-        ("inventory", "Inventory"),
+def test_every_app_shell_renders(admin):
+    """App homes are production dashboards, not phase-labelled developer shells."""
+    for key, name, dashboard in (
+        ("contacts", "Contacts", "Directory at a glance"),
+        ("sales", "Sales", "Sales at a glance"),
+        ("accounting", "Accounting", "Ledger at a glance"),
+        ("purchase", "Purchase", "Purchasing at a glance"),
+        ("inventory", "Inventory", "Stock at a glance"),
     ):
-        response = admin.get(f"/apps/{key}")
-        assert response.status_code == 200, key
-        assert name in _html(response)
-    contacts = _html(admin.get("/apps/contacts"))
-    assert f'href="/apps/contacts/action/{aid}' in contacts
+        html = _html(admin.get(f"/apps/{key}"))
+        assert f"<h1>{name}</h1>" in html
+        assert dashboard in html
+        assert "kpi-card" in html
+        assert 'class="menubar"' in html
+        assert "/action/" in html
+        for dev_copy in ("Available screens", "Delivery phase", "No screens yet"):
+            assert dev_copy not in html
 
-    # Sales now ships screens, while the remaining apps still show a shell.
-    sales = _html(admin.get("/apps/sales"))
-    assert "Quotations" in sales
-    assert "/action/" in sales
-    accounting = _html(admin.get("/apps/accounting"))
-    assert "Ledger at a glance" in accounting
-    assert "Invoices" in accounting
-    inventory = _html(admin.get("/apps/inventory"))
-    assert "Stock at a glance" in inventory
-    assert "Receipts" in inventory
-    purchase = _html(admin.get("/apps/purchase"))
-    assert "Requests for Quotation" in purchase
-    shell = _html(admin.get("/apps/inventory"))
-    assert "Stock at a glance" in shell
+    launcher = _html(admin.get("/apps"))
+    assert "Build status" not in launcher
+    assert "walking skeleton" not in launcher
 
 
 def test_contacts_list_search_and_filter(admin, env):
@@ -129,6 +122,41 @@ def test_contacts_list_search_and_filter(admin, env):
     persons = _html(admin.get(url + "?filter=persons"))
     assert "Amina Wanjiru" in persons
     assert "Acme Trading" not in persons
+
+
+def test_invoice_search_handles_many2one_fields(admin, env):
+    """A search view may list a many2one; text search must not ILIKE its id."""
+    aid = action_id(env, "accounting.action_invoice")
+    origin = f"WEB-SEARCH-{uuid.uuid4().hex[:8]}"
+    partner_name = f"Search Partner {uuid.uuid4().hex[:6]}"
+    partner_id = env["core.partner"].create({"name": partner_name})
+    product_id = env["core.product_template"].search([], limit=1)[0]
+    journal_id = env["accounting.journal"].search([("code", "=", "SAL")], limit=1)[0]
+    env["accounting.move"].create(
+        {
+            "move_type": "out_invoice",
+            "journal_id": journal_id,
+            "date": dt.date.today(),
+            "partner_id": partner_id,
+            "company_id": 1,
+            "origin": origin,
+            "line_ids": [
+                {"product_id": product_id, "name": "Search line", "qty": 1, "price_unit": 100}
+            ],
+        }
+    )
+
+    url = f"/apps/accounting/action/{aid}"
+    by_origin = admin.get(f"{url}?q={origin}")
+    assert by_origin.status_code == 200
+    # The origin is echoed in the search box; the partner name proves the row
+    # carrying that origin was actually returned.
+    assert partner_name in _html(by_origin)
+
+    by_partner = admin.get(f"{url}?q={partner_name}")
+    assert by_partner.status_code == 200
+    # Once in the search input and once in the matching row.
+    assert _html(by_partner).count(partner_name) >= 2
 
 
 def test_contacts_list_has_no_n_plus_one(admin, env, app, monkeypatch):

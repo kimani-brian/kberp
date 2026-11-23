@@ -7,9 +7,9 @@ import datetime as dt
 import pytest
 
 from kberp.migration import (
+    MigrationError,
     import_file,
     import_opening_balances,
-    import_partners,
     import_products,
     load_csv,
     write_templates,
@@ -170,5 +170,5 @@ def test_templates_are_written(tmp_path):
 
 def test_unknown_kind_is_rejected(env, tmp_path):
     path = write_csv(tmp_path, "x.csv", "name", ["x"])
-    with pytest.raises(Exception):
+    with pytest.raises(MigrationError):
         import_file(env, "unknown", path)

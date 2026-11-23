@@ -1,4 +1,4 @@
-.PHONY: help venv install client-install client-check up down logs reset init seed run worker test lint typecheck fmt check check-menus check-views bench
+.PHONY: help venv install client-install client-check up down logs reset init seed run worker test lint typecheck fmt check check-menus check-views bench backup-drill smoke smoke-menus smoke-controls smoke-all build-id deploy
 
 PY := .venv/bin/python
 PIP := .venv/bin/pip
@@ -16,6 +16,13 @@ help:
 	@echo "make test      run the test suite"
 	@echo "make check     lint + types + parity + tests"
 	@echo "make bench     p95 list query on 10,000 partners"
+	@echo "make backup-drill  dump, restore, compare and measure RPO/RTO"
+	@echo "make smoke         drive the running UI with Chrome (21 checks)"
+	@echo "make smoke-menus   click every top-bar menu in all five apps"
+	@echo "make smoke-controls click every page-header control in all five apps"
+	@echo "make smoke-all     run all three browser suites"
+	@echo "make build-id      print the source hash baked into the container"
+	@echo "make deploy        rebuild web/worker after a code change"
 	@echo "make check-menus / check-views   metadata parity checks"
 	@echo "make reset     drop and recreate the database (destructive)"
 
@@ -81,6 +88,29 @@ check: lint typecheck client-check check-menus check-views test
 
 bench: db-ready
 	$(PY) scripts/bench_list.py
+
+backup-drill: db-ready
+	$(PY) scripts/backup_drill.py
+
+smoke:
+	cd client && npm run smoke
+
+smoke-menus:
+	cd client && npm run smoke:menus
+
+smoke-controls:
+	cd client && npm run smoke:controls
+
+smoke-all: smoke smoke-menus smoke-controls
+
+build-id:
+	@find src -type f ! -path '*/__pycache__/*' ! -name '*.pyc' -print0 \
+	 | LC_ALL=C sort -z | xargs -0 sha256sum | sha256sum | cut -c1-12
+
+deploy:
+	docker compose up -d --build web worker
+	@until curl -fsS localhost:8069/readyz >/dev/null 2>&1; do sleep 1; done
+	@echo "running build: $$(curl -fsS localhost:8069/readyz | $(PY) -c 'import json,sys; print(json.load(sys.stdin)["build_id"])')"
 
 reset:
 	docker compose down -v

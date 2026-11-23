@@ -2,6 +2,27 @@ services:
   db:
     image: postgres:16
     container_name: kberp_db
+    # WAL archiving bounds point-in-time loss: archive_timeout forces a segment
+    # switch at most every minute even on an idle system (NFR-008, RPO <= 15m).
+    # Production should point archive_command at durable object storage; the
+    # local volume is enough to exercise the drill on a single host.
+    entrypoint:
+      - sh
+      - -c
+      - |
+        chown postgres:postgres /var/lib/postgresql/wal_archive
+        exec /usr/local/bin/docker-entrypoint.sh "$$@"
+      - sh
+    command:
+      - postgres
+      - -c
+      - wal_level=replica
+      - -c
+      - archive_mode=on
+      - -c
+      - archive_timeout=60
+      - -c
+      - "archive_command=test ! -f /var/lib/postgresql/wal_archive/%f && cp %p /var/lib/postgresql/wal_archive/%f"
     environment:
       POSTGRES_DB: ${KB_DB_NAME:-kberp}
       POSTGRES_USER: ${KB_DB_USER:-kberp}
@@ -10,6 +31,7 @@ services:
       - "${KB_DB_PORT:-5433}:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
+      - wal-archive:/var/lib/postgresql/wal_archive
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${KB_DB_USER:-kberp} -d ${KB_DB_NAME:-kberp}"]
       interval: 3s
@@ -66,6 +88,7 @@ services:
 
 volumes:
   db-data:
+  wal-archive:
 
 networks:
   default:

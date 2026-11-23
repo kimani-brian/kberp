@@ -928,7 +928,7 @@
       "is_app": true,
       "web_icon": "accounting",
       "action": "base.action_app_home",
-      "groups": ""
+      "groups": "accounting.group_accounting_user,accounting.group_accounting_manager,accounting.group_accounting_auditor"
     },
     {
       "xml_id": "accounting.menu_accounting_secure_entries",
