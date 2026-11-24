@@ -1,0 +1,40 @@
+name: Feature request
+description: Propose a capability, screen or behaviour that is missing
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is hard or impossible to do today, and who hits it?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the smallest change that solves the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Existing screens, workarounds or a smaller fix.
+  - type: input
+    id: phase
+    attributes:
+      label: Phase or requirement
+      description: Link the phase in phases.md, PRD requirement or gap in BUILD.md if one exists.
+      placeholder: "phases.md §12, NFR-010"
+  - type: textarea
+    id: impact
+    attributes:
+      label: Data and compatibility impact
+      description: New tables, migrations, permission changes or API changes.
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Sketches, examples from other ERPs, benchmark notes.

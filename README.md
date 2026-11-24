@@ -1,5 +1,10 @@
 # KB ERP
 
+[![CI](https://github.com/kimani-brian/kberp/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/kimani-brian/kberp/actions/workflows/ci.yml)
+[![Python 3.12](https://img.shields.io/badge/python-3.12-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![PostgreSQL 16](https://img.shields.io/badge/postgresql-16-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Node 22](https://img.shields.io/badge/node-22-5FA04E?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+
 An Odoo-shaped ERP for five interconnected applications: **Contacts, Sales,
 Purchase, Inventory, Accounting**.
 
@@ -104,3 +109,14 @@ client/              TypeScript KWL client (signals, router, RPC, list/form view
 Cross-module rules from `rules.md` are enforced from the start: a module may import
 only its declared dependencies, and business data is reached through services — never
 through another module's tables.
+
+## Contributing
+
+Read [`CONTRIBUTING.md`](CONTRIBUTING.md) for setup, coding rules and the test
+gate, and [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) for how we work together.
+Keep pull requests focused, include a regression test, and run `make check`
+before opening one.
+
+Report suspected vulnerabilities privately through the repository's Security
+tab as described in [`SECURITY.md`](SECURITY.md). Do not open a public issue for
+them.
