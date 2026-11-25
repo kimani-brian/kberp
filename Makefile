@@ -1,4 +1,4 @@
-.PHONY: help venv install client-install client-check up down logs reset init seed run worker test lint typecheck fmt check check-menus check-views bench backup-drill smoke smoke-menus smoke-controls smoke-all build-id deploy
+.PHONY: help venv install client-install client-check up down logs reset init seed run worker test lint typecheck fmt check check-menus check-views bench backup-drill smoke smoke-menus smoke-controls smoke-all build-id deploy demo demo-reset
 
 PY := .venv/bin/python
 PIP := .venv/bin/pip
@@ -12,6 +12,8 @@ help:
 	@echo "make db-up     start only PostgreSQL"
 	@echo "make init      create schemas/tables and load XML metadata"
 	@echo "make seed      load demo data"
+	@echo "make demo      build and start the full demo, then load demo documents"
+	@echo "make demo-reset  wipe the demo database and rebuild it"
 	@echo "make run       run the dev server against local PostgreSQL"
 	@echo "make test      run the test suite"
 	@echo "make check     lint + types + parity + tests"
@@ -59,6 +61,18 @@ init: db-ready
 
 seed: db-ready
 	$(PY) -m kberp.cli seed
+
+demo:
+	docker compose up -d --build
+	@$(MAKE) db-ready
+	docker compose exec -T web kberp init --with-demo
+	docker compose exec -T web kberp demo
+	@until curl -fsS localhost:8069/readyz >/dev/null 2>&1; do sleep 1; done
+	@echo "demo ready: http://localhost:8069 (admin / admin)"
+
+demo-reset:
+	docker compose down -v
+	@$(MAKE) demo
 
 run: db-ready
 	$(PY) -m kberp.cli run --reload

@@ -26,6 +26,8 @@ The interface is sky blue on cloud white rather than Odoo's maroon: a deep sky
 for actions and links, a soft wash at the top of each page, and white work
 surfaces so tables and forms stay calm.
 
+![KB ERP launcher](docs/screenshots/launcher.png)
+
 ## Documents
 
 | Document | Purpose |
@@ -36,6 +38,7 @@ surfaces so tables and forms stay calm.
 | [`design.md`](design.md) | Launcher, shell, views, per-module screens |
 | [`phases.md`](phases.md) | Phase plan, gates, estimates |
 | [`docs/adr/`](docs/adr/) | Decisions: ORM/schemas, view engine, client strategy |
+| [`docs/demo.md`](docs/demo.md) | One-command demo, seeded records and a five-minute tour |
 | [`BUILD.md`](BUILD.md) | Live build log with every phase's evidence and deliberate deviations |
 | [`docs/f1-evidence.md`](docs/f1-evidence.md) | F1 parity, security, performance, UAT and restore-drill results |
 | [`docs/runbook.md`](docs/runbook.md) | Daily operations, health checks and common incidents |
@@ -43,6 +46,18 @@ surfaces so tables and forms stay calm.
 | [`docs/rollback.md`](docs/rollback.md) | Rollback triggers, restore procedure and post-mortem |
 
 ## Quick start
+
+The shortest path to a running system with demo documents is Docker:
+
+```bash
+make demo           # build, start, install metadata and seed the demo
+# http://localhost:8069  (admin / admin)
+make demo-reset     # wipe the volumes and start again
+```
+
+See [`docs/demo.md`](docs/demo.md) for what is seeded and a five-minute tour.
+
+To develop against a local PostgreSQL instead:
 
 ```bash
 cp .env.example .env

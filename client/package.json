@@ -9,7 +9,8 @@
     "typecheck": "tsc --noEmit",
     "smoke": "node smoke.mjs",
     "smoke:menus": "node menus.mjs",
-    "smoke:controls": "node controls.mjs"
+    "smoke:controls": "node controls.mjs",
+    "screenshots": "node screenshots.mjs"
   },
   "devDependencies": {
     "esbuild": "^0.24.0",
