@@ -12,6 +12,8 @@ from pathlib import Path
 
 from .config import Settings
 from .db import Database
+from .demo import DemoError
+from .demo import seed as seed_demo
 from .env import Env
 from .installer import Installer
 from .migration import KINDS, import_file, write_templates
@@ -43,6 +45,32 @@ def cmd_seed(args: argparse.Namespace) -> int:
     summary = installer.init(demo=True)
     print(f"demo data ready (models: {summary['models']})")
     return 0
+
+
+def cmd_demo(args: argparse.Namespace) -> int:
+    settings = _settings()
+    db = Database(settings)
+    db.open()
+    try:
+        registry = Registry(settings)
+        registry.load()
+        env = Env(db, registry=registry, su=True)
+        try:
+            summary = seed_demo(env)
+        except DemoError as exc:
+            print(f"demo seed cannot run: {exc}", file=sys.stderr)
+            return 1
+        if not summary["seeded"]:
+            print("demo documents already exist with marker DEMO-SO-001")
+            return 0
+        print("KB ERP demo documents ready")
+        for key, value in summary.items():
+            if key == "seeded":
+                continue
+            print(f"  {key:15}: {value}")
+        return 0
+    finally:
+        db.close()
 
 
 def cmd_run(args: argparse.Namespace) -> int:
@@ -211,6 +239,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     seed = sub.add_parser("seed", help="load demo data into an existing database")
     seed.set_defaults(func=cmd_seed)
+
+    demo = sub.add_parser("demo", help="load the scripted demo document chain")
+    demo.set_defaults(func=cmd_demo)
 
     run = sub.add_parser("run", help="start the development web server")
     run.add_argument("--host", default=None)
